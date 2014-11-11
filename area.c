@@ -1,5 +1,5 @@
 /***********************************************************
-    area.c -- ÌÌÀÑ
+    area.c -- é¢ç©
 ***********************************************************/
 
 double area(int n, float x[], float y[])
@@ -19,6 +19,6 @@ double area(int n, float x[], float y[])
 int main()
 {
     static float x[4] = { 1, 3, 2, 0 }, y[4] = { 1, 2, 4, 2 };
-    printf("ÌÌÀÑ = %g\n", area(4, x, y));
+    printf("é¢ç© = %g\n", area(4, x, y));
     return EXIT_SUCCESS;
 }

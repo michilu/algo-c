@@ -1,5 +1,5 @@
 /***********************************************************
-    tree.c -- 2Ê¬Ãµº÷ÌÚ
+    tree.c -- 2åˆ†æ¢ç´¢æœ¨
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,36 +15,36 @@ typedef struct node {
 struct node nil;
 nodeptr root = &nil;
 
-nodeptr insert(keytype key)  /* ÁŞÆş (ÅĞÏ¿) */
+nodeptr insert(keytype key)  /* æŒ¿å…¥ (ç™»éŒ²) */
 {
     int cmp;
     nodeptr *p, q;
 
-    strcpy(nil.key, key);  /* ÈÖ¿Í */
+    strcpy(nil.key, key);  /* ç•ªäºº */
     p = &root;
     while ((cmp = strcmp(key, (*p)->key)) != 0)
         if (cmp < 0) p = &((*p)->left );
         else         p = &((*p)->right);
-    if (*p != &nil) return NULL;  /* ¤¹¤Ç¤ËÅĞÏ¿¤µ¤ì¤Æ¤¤¤ë */
+    if (*p != &nil) return NULL;  /* ã™ã§ã«ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹ */
     if ((q = malloc(sizeof *q)) == NULL) {
-        printf("¥á¥â¥êÉÔÂ­.\n");  exit(EXIT_FAILURE);
+        printf("ãƒ¡ãƒ¢ãƒªä¸è¶³.\n");  exit(EXIT_FAILURE);
     }
     strcpy(q->key, key);
     q->left = &nil;  q->right = *p;  *p = q;
-    return q;  /* ÅĞÏ¿¤·¤¿ */
+    return q;  /* ç™»éŒ²ã—ãŸ */
 }
 
-int delete(keytype key)  /* ºï½ü¤Ç¤­¤ì¤Ğ 0, ¼ºÇÔ¤Ê¤é 1 ¤òÊÖ¤¹ */
+int delete(keytype key)  /* å‰Šé™¤ã§ãã‚Œã° 0, å¤±æ•—ãªã‚‰ 1 ã‚’è¿”ã™ */
 {
     int cmp;
     nodeptr *p, *q, r, s;
 
-    strcpy(nil.key, key);  /* ÈÖ¿Í */
+    strcpy(nil.key, key);  /* ç•ªäºº */
     p = &root;
     while ((cmp = strcmp(key, (*p)->key)) != 0)
         if (cmp < 0) p = &((*p)->left);
         else         p = &((*p)->right);
-    if (*p == &nil) return 1;  /* ¸«¤Ä¤«¤é¤º */
+    if (*p == &nil) return 1;  /* è¦‹ã¤ã‹ã‚‰ãš */
     r = *p;
     if      (r->right == &nil) *p = r->left;
     else if (r->left  == &nil) *p = r->right;
@@ -56,21 +56,21 @@ int delete(keytype key)  /* ºï½ü¤Ç¤­¤ì¤Ğ 0, ¼ºÇÔ¤Ê¤é 1 ¤òÊÖ¤¹ */
         *p = s;
     }
     free(r);
-    return 0;  /* ºï½üÀ®¸ù */
+    return 0;  /* å‰Šé™¤æˆåŠŸ */
 }
 
-nodeptr search(keytype key)  /* ¸¡º÷ (Ì¤ÅĞÏ¿¤Ê¤éNULL¤òÊÖ¤¹) */
+nodeptr search(keytype key)  /* æ¤œç´¢ (æœªç™»éŒ²ãªã‚‰NULLã‚’è¿”ã™) */
 {
     int cmp;
     nodeptr p;
 
-    strcpy(nil.key, key);  /* ÈÖ¿Í */
+    strcpy(nil.key, key);  /* ç•ªäºº */
     p = root;
     while ((cmp = strcmp(key, p->key)) != 0)
         if (cmp < 0) p = p->left;
         else         p = p->right;
-    if (p != &nil) return p;     /* ¸«¤Ä¤«¤Ã¤¿ */
-    else           return NULL;  /* ¸«¤Ä¤«¤é¤Ê¤¤ */
+    if (p != &nil) return p;     /* è¦‹ã¤ã‹ã£ãŸ */
+    else           return NULL;  /* è¦‹ã¤ã‹ã‚‰ãªã„ */
 }
 
 void printtree(nodeptr p)
@@ -90,27 +90,27 @@ int main()
 {
     char buf[22];
 
-    printf("Ì¿Îá Iabc:  abc¤òÁŞÆş\n"
-           "     Dabc:  abc¤òºï½ü\n"
-           "     Sabc:  abc¤ò¸¡º÷\n");
+    printf("å‘½ä»¤ Iabc:  abcã‚’æŒ¿å…¥\n"
+           "     Dabc:  abcã‚’å‰Šé™¤\n"
+           "     Sabc:  abcã‚’æ¤œç´¢\n");
     for ( ; ; ) {
-        printf("Ì¿Îá? ");
+        printf("å‘½ä»¤? ");
         if (scanf("%21s%*[^\n]", buf) != 1) break;
         switch (buf[0]) {
         case 'I':  case 'i':
-            if (insert(&buf[1])) printf("ÅĞÏ¿¤·¤Ş¤·¤¿.\n");
-            else                 printf("ÅĞÏ¿¤º¤ß¤Ç¤¹.\n");
+            if (insert(&buf[1])) printf("ç™»éŒ²ã—ã¾ã—ãŸ.\n");
+            else                 printf("ç™»éŒ²ãšã¿ã§ã™.\n");
             break;
         case 'D':  case 'd':
-            if (delete(&buf[1])) printf("ÅĞÏ¿¤µ¤ì¤Æ¤¤¤Ş¤»¤ó.\n");
-            else                 printf("ºï½ü¤·¤Ş¤·¤¿.\n");
+            if (delete(&buf[1])) printf("ç™»éŒ²ã•ã‚Œã¦ã„ã¾ã›ã‚“.\n");
+            else                 printf("å‰Šé™¤ã—ã¾ã—ãŸ.\n");
             break;
         case 'S':  case 's':
-            if (search(&buf[1])) printf("ÅĞÏ¿¤µ¤ì¤Æ¤¤¤Ş¤¹.\n");
-            else                 printf("ÅĞÏ¿¤µ¤ì¤Æ¤¤¤Ş¤»¤ó\n");
+            if (search(&buf[1])) printf("ç™»éŒ²ã•ã‚Œã¦ã„ã¾ã™.\n");
+            else                 printf("ç™»éŒ²ã•ã‚Œã¦ã„ã¾ã›ã‚“\n");
             break;
         default:
-            printf("»È¤¨¤ë¤Î¤Ï I, D, S ¤Ç¤¹.\n");
+            printf("ä½¿ãˆã‚‹ã®ã¯ I, D, S ã§ã™.\n");
             break;
         }
         if (root != &nil) {

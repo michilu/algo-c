@@ -1,5 +1,5 @@
 /***********************************************************
-    wordcnt.c -- •œ•√•∑•ÂÀ°
+    wordcnt.c -- „Éè„ÉÉ„Ç∑„É•Ê≥ï
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,22 +7,22 @@
 #include <ctype.h>
 #include <limits.h>
 
-#define HASHSIZE   101  /* •œ•√•∑•Â…Ω§Œ¬Á§≠§µ (¡«øÙ) */
-#define MAXWORDLEN 128  /* ∫«¬Á√±∏Ïƒπ */
+#define HASHSIZE   101  /* „Éè„ÉÉ„Ç∑„É•Ë°®„ÅÆÂ§ß„Åç„Åï (Á¥†Êï∞) */
+#define MAXWORDLEN 128  /* ÊúÄÂ§ßÂçòË™ûÈï∑ */
 
-int wordlen;                    /* √±∏Ïƒπ */
-unsigned long words, newwords;  /* √±∏Ï, ø∑√±∏Ï•´•¶•Û•ø */
-char word[MAXWORDLEN + 1];      /* ∏Ω∫ﬂ§Œ√±∏Ï */
+int wordlen;                    /* ÂçòË™ûÈï∑ */
+unsigned long words, newwords;  /* ÂçòË™û, Êñ∞ÂçòË™û„Ç´„Ç¶„É≥„Çø */
+char word[MAXWORDLEN + 1];      /* ÁèæÂú®„ÅÆÂçòË™û */
 
-typedef struct node {           /* 2 ¨Ã⁄§Œ•Œ°º•… */
-    struct node *left, *right;  /* ∫∏±¶§Œª“ */
-    char *key;                  /* •≠°º ( ∏ª˙ŒÛ) */
+typedef struct node {           /* 2ÂàÜÊú®„ÅÆ„Éé„Éº„Éâ */
+    struct node *left, *right;  /* Â∑¶Âè≥„ÅÆÂ≠ê */
+    char *key;                  /* „Ç≠„Éº (ÊñáÂ≠óÂàó) */
 } *nodeptr;
 
-struct node nil = {NULL, NULL, word};  /* »÷øÕ */
-nodeptr hashtable[HASHSIZE];    /* •œ•√•∑•Â…Ω */
+struct node nil = {NULL, NULL, word};  /* Áï™‰∫∫ */
+nodeptr hashtable[HASHSIZE];    /* „Éè„ÉÉ„Ç∑„É•Ë°® */
 
-int hash(char *s)               /* ¥ √±§ •œ•√•∑•Â¥ÿøÙ */
+int hash(char *s)               /* Á∞°Âçò„Å™„Éè„ÉÉ„Ç∑„É•Èñ¢Êï∞ */
 {
     unsigned v;
 
@@ -31,7 +31,7 @@ int hash(char *s)               /* ¥ √±§ •œ•√•∑•Â¥ÿøÙ */
     return (int)v;
 }
 
-void insert(void)  /* ¡ﬁ∆˛ (≈–œø) */
+void insert(void)  /* ÊåøÂÖ• (ÁôªÈå≤) */
 {
     int cmp;
     nodeptr *p, q;
@@ -41,11 +41,11 @@ void insert(void)  /* ¡ﬁ∆˛ (≈–œø) */
     while ((cmp = strcmp(word, (*p)->key)) != 0)
         if (cmp < 0) p = &((*p)->left );
         else         p = &((*p)->right);
-    if (*p != &nil) return;  /* §π§«§À≈–œø§µ§Ï§∆§§§Î */
+    if (*p != &nil) return;  /* „Åô„Åß„Å´ÁôªÈå≤„Åï„Çå„Å¶„ÅÑ„Çã */
     newwords++;
     if ((q = malloc(sizeof *q)) == NULL
      || (q->key = malloc(wordlen + 1)) == NULL) {
-        printf("•·•‚•Í…‘¬≠.\n");  exit(EXIT_FAILURE);
+        printf("„É°„É¢„É™‰∏çË∂≥.\n");  exit(EXIT_FAILURE);
     }
     strcpy(q->key, word);
     q->left = &nil;  q->right = *p;  *p = q;

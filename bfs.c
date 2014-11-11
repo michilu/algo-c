@@ -1,15 +1,15 @@
 /***********************************************************
-    bfs.c -- ²£·ÁÃµº÷
+    bfs.c -- æ¨ªå½¢æ¢ç´¢
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
-#define NMAX 100                                /* ÅÀ¤Î¿ô¤Î¾å¸Â */
-char adjacent[NMAX + 1][NMAX + 1];              /* ÎÙÀÜ¹ÔÎó */
+#define NMAX 100                                /* ç‚¹ã®æ•°ã®ä¸Šé™ */
+char adjacent[NMAX + 1][NMAX + 1];              /* éš£æ¥è¡Œåˆ— */
 
-int n = 7;                                      /* ÅÀ¤Î¿ô (Îã) */
-int data[] = { 1, 2, 2, 3, 1, 3, 2, 4, 5, 7 };  /* ¥Ç¡¼¥¿ (Îã) */
+int n = 7;                                      /* ç‚¹ã®æ•° (ä¾‹) */
+int data[] = { 1, 2, 2, 3, 1, 3, 2, 4, 5, 7 };  /* ãƒ‡ãƒ¼ã‚¿ (ä¾‹) */
 
-void readgraph(void)  /* ¥°¥é¥ÕÆşÎÏ */
+void readgraph(void)  /* ã‚°ãƒ©ãƒ•å…¥åŠ› */
 {
     int i, j, k;
 
@@ -22,25 +22,25 @@ void readgraph(void)  /* ¥°¥é¥ÕÆşÎÏ */
             adjacent[i][j] = adjacent[j][i] = 1;
         }
     }
-    printf("ÎÙÀÜ¹ÔÎó:\n");
+    printf("éš£æ¥è¡Œåˆ—:\n");
     for (i = 1; i <= n; i++) {
         for (j = 1; j <= n; j++) printf(" %d", adjacent[i][j]);
         printf("\n");
     }
 }
 
-struct queue {  /* ÂÔ¤Á¹ÔÎó */
+struct queue {  /* å¾…ã¡è¡Œåˆ— */
     int item;
     struct queue *next;
 } *head, *tail;
 
-void initialize_queue(void)  /* ÂÔ¤Á¹ÔÎó¤Î½é´ü²½ */
+void initialize_queue(void)  /* å¾…ã¡è¡Œåˆ—ã®åˆæœŸåŒ– */
 {
     head = tail = malloc(sizeof(struct queue));
     if (head == NULL) exit(EXIT_FAILURE);
 }
 
-void addqueue(int x)  /* ÂÔ¤Á¹ÔÎó¤Ø¤ÎÁŞÆş */
+void addqueue(int x)  /* å¾…ã¡è¡Œåˆ—ã¸ã®æŒ¿å…¥ */
 {
     tail->item = x;
     tail->next = malloc(sizeof(struct queue));
@@ -48,7 +48,7 @@ void addqueue(int x)  /* ÂÔ¤Á¹ÔÎó¤Ø¤ÎÁŞÆş */
     tail = tail->next;
 }
 
-int removequeue(void)  /* ÂÔ¤Á¹ÔÎó¤«¤é¤Î¼è½Ğ¤· */
+int removequeue(void)  /* å¾…ã¡è¡Œåˆ—ã‹ã‚‰ã®å–å‡ºã— */
 {
     int x;
     struct queue *p;
@@ -76,7 +76,7 @@ int main()
                 prev[j] = i;
             }
     } while (head != tail);
-    printf("ÅÀ  Ä¾Á°¤ÎÅÀ  ºÇÃ»µ÷Î¥\n");
+    printf("ç‚¹  ç›´å‰ã®ç‚¹  æœ€çŸ­è·é›¢\n");
     for (i = 1; i <= n; i++)
         if (distance[i] > 0)
             printf("%2d%10d%10d\n", i, prev[i], distance[i]);

@@ -1,7 +1,7 @@
 /***********************************************************
-    house.c -- Householder (¥Ï¥¦¥¹¥Û¥ë¥À¡¼) ÊÑ´¹
+    house.c -- Householder (ãƒã‚¦ã‚¹ãƒ›ãƒ«ãƒ€ãƒ¼) å¤‰æ›
 ***********************************************************/
-#include "matutil.c"  /* ¹ÔÎóÍÑ¾®Æ»¶ñ½¸ */
+#include "matutil.c"  /* è¡Œåˆ—ç”¨å°é“å…·é›† */
 #include <math.h>
 
 double house(int n, vector x)
@@ -9,7 +9,7 @@ double house(int n, vector x)
     int i;
     double s, t;
 
-    s = sqrt(innerproduct(n, x, x));  /* ÆâÀÑ¤ÎÊ¿Êıº¬, ¤¹¤Ê¤ï¤Á¥Ù¥¯¥È¥ë $x$ ¤ÎÂç¤­¤µ */
+    s = sqrt(innerproduct(n, x, x));  /* å†…ç©ã®å¹³æ–¹æ ¹, ã™ãªã‚ã¡ãƒ™ã‚¯ãƒˆãƒ« $x$ ã®å¤§ãã• */
     if (s != 0) {
         if (x[0] < 0) s = -s;
         x[0] += s;  t = 1 / sqrt(x[0] * s);
@@ -18,12 +18,12 @@ double house(int n, vector x)
     return -s;
 }
 
-/************** °Ê²¼¤Ï¥Æ¥¹¥ÈÍÑ ****************/
+/************** ä»¥ä¸‹ã¯ãƒ†ã‚¹ãƒˆç”¨ ****************/
 
 #include <limits.h>
 static unsigned long seed;
 
-double rnd(void)  /* Íğ¿ô  0 < rnd() < 1 */
+double rnd(void)  /* ä¹±æ•°  0 < rnd() < 1 */
 {
     return (seed *= 69069UL) / (ULONG_MAX + 1.0);
 }
@@ -35,7 +35,7 @@ int main()
     vector x, v;
 
     printf("n = ");  scanf("%d", &n);
-    printf("Íğ¿ô¤Î¼ï (Àµ¤ÎÀ°¿ô) = ");
+    printf("ä¹±æ•°ã®ç¨® (æ­£ã®æ•´æ•°) = ");
     scanf("%ul", &seed);  seed |= 1;
     x = new_vector(n);  v = new_vector(n);
     s = 0;
@@ -47,16 +47,16 @@ int main()
     vecprint(x, n, 7, "%10.6f");
     printf("||x|| = %g\n", sqrt(s));
 
-    x1 = house(n, v);  /* HouseholderÊÑ´¹ */
+    x1 = house(n, v);  /* Householderå¤‰æ› */
 
-    printf("x' = (%g, 0, ..., 0)\n", x1);  /* ÊÑ´¹¸å¤Î¥Ù¥¯¥È¥ë¤ò½ĞÎÏ */
+    printf("x' = (%g, 0, ..., 0)\n", x1);  /* å¤‰æ›å¾Œã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’å‡ºåŠ› */
 
-    s = 0;  /* °Ê²¼¤Ï³ÎÇ§ */
+    s = 0;  /* ä»¥ä¸‹ã¯ç¢ºèª */
     for (i = 0; i < n; i++) s += v[i] * x[i];
     for (i = 0; i < n; i++) x[i] -= s * v[i];
     s = (x[0] - x1) * (x[0] - x1);
     for (i = 1; i < n; i++) s += x[i] * x[i];
-    printf("Æó¾èÊ¿¶Ñ¸íº¹: %g\n", sqrt(s / n));
+    printf("äºŒä¹—å¹³å‡èª¤å·®: %g\n", sqrt(s / n));
 
     return EXIT_SUCCESS;
 }

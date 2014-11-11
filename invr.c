@@ -1,9 +1,9 @@
 /***********************************************************
-    invr.c -- µÕ¹ÔÎó
+    invr.c -- é€†è¡Œåˆ—
 ***********************************************************/
 #include "matutil.c"
 
-void invr(int n, matrix x)  /* ¾å»°³Ñ¹ÔÎó¤ÎµÕ¹ÔÎó */
+void invr(int n, matrix x)  /* ä¸Šä¸‰è§’è¡Œåˆ—ã®é€†è¡Œåˆ— */
 {
     int i, j, k;
     double s;
@@ -19,14 +19,14 @@ void invr(int n, matrix x)  /* ¾å»°³Ñ¹ÔÎó¤ÎµÕ¹ÔÎó */
     }
 }
 
-/************** °Ê²¼¤Ï¥Æ¥¹¥ÈÍÑ *************/
+/************** ä»¥ä¸‹ã¯ãƒ†ã‚¹ãƒˆç”¨ *************/
 
 #include <math.h>
 #include <limits.h>
 
-double rnd(void)  /* Íğ¿ô  0 < rnd() < 1 */
+double rnd(void)  /* ä¹±æ•°  0 < rnd() < 1 */
 {
-    static unsigned long seed = 123456789UL;  /* ´ñ¿ô */
+    static unsigned long seed = 123456789UL;  /* å¥‡æ•° */
 
     return (seed *= 69069UL) / (ULONG_MAX + 1.0);
 }
@@ -88,7 +88,7 @@ int main()
                 s -= r[i][k] * r_inv[k][j];
             t += s * s;
         }
-    printf("$R R^{-1}$ ¤ÎÀ®Ê¬¤ÎÆó¾èÊ¿¶Ñ¸íº¹ %g\n",
+    printf("$R R^{-1}$ ã®æˆåˆ†ã®äºŒä¹—å¹³å‡èª¤å·® %g\n",
     sqrt(t / (n * n)));
     t = 0;
     for (i = 0; i < n; i++)
@@ -98,7 +98,7 @@ int main()
                 s -= r_inv[i][k] * r[k][j];
             t += s * s;
         }
-    printf("$R^{-1} R$ ¤ÎÀ®Ê¬¤ÎÆó¾èÊ¿¶Ñ¸íº¹ %g\n",
+    printf("$R^{-1} R$ ã®æˆåˆ†ã®äºŒä¹—å¹³å‡èª¤å·® %g\n",
     sqrt(t / (n * n)));
     return EXIT_SUCCESS;
 }

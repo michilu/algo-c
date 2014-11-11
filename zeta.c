@@ -1,5 +1,5 @@
 /***********************************************************
-    zeta.c -- Riemann¤Î¥¼¡¼¥¿´Ø¿ô
+    zeta.c -- Riemannã®ã‚¼ãƒ¼ã‚¿é–¢æ•°
 ***********************************************************/
 #include <math.h>
 #define N 8
@@ -55,7 +55,7 @@ int main()
 {
     double x;
 
-    printf("Riemann¤Î¥¼¡¼¥¿´Ø¿ô\n");
+    printf("Riemannã®ã‚¼ãƒ¼ã‚¿é–¢æ•°\n");
     for (x = 2; x <= 20; x++)
         printf("zeta(%2.0f) = %17.15f\n", x, zeta(x));
     return EXIT_SUCCESS;

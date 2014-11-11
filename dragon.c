@@ -1,7 +1,7 @@
 /***********************************************************
-    dragon.c -- ¥É¥é¥´¥ó¥«¡¼¥Ö
+    dragon.c -- ãƒ‰ãƒ©ã‚´ãƒ³ã‚«ãƒ¼ãƒ–
 ***********************************************************/
-#include "plotter.c"  /* ¥é¡¼¥¸¥â¥Ç¥ë¤Ç¥³¥ó¥Ñ¥¤¥ë */
+#include "plotter.c"  /* ãƒ©ãƒ¼ã‚¸ãƒ¢ãƒ‡ãƒ«ã§ã‚³ãƒ³ãƒ‘ã‚¤ãƒ« */
 
 void dragon(int i, double dx, double dy, int sign)
 {
@@ -16,7 +16,7 @@ int main()
 {
     int order;
 
-    printf("°Ì¿ô = ");  scanf("%d", &order);
+    printf("ä½æ•° = ");  scanf("%d", &order);
     gr_on();  gr_window(0, 0, 4, 3, 1, GREEN);
     move(1, 1);  dragon(order, 2, 0, 1);
     hitanykey();

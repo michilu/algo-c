@@ -24,7 +24,7 @@ int main()
 {
     int i, j;
 
-    printf("Íð¿ôÉ½\n");
+    printf("ä¹±æ•°è¡¨\n");
     for (i = 0; i < 20; i++) {
         for (j = 0; j < 8; j++) printf("%8d", rand());
         printf("\n");

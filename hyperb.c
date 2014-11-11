@@ -1,11 +1,11 @@
 /***********************************************************
-    hyperb.c -- ÁĞ¶ÊÀş´Ø¿ô
-             -- µÕÁĞ¶ÊÀş´Ø¿ô
+    hyperb.c -- åŒæ›²ç·šé–¢æ•°
+             -- é€†åŒæ›²ç·šé–¢æ•°
 ***********************************************************/
 #include <math.h>
-#define EPS5 0.001  /* DBL_EPSILON ¤Î 1/5 ¾èÄøÅÙ */
+#define EPS5 0.001  /* DBL_EPSILON ã® 1/5 ä¹—ç¨‹åº¦ */
 
-double my_sinh(double x)  /* ¼«²ÈÀ½ $\sinh x$ */
+double my_sinh(double x)  /* è‡ªå®¶è£½ $\sinh x$ */
 {
     double t;
 
@@ -16,7 +16,7 @@ double my_sinh(double x)  /* ¼«²ÈÀ½ $\sinh x$ */
     return x * (1 + x * x / 6);
 }
 
-double my_cosh(double x)  /* ¼«²ÈÀ½ $\cosh x$ */
+double my_cosh(double x)  /* è‡ªå®¶è£½ $\cosh x$ */
 {
     double t;
 
@@ -24,7 +24,7 @@ double my_cosh(double x)  /* ¼«²ÈÀ½ $\cosh x$ */
     return (t + 1 / t) / 2;
 }
 
-double my_tanh(double x)  /* ¼«²ÈÀ½ $\tanh x$ */
+double my_tanh(double x)  /* è‡ªå®¶è£½ $\tanh x$ */
 {
     if (x >  EPS5) return 2 / (1 + exp(-2 * x)) - 1;
     if (x < -EPS5) return 1 - 2 / (exp(2 * x) + 1);
@@ -50,7 +50,7 @@ double arctanh(double x)  /* $\tanh^{-1} x$ */
     return x * (1 + x * x / 3.0);
 }
 
-/************* °Ê²¼¤Ï¥Æ¥¹¥ÈÍÑ **************/
+/************* ä»¥ä¸‹ã¯ãƒ†ã‚¹ãƒˆç”¨ **************/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -60,7 +60,7 @@ int main()
     int i;
     double x;
 
-    printf("ÁĞ¶ÊÀş´Ø¿ô¤È¤½¤ÎµÕ¤ÎÀ°¹çÀ­\n");
+    printf("åŒæ›²ç·šé–¢æ•°ã¨ãã®é€†ã®æ•´åˆæ€§\n");
     for (i = -10; i <= 10; i++)
         printf("%4d  % .3e  % .3e  % .3e\n",
             i, arcsinh(my_sinh(i)) - i,
@@ -73,7 +73,7 @@ int main()
                arccosh(my_cosh(x)) - fabs(x),
                arctanh(my_tanh(x)) - x);
     }
-    printf("tanh ¤Î·å¤¢¤Õ¤ì¥Æ¥¹¥È (¥é¥¤¥Ö¥é¥ê´Ø¿ô¤ÈÈæ³Ó)\n");
+    printf("tanh ã®æ¡ã‚ãµã‚Œãƒ†ã‚¹ãƒˆ (ãƒ©ã‚¤ãƒ–ãƒ©ãƒªé–¢æ•°ã¨æ¯”è¼ƒ)\n");
     for (i = -5000; i <= 5000; i += 500)
         printf("%5d  % g % g\n", i, my_tanh(i), tanh(i));
     return EXIT_SUCCESS;

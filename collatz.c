@@ -1,5 +1,5 @@
 /***********************************************************
-    collatz.c -- Collatz (•≥•È•√•ƒ) §ŒÕΩ¡€
+    collatz.c -- Collatz („Ç≥„É©„ÉÉ„ÉÑ) „ÅÆ‰∫àÊÉ≥
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,7 +13,7 @@ int main()
 
     printf("n = ");  scanf("%lu", &n);
     while (n > 1) {
-        if (n & 1) {  /* ¥ÒøÙ */
+        if (n & 1) {  /* Â•áÊï∞ */
             if (n > LIMIT) {
                 printf("\nOverflow\n");  return 1;
             } else n = 3 * n + 1;

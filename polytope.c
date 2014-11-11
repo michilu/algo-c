@@ -1,8 +1,8 @@
 /***********************************************************
-    polytope.c -- ¥İ¥ê¥È¡¼¥×Ë¡
+    polytope.c -- ãƒãƒªãƒˆãƒ¼ãƒ—æ³•
 ***********************************************************/
 /*
-  ºÇ¾®²½¤¹¤ë´Ø¿ô
+  æœ€å°åŒ–ã™ã‚‹é–¢æ•°
 */
 #define N 11  /* number of data points */
 double x[N] = {-10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10};
@@ -25,7 +25,7 @@ double func(double parameter[])
     return f;
 }
 /*
-  ºÇ¾®²½
+  æœ€å°åŒ–
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -81,7 +81,7 @@ int main()
                 break;
         if (j == M) break;
         if (++iter > MAXITER) {
-            printf("\n¼ıÂ«¤·¤Ş¤»¤ó\n");  break;
+            printf("\nåæŸã—ã¾ã›ã‚“\n");  break;
         }
         for (j = 0; j < M; j++) {
             x = 0.0;

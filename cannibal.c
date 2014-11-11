@@ -1,23 +1,23 @@
 /***********************************************************
-    cannibals.c -- Àë¶µ»Õ¤È¿Í¿©¤¤¿Í
+    cannibals.c -- å®£æ•™å¸«ã¨äººé£Ÿã„äºº
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 
-#define M  3  /* Àë¶µ»Õ¤Î¿ô */
-#define C  3  /* ¿Í¿©¤¤¿Í¤Î¿ô */
-#define B  2  /* ¥Ü¡¼¥È¤ÎÄê°÷ */
+#define M  3  /* å®£æ•™å¸«ã®æ•° */
+#define C  3  /* äººé£Ÿã„äººã®æ•° */
+#define B  2  /* ãƒœãƒ¼ãƒˆã®å®šå“¡ */
 
 int np, solution;
 unsigned char mb[(B+1)*(B+2)/2], cb[(B+1)*(B+2)/2],
     mh[2*(M+1)*(C+1)], ch[2*(M+1)*(C+1)], flag[M+1][C+1];
 
-void found(int n)  /* ²ò¤ÎÉ½¼¨ */
+void found(int n)  /* è§£ã®è¡¨ç¤º */
 {
     int i;
     static char mmm[] = "MMMMMMMMMM", ccc[] = "CCCCCCCCCC";
 
-    printf("²ò %d\n", ++solution);
+    printf("è§£ %d\n", ++solution);
     for (i = 0; i <= n; i++) {
         printf("%4d  %-*.*s %-*.*s  /  %-*.*s %-*.*s\n",
             i, M, mh[i], mmm, C, ch[i], ccc,
@@ -25,16 +25,16 @@ void found(int n)  /* ²ò¤ÎÉ½¼¨ */
     }
 }
 
-void try(void)  /* ºÆµ¢Åª¤Ë»î¤¹ */
+void try(void)  /* å†å¸°çš„ã«è©¦ã™ */
 {
     static i = 0;
     int j, m, c;
 
     i++;
     for (j = 1; j < np; j++) {
-        if (i & 1) {  /* ´ñ¿ô²óÌÜ¤Ï¸ş¤³¤¦¤Ë¹Ô¤¯ */
+        if (i & 1) {  /* å¥‡æ•°å›ç›®ã¯å‘ã“ã†ã«è¡Œã */
             m = mh[i - 1] - mb[j];  c = ch[i - 1] - cb[j];
-        } else {      /* ¶ö¿ô²óÌÜ¤Ï¤³¤Á¤é¤ËÍè¤ë */
+        } else {      /* å¶æ•°å›ç›®ã¯ã“ã¡ã‚‰ã«æ¥ã‚‹ */
             m = mh[i - 1] + mb[j];  c = ch[i - 1] + cb[j];
         }
         if (m < 0 || c < 0 || m > M || c > C ||
@@ -63,6 +63,6 @@ int main()
             flag[m][c] |= 1 | 2;
     mh[0] = M;  ch[0] = C;  flag[M][C] |= 1;
     solution = 0;  try();
-    if (solution == 0) printf("²ò¤Ï¤¢¤ê¤Ş¤»¤ó.\n");
+    if (solution == 0) printf("è§£ã¯ã‚ã‚Šã¾ã›ã‚“.\n");
     return EXIT_SUCCESS;
 }

@@ -1,10 +1,10 @@
 /***********************************************************
-    fdist.c -- FÊ¬ÉÛ
+    fdist.c -- Fåˆ†å¸ƒ
 ***********************************************************/
 #include <math.h>
 #define PI 3.14159265358979323846264
 
-double q_f(int df1, int df2, double f)  /* ¾åÂ¦ÎßÀÑ³ÎÎ¨ */
+double q_f(int df1, int df2, double f)  /* ä¸Šå´ç´¯ç©ç¢ºç‡ */
 {
     int i;
     double cos2, sin2, prob, temp;
@@ -34,7 +34,7 @@ double q_f(int df1, int df2, double f)  /* ¾åÂ¦ÎßÀÑ³ÎÎ¨ */
     return prob * 2 / PI;
 }
 
-double p_f(int df1, int df2, double f)  /* ²¼Â¦ÎßÀÑ³ÎÎ¨ */
+double p_f(int df1, int df2, double f)  /* ä¸‹å´ç´¯ç©ç¢ºç‡ */
 {
     if (f <= 0) return 0;
     return q_f(df2, df1, 1 / f);

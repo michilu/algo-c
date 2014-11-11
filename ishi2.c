@@ -1,5 +1,5 @@
 /***********************************************************
-    ishi2.c -- ÀĞ¼è¤ê¥²¡¼¥à 2
+    ishi2.c -- çŸ³å–ã‚Šã‚²ãƒ¼ãƒ  2
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,24 +10,24 @@ int main()
 
     f[1] = f[2] = 1;
     for (i = 3; i <= 20; i++) f[i] = f[i - 1] + f[i - 2];
-    printf("ÀĞ¤Î¿ô (2..10000)? ");  scanf("%d", &n);
+    printf("çŸ³ã®æ•° (2..10000)? ");  scanf("%d", &n);
     if (n < 2 || n > 10000) return EXIT_FAILURE;
     max = n - 1;
     for (my_turn = 1; n != 0; my_turn ^= 1) {
-        printf("%d ¸Ä¤Ş¤Ç¼è¤ì¤Ş¤¹.\n", max);
+        printf("%d å€‹ã¾ã§å–ã‚Œã¾ã™.\n", max);
         if (my_turn) {
             x = n;
             for (i = 20; x != f[i]; i--) if (x > f[i]) x -= f[i];
             if (x > max) x = 1;
-            printf("»ä¤Ï %d ¸Ä¤ÎÀĞ¤ò¤È¤ê¤Ş¤¹.\n", x);
+            printf("ç§ã¯ %d å€‹ã®çŸ³ã‚’ã¨ã‚Šã¾ã™.\n", x);
         } else do {
-            printf("²¿¸Ä¤È¤ê¤Ş¤¹¤«? ");
+            printf("ä½•å€‹ã¨ã‚Šã¾ã™ã‹? ");
             r = scanf("%d", &x);  scanf("%*[^\n]");
         } while (r != 1 || x < 1 || x > max);
         n -= x;  max = 2 * x;  if (max > n) max = n;
-        printf("»Ä¤ê¤Ï %d ¸Ä¤Ç¤¹.\n", n);
+        printf("æ®‹ã‚Šã¯ %d å€‹ã§ã™.\n", n);
     }
-    if (my_turn) printf("¤¢¤Ê¤¿¤Î¾¡¤Á¤Ç¤¹!\n");
-    else         printf("»ä¤Î¾¡¤Á¤Ç¤¹!\n");
+    if (my_turn) printf("ã‚ãªãŸã®å‹ã¡ã§ã™!\n");
+    else         printf("ç§ã®å‹ã¡ã§ã™!\n");
     return EXIT_SUCCESS;
 }

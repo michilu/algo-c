@@ -1,27 +1,27 @@
 /***********************************************************
-    slide.c -- LZË¡
+    slide.c -- LZæ³•
 ***********************************************************/
-/* ¥¹¥é¥¤¥É¼­½ñË¡ */
+/* ã‚¹ãƒ©ã‚¤ãƒ‰è¾æ›¸æ³• */
 
 #include <stdio.h>
 #include <stdlib.h>
 
-#define N   4096  /* ´Ä¾õ¥Ğ¥Ã¥Õ¥¡¤ÎÂç¤­¤µ */
-#define F     18  /* ºÇÄ¹°ìÃ×Ä¹ */
+#define N   4096  /* ç’°çŠ¶ãƒãƒƒãƒ•ã‚¡ã®å¤§ãã• */
+#define F     18  /* æœ€é•·ä¸€è‡´é•· */
 
-FILE *infile, *outfile;      /* ÆşÎÏ¥Õ¥¡¥¤¥ë, ½ĞÎÏ¥Õ¥¡¥¤¥ë */
-unsigned long outcount = 0;  /* ½ĞÎÏ¥Ğ¥¤¥È¿ô¥«¥¦¥ó¥¿ */
-unsigned char text[N+F-1]; /* ¥Æ¥­¥¹¥ÈÍÑ¥Ğ¥Ã¥Õ¥¡ */
-int dad[N+1], lson[N+1], rson[N+257];  /* ÌÚ */
-#define NIL    N  /* ÌÚ¤ÎËöÃ¼ */
+FILE *infile, *outfile;      /* å…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«, å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ« */
+unsigned long outcount = 0;  /* å‡ºåŠ›ãƒã‚¤ãƒˆæ•°ã‚«ã‚¦ãƒ³ã‚¿ */
+unsigned char text[N+F-1]; /* ãƒ†ã‚­ã‚¹ãƒˆç”¨ãƒãƒƒãƒ•ã‚¡ */
+int dad[N+1], lson[N+1], rson[N+257];  /* æœ¨ */
+#define NIL    N  /* æœ¨ã®æœ«ç«¯ */
 
-void error(char *message)  /* ¥á¥Ã¥»¡¼¥¸¤òÉ½¼¨¤·½ªÎ» */
+void error(char *message)  /* ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’è¡¨ç¤ºã—çµ‚äº† */
 {
     fprintf(stderr, "\n%s\n", message);
     exit(EXIT_FAILURE);
 }
 
-void init_tree(void)  /* ÌÚ¤Î½é´ü²½ */
+void init_tree(void)  /* æœ¨ã®åˆæœŸåŒ– */
 {
     int i;
 
@@ -29,9 +29,9 @@ void init_tree(void)  /* ÌÚ¤Î½é´ü²½ */
     for (i = 0; i < N; i++) dad[i] = NIL;
 }
 
-int matchpos, matchlen;  /* ºÇÄ¹°ìÃ×°ÌÃÖ, °ìÃ×Ä¹ */
+int matchpos, matchlen;  /* æœ€é•·ä¸€è‡´ä½ç½®, ä¸€è‡´é•· */
 
-void insert_node(int r)  /* Àá r ¤òÌÚ¤ËÁŞÆş */
+void insert_node(int r)  /* ç¯€ r ã‚’æœ¨ã«æŒ¿å…¥ */
 {
     int i, p, cmp;
     unsigned char *key;
@@ -57,14 +57,14 @@ void insert_node(int r)  /* Àá r ¤òÌÚ¤ËÁŞÆş */
     dad[lson[p]] = r;  dad[rson[p]] = r;
     if (rson[dad[p]] == p) rson[dad[p]] = r;
     else                   lson[dad[p]] = r;
-    dad[p] = NIL;  /* p ¤ò³°¤¹ */
+    dad[p] = NIL;  /* p ã‚’å¤–ã™ */
 }
 
-void delete_node(int p)  /* Àá p ¤òÌÚ¤«¤é¾Ã¤¹ */
+void delete_node(int p)  /* ç¯€ p ã‚’æœ¨ã‹ã‚‰æ¶ˆã™ */
 {
     int  q;
 
-    if (dad[p] == NIL) return;  /* ¸«¤Ä¤«¤é¤Ê¤¤ */
+    if (dad[p] == NIL) return;  /* è¦‹ã¤ã‹ã‚‰ãªã„ */
     if (rson[p] == NIL) q = lson[p];
     else if (lson[p] == NIL) q = rson[p];
     else {
@@ -82,16 +82,16 @@ void delete_node(int p)  /* Àá p ¤òÌÚ¤«¤é¾Ã¤¹ */
     dad[p] = NIL;
 }
 
-void encode(void)  /* °µ½Ì */
+void encode(void)  /* åœ§ç¸® */
 {
     int i, c, len, r, s, lastmatchlen, codeptr;
     unsigned char code[17], mask;
     unsigned long int incount = 0, printcount = 0, cr;
 
-    init_tree();  /* ÌÚ¤ò½é´ü²½ */
+    init_tree();  /* æœ¨ã‚’åˆæœŸåŒ– */
     code[0] = 0;  codeptr = mask = 1;
     s = 0;  r = N - F;
-    for (i = s; i < r; i++) text[i] = 0;  /* ¥Ğ¥Ã¥Õ¥¡¤ò½é´ü²½ */
+    for (i = s; i < r; i++) text[i] = 0;  /* ãƒãƒƒãƒ•ã‚¡ã‚’åˆæœŸåŒ– */
     for (len = 0; len < F ; len++) {
         c = getc(infile);  if (c == EOF) break;
         text[r + len] = c;
@@ -134,15 +134,15 @@ void encode(void)  /* °µ½Ì */
         for (i = 0; i < codeptr; i++) putc(code[i], outfile);
         outcount += codeptr;
     }
-    printf("In : %lu bytes\n", incount);  /* ·ë²ÌÊó¹ğ */
+    printf("In : %lu bytes\n", incount);  /* çµæœå ±å‘Š */
     printf("Out: %lu bytes\n", outcount);
-    if (incount != 0) {  /* °µ½ÌÈæ¤òµá¤á¤ÆÊó¹ğ */
+    if (incount != 0) {  /* åœ§ç¸®æ¯”ã‚’æ±‚ã‚ã¦å ±å‘Š */
         cr = (1000 * outcount + incount / 2) / incount;
         printf("Out/In: %lu.%03lu\n", cr / 1000, cr % 1000);
     }
 }
 
-void decode(unsigned long int size)  /* Éü¸µ */
+void decode(unsigned long int size)  /* å¾©å…ƒ */
 {
     int i, j, k, r, c;
     unsigned int flags;
@@ -173,24 +173,24 @@ void decode(unsigned long int size)  /* Éü¸µ */
 int main(int argc, char *argv[])
 {
     int c;
-    unsigned long int size;  /* ¸µ¤Î¥Ğ¥¤¥È¿ô */
+    unsigned long int size;  /* å…ƒã®ãƒã‚¤ãƒˆæ•° */
 
     if (argc != 4 || ((c = *argv[1]) != 'E' && c != 'e'
                                 && c != 'D' && c != 'd'))
-        error("»ÈÍÑË¡¤ÏËÜÊ¸¤ò»²¾È¤·¤Æ¤¯¤À¤µ¤¤");
+        error("ä½¿ç”¨æ³•ã¯æœ¬æ–‡ã‚’å‚ç…§ã—ã¦ãã ã•ã„");
     if ((infile  = fopen(argv[2], "rb")) == NULL)
-        error("ÆşÎÏ¥Õ¥¡¥¤¥ë¤¬³«¤­¤Ş¤»¤ó");
+        error("å…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«ãŒé–‹ãã¾ã›ã‚“");
     if ((outfile = fopen(argv[3], "wb")) == NULL)
-        error("½ĞÎÏ¥Õ¥¡¥¤¥ë¤¬³«¤­¤Ş¤»¤ó");
+        error("å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«ãŒé–‹ãã¾ã›ã‚“");
     if (c == 'E' || c == 'e') {
-        fseek(infile, 0L, SEEK_END);  /* infile ¤ÎËöÈø¤òÃµ¤¹ */
-        size = ftell(infile);     /* infile ¤Î¥Ğ¥¤¥È¿ô */
+        fseek(infile, 0L, SEEK_END);  /* infile ã®æœ«å°¾ã‚’æ¢ã™ */
+        size = ftell(infile);     /* infile ã®ãƒã‚¤ãƒˆæ•° */
         fwrite(&size, sizeof size, 1, outfile);
         rewind(infile);
-        encode();  /* °µ½Ì */
+        encode();  /* åœ§ç¸® */
     } else {
-        fread(&size, sizeof size, 1, infile);  /* ¸µ¤Î¥Ğ¥¤¥È¿ô */
-        decode(size);  /* Éü¸µ */
+        fread(&size, sizeof size, 1, infile);  /* å…ƒã®ãƒã‚¤ãƒˆæ•° */
+        decode(size);  /* å¾©å…ƒ */
     }
     fclose(infile);  fclose(outfile);
     return EXIT_SUCCESS;

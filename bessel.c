@@ -1,13 +1,13 @@
 /***********************************************************
-    bessel.c -- Bessel (¥Ù¥Ã¥»¥ë) ´Ø¿ô
+    bessel.c -- Bessel (ãƒ™ãƒƒã‚»ãƒ«) é–¢æ•°
 ***********************************************************/
 #include <stdio.h>
 #include <math.h>
 
-#define EPS      1e-10                /* µöÍÆÁêÂĞ¸íº¹ */
-#define odd(x)   ((x) & 1)            /* ´ñ¿ô? */
+#define EPS      1e-10                /* è¨±å®¹ç›¸å¯¾èª¤å·® */
+#define odd(x)   ((x) & 1)            /* å¥‡æ•°? */
 #define PI       3.14159265358979324  /* $\pi$ */
-#define EULER    0.577215664901532861 /* Euler¤ÎÄê¿ô $\gamma$ */
+#define EULER    0.577215664901532861 /* Eulerã®å®šæ•° $\gamma$ */
 
 double BesJ(int n, double x)   /* $J_n(x)$ */
 {
@@ -27,19 +27,19 @@ double BesJ(int n, double x)   /* $J_n(x)$ */
     a = s = 0;  b = 1;
     k = n;  if (k < x) k = x;
     do {  k++;  } while ((b *= x_2 / k) > EPS);
-    if (odd(k)) k++;  /* ´ñ¿ô¤Ê¤é¶ö¿ô¤Ë¤¹¤ë */
+    if (odd(k)) k++;  /* å¥‡æ•°ãªã‚‰å¶æ•°ã«ã™ã‚‹ */
     while (k > 0) {
         s += b;
         a = 2 * k * b / x - a;  k--;  /* $a = J_k(x)$ */
-        if (n == k) r = a;            /* $k$ ´ñ¿ô */
+        if (n == k) r = a;            /* $k$ å¥‡æ•° */
         b = 2 * k * a / x - b;  k--;  /* $b = J_k(x)$ */
-        if (n == k) r = b;            /* $k$ ¶ö¿ô */
+        if (n == k) r = b;            /* $k$ å¶æ•° */
     }
     return r / (2 * s + b);
-        /* $J_0 + 2(J_2 + J_4 + \cdots) = 1$ ¤È¤Ê¤ë¤è¤¦¤Ëµ¬³Ê²½ */
+        /* $J_0 + 2(J_2 + J_4 + \cdots) = 1$ ã¨ãªã‚‹ã‚ˆã†ã«è¦æ ¼åŒ– */
 }
 
-#if 0  /***** »²¹Í: µé¿ôÅ¸³«ÈÇ *****/
+#if 0  /***** å‚è€ƒ: ç´šæ•°å±•é–‹ç‰ˆ *****/
 
 double BesJ2(int n, double x)  /* $J_n(x)$ */
 {
@@ -62,7 +62,7 @@ double BesJ2(int n, double x)  /* $J_n(x)$ */
         previous = result;  result += term;
         if (result == previous) return result;
     }
-    printf("BesJ2(n, x): ¼ıÂ«¤·¤Ş¤»¤ó.\n");
+    printf("BesJ2(n, x): åæŸã—ã¾ã›ã‚“.\n");
     return result;
 }
 
@@ -76,7 +76,7 @@ double BesY(int n, double x)   /* $Y_n(x)$ */
     const double log_x_2 = log(x_2);
 
     if (x <= 0) {
-        printf("BesY(n, x): x ¤ÏÀµ¤Ç¤Ê¤±¤ì¤Ğ¤Ê¤ê¤Ş¤»¤ó.\n");
+        printf("BesY(n, x): x ã¯æ­£ã§ãªã‘ã‚Œã°ãªã‚Šã¾ã›ã‚“.\n");
         return 0;
     }
     if (n < 0) {
@@ -85,16 +85,16 @@ double BesY(int n, double x)   /* $Y_n(x)$ */
     }
     k = x;  b = 1;
     do {  k++;  } while ((b *= x_2 / k) > EPS);
-    if (odd(k)) k++;   /* ´ñ¿ô¤Ê¤é¶ö¿ô¤Ë¤¹¤ë */
-    a = 0;  /* $a = J_{k+1}(x) = 0$, $b = J_k(x)$, $k$ ¶ö¿ô */
-    s = 0;  /* µ¬³Ê²½¤Î°ø»Ò */
+    if (odd(k)) k++;   /* å¥‡æ•°ãªã‚‰å¶æ•°ã«ã™ã‚‹ */
+    a = 0;  /* $a = J_{k+1}(x) = 0$, $b = J_k(x)$, $k$ å¶æ•° */
+    s = 0;  /* è¦æ ¼åŒ–ã®å› å­ */
     t = 0;  /* $Y_0(x)$ */
     u = 0;  /* $Y_1(x)$ */
     while (k > 0) {
         s += b;  t = b / (k / 2) - t;
-        a = 2 * k * b / x - a;  k--;  /* $a = J_k(x)$, $k$ ´ñ¿ô */
+        a = 2 * k * b / x - a;  k--;  /* $a = J_k(x)$, $k$ å¥‡æ•° */
         if (k > 2) u = (k * a) / ((k / 2) * (k / 2 + 1)) - u;
-        b = 2 * k * a / x - b;  k--;  /* $b = J_k(x)$, $k$ ¶ö¿ô */
+        b = 2 * k * a / x - b;  k--;  /* $b = J_k(x)$, $k$ å¶æ•° */
     }
     s = 2 * s + b;
     a /= s;  b /= s;  t /= s;  u /= s;  /* $a = J_1(x)$, $b = J_0(x)$ */

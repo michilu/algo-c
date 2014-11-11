@@ -1,11 +1,11 @@
 /***********************************************************
-    p_chi2.c -- ¥«¥¤2¾èÊ¬ÉÛ
+    p_chi2.c -- ã‚«ã‚¤2ä¹—åˆ†å¸ƒ
 ***********************************************************/
 #include <math.h>
 
 #define PI 3.14159265358979323846264
 
-double p_nor(double z)  /* Àµµ¬Ê¬ÉÛ¤Î²¼Â¦ÎßÀÑ³ÎÎ¨ */
+double p_nor(double z)  /* æ­£è¦åˆ†å¸ƒã®ä¸‹å´ç´¯ç©ç¢ºç‡ */
 {
     int i;
     double z2, prev, p, t;
@@ -19,17 +19,17 @@ double p_nor(double z)  /* Àµµ¬Ê¬ÉÛ¤Î²¼Â¦ÎßÀÑ³ÎÎ¨ */
     return (z > 0);
 }
 
-double q_nor(double z)  /* Àµµ¬Ê¬ÉÛ¤Î¾åÂ¦ÎßÀÑ³ÎÎ¨ */
+double q_nor(double z)  /* æ­£è¦åˆ†å¸ƒã®ä¸Šå´ç´¯ç©ç¢ºç‡ */
 {
     return 1 - p_nor(z);
 }
 
-double q_chi2(int df, double chi2)  /* ¾åÂ¦ÎßÀÑ³ÎÎ¨ */
+double q_chi2(int df, double chi2)  /* ä¸Šå´ç´¯ç©ç¢ºç‡ */
 {
     int k;
     double s, t, chi;
 
-    if (df & 1) {  /* ¼«Í³ÅÙ¤¬´ñ¿ô */
+    if (df & 1) {  /* è‡ªç”±åº¦ãŒå¥‡æ•° */
         chi = sqrt(chi2);
         if (df == 1) return 2 * q_nor(chi);
         s = t = chi * exp(-0.5 * chi2) / sqrt(2 * PI);
@@ -37,7 +37,7 @@ double q_chi2(int df, double chi2)  /* ¾åÂ¦ÎßÀÑ³ÎÎ¨ */
             t *= chi2 / k;  s += t;
         }
         return 2 * (q_nor(chi) + s);
-    } else {      /* ¼«Í³ÅÙ¤¬¶ö¿ô */
+    } else {      /* è‡ªç”±åº¦ãŒå¶æ•° */
         s = t = exp(-0.5 * chi2);
         for (k = 2; k < df; k += 2) {
             t *= chi2 / k;  s += t;
@@ -46,7 +46,7 @@ double q_chi2(int df, double chi2)  /* ¾åÂ¦ÎßÀÑ³ÎÎ¨ */
     }
 }
 
-double p_chi2(int df, double chi2)  /* ²¼Â¦ÎßÀÑ³ÎÎ¨ */
+double p_chi2(int df, double chi2)  /* ä¸‹å´ç´¯ç©ç¢ºç‡ */
 {
     return 1 - q_chi2(df, chi2);
 }

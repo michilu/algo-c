@@ -1,5 +1,5 @@
 /***********************************************************
-    strmatch.c -- Ê¸»úÎó¾È¹ç
+    strmatch.c -- æ–‡å­—åˆ—ç…§åˆ
 ***********************************************************/
 int position(char text[], char pattern[])
 {
@@ -12,13 +12,13 @@ int position(char text[], char pattern[])
             while (text[k] == pattern[j] && pattern[j] != 0) {
                 k++;  j++;
             }
-            if (pattern[j] == '\0') return k - j;  /* ¸«¤Ä¤«¤Ã¤¿ */
+            if (pattern[j] == '\0') return k - j;  /* è¦‹ã¤ã‹ã£ãŸ */
         }
     }
-    return -1;  /* ¸«¤Ä¤«¤é¤Ê¤«¤Ã¤¿ */
+    return -1;  /* è¦‹ã¤ã‹ã‚‰ãªã‹ã£ãŸ */
 }
 
-#if 0   /***** ¤¢¤ë¤¤¤ÏÆ±¤¸¤³¤È¤Ç¤¢¤ë¤¬... *****/
+#if 0   /***** ã‚ã‚‹ã„ã¯åŒã˜ã“ã¨ã§ã‚ã‚‹ãŒ... *****/
 int position(char text[], char pattern[])
 {
     int i, j;
@@ -27,8 +27,8 @@ int position(char text[], char pattern[])
     while (text[i] != '\0' && pattern[j] != '\0')
         if (text[i] == pattern[j]) {  i++;  j++;  }
         else {  i = i - j + 1;  j = 0;  }
-    if (pattern[j] == '\0') return i - j;  /* ¸«¤Ä¤«¤Ã¤¿ */
-    return -1;  /* ¸«¤Ä¤«¤é¤Ê¤«¤Ã¤¿ */
+    if (pattern[j] == '\0') return i - j;  /* è¦‹ã¤ã‹ã£ãŸ */
+    return -1;  /* è¦‹ã¤ã‹ã‚‰ãªã‹ã£ãŸ */
 }
 #endif
 

@@ -1,15 +1,15 @@
 /***********************************************************
-    tridiag.c -- 3½ÅÂĞ³Ñ²½
+    tridiag.c -- 3é‡å¯¾è§’åŒ–
 ***********************************************************/
 #include "matutil.c"
 #include <math.h>
 
-double house(int n, vector x)  /* HouseholderÊÑ´¹ */
+double house(int n, vector x)  /* Householderå¤‰æ› */
 {
     int i;
     double s, t;
 
-    s = sqrt(innerproduct(n, x, x));  /* ÆâÀÑ¤ÎÊ¿Êıº¬ = Âç¤­¤µ */
+    s = sqrt(innerproduct(n, x, x));  /* å†…ç©ã®å¹³æ–¹æ ¹ = å¤§ãã• */
     if (s != 0) {
         if (x[0] < 0) s = -s;
         x[0] += s;  t = 1 / sqrt(x[0] * s);
@@ -59,12 +59,12 @@ void tridiagonalize(int n, matrix a, vector d, vector e)
     }
 }
 
-/***************** °Ê²¼¤Ï¥Æ¥¹¥ÈÍÑ *********************/
+/***************** ä»¥ä¸‹ã¯ãƒ†ã‚¹ãƒˆç”¨ *********************/
 
 #include <limits.h>
 static unsigned long seed;
 
-double rnd(void)  /* Íğ¿ô  0 < rnd() < 1 */
+double rnd(void)  /* ä¹±æ•°  0 < rnd() < 1 */
 {
     return (seed *= 69069UL) / (ULONG_MAX + 1.0);
 }
@@ -77,7 +77,7 @@ int main()
     double s, t;
 
     printf("n = ");  scanf("%d", &n);
-    printf("Íğ¿ô¤Î¼ï (Àµ¤ÎÀ°¿ô) = ");
+    printf("ä¹±æ•°ã®ç¨® (æ­£ã®æ•´æ•°) = ");
     scanf("%ul", &seed);  seed |= 1;
     a = new_matrix(n, n);
     p = new_matrix(n, n);
@@ -127,6 +127,6 @@ int main()
             } else {
                 t = a[i][j];  s += t * t;
             }
-    printf("Æó¾èÊ¿¶Ñ¸íº¹: %g\n", sqrt(s) / n);
+    printf("äºŒä¹—å¹³å‡èª¤å·®: %g\n", sqrt(s) / n);
     return EXIT_SUCCESS;
 }

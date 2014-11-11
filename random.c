@@ -1,22 +1,22 @@
 /***********************************************************
-    random.c -- ¥«¥¤2¾èÊ¬ÉÛ
-             -- ¥¬¥ó¥ŞÊ¬ÉÛ
-             -- »°³ÑÊ¬ÉÛ
-             -- »Ø¿ôÊ¬ÉÛ
-             -- Àµµ¬Ê¬ÉÛ
-             -- ¥Ù¡¼¥¿Ê¬ÉÛ
-             -- Îß¾èÊ¬ÉÛ
-             -- ¥í¥¸¥¹¥Æ¥£¥Ã¥¯Ê¬ÉÛ
-             -- ¥ï¥¤¥Ö¥ëÊ¬ÉÛ
-             -- Cauchy (¥³¡¼¥·¡¼) Ê¬ÉÛ
-             -- FÊ¬ÉÛ
-             -- tÊ¬ÉÛ
+    random.c -- ã‚«ã‚¤2ä¹—åˆ†å¸ƒ
+             -- ã‚¬ãƒ³ãƒåˆ†å¸ƒ
+             -- ä¸‰è§’åˆ†å¸ƒ
+             -- æŒ‡æ•°åˆ†å¸ƒ
+             -- æ­£è¦åˆ†å¸ƒ
+             -- ãƒ™ãƒ¼ã‚¿åˆ†å¸ƒ
+             -- ç´¯ä¹—åˆ†å¸ƒ
+             -- ãƒ­ã‚¸ã‚¹ãƒ†ã‚£ãƒƒã‚¯åˆ†å¸ƒ
+             -- ãƒ¯ã‚¤ãƒ–ãƒ«åˆ†å¸ƒ
+             -- Cauchy (ã‚³ãƒ¼ã‚·ãƒ¼) åˆ†å¸ƒ
+             -- Fåˆ†å¸ƒ
+             -- tåˆ†å¸ƒ
 ***********************************************************/
 
-/***** °ìÍÍÍğ¿ô (Àş·Á¹çÆ±Ë¡) ******************************/
+/***** ä¸€æ§˜ä¹±æ•° (ç·šå½¢åˆåŒæ³•) ******************************/
 
 #include <limits.h>
-static unsigned long seed = 1;  /* Ç¤°Õ */
+static unsigned long seed = 1;  /* ä»»æ„ */
 
 void init_rnd(unsigned long x)
 {
@@ -40,12 +40,12 @@ double rnd(void)  /* 0 <= rnd() < 1 */
 #define PI 3.141592653589793238
 #define E  2.718281828459045235
 
-double triangular_rnd(void)  /* »°³ÑÊ¬ÉÛ */
+double triangular_rnd(void)  /* ä¸‰è§’åˆ†å¸ƒ */
 {
     return rnd() - rnd();
 }
 
-double power_rnd1(int n)  /* Îß¾èÊ¬ÉÛ 1 */
+double power_rnd1(int n)  /* ç´¯ä¹—åˆ†å¸ƒ 1 */
 {
     int i;
     double p, r;
@@ -56,22 +56,22 @@ double power_rnd1(int n)  /* Îß¾èÊ¬ÉÛ 1 */
     return p;
 }
 
-double power_rnd(double n)  /* Îß¾èÊ¬ÉÛ 2 */
+double power_rnd(double n)  /* ç´¯ä¹—åˆ†å¸ƒ 2 */
 {
     return pow(rnd(), 1.0 / (n + 1));
 }
 
-double exp_rnd(void)  /* »Ø¿ôÊ¬ÉÛ */
+double exp_rnd(void)  /* æŒ‡æ•°åˆ†å¸ƒ */
 {
     return -log(1 - rnd());
 }
 
-double Cauchy_rnd1(void)  /* Cauchy (¥³¡¼¥·¡¼) Ê¬ÉÛ 1 */
+double Cauchy_rnd1(void)  /* Cauchy (ã‚³ãƒ¼ã‚·ãƒ¼) åˆ†å¸ƒ 1 */
 {
     return tan(PI * rnd());
 }
 
-double Cauchy_rnd(void)  /* Cauchy (¥³¡¼¥·¡¼) Ê¬ÉÛ 2 */
+double Cauchy_rnd(void)  /* Cauchy (ã‚³ãƒ¼ã‚·ãƒ¼) åˆ†å¸ƒ 2 */
 {
     double x, y;
 
@@ -81,13 +81,13 @@ double Cauchy_rnd(void)  /* Cauchy (¥³¡¼¥·¡¼) Ê¬ÉÛ 2 */
     return y / x;
 }
 
-double nrnd1(void)  /* Àµµ¬Ê¬ÉÛ 1 */
+double nrnd1(void)  /* æ­£è¦åˆ†å¸ƒ 1 */
 {
     return rnd() + rnd() + rnd() + rnd() + rnd() + rnd()
          + rnd() + rnd() + rnd() + rnd() + rnd() + rnd() - 6;
 }
 
-double nrnd2(void)  /* Àµµ¬Ê¬ÉÛ 2 */
+double nrnd2(void)  /* æ­£è¦åˆ†å¸ƒ 2 */
 {
     static int sw = 0;
     static double t, u;
@@ -102,7 +102,7 @@ double nrnd2(void)  /* Àµµ¬Ê¬ÉÛ 2 */
     }
 }
 
-double nrnd(void)  /* Àµµ¬Ê¬ÉÛ 3 */
+double nrnd(void)  /* æ­£è¦åˆ†å¸ƒ 3 */
 {
     static int sw = 0;
     static double r1, r2, s;
@@ -122,7 +122,7 @@ double nrnd(void)  /* Àµµ¬Ê¬ÉÛ 3 */
     }
 }
 
-double gamma_rnd1(int two_a)  /* ¥¬¥ó¥ŞÊ¬ÉÛ */
+double gamma_rnd1(int two_a)  /* ã‚¬ãƒ³ãƒåˆ†å¸ƒ */
 {
     int i;
     double x, r;
@@ -136,7 +136,7 @@ double gamma_rnd1(int two_a)  /* ¥¬¥ó¥ŞÊ¬ÉÛ */
     return x;
 }
 
-double gamma_rnd(double a)  /* ¥¬¥ó¥ŞÊ¬ÉÛ, a > 0 */
+double gamma_rnd(double a)  /* ã‚¬ãƒ³ãƒåˆ†å¸ƒ, a > 0 */
 {
     double t, u, x, y;
 
@@ -144,7 +144,7 @@ double gamma_rnd(double a)  /* ¥¬¥ó¥ŞÊ¬ÉÛ, a > 0 */
         t = sqrt(2 * a - 1);
         do {
             do {
-                /* ¼¡¤Î£´¹Ô¤Ï y = tan(PI * rnd()) ¤ÈÆ±ÃÍ */
+                /* æ¬¡ã®ï¼”è¡Œã¯ y = tan(PI * rnd()) ã¨åŒå€¤ */
                 do {
                     x = 1 - rnd();  y = 2 * rnd() - 1;
                 } while (x * x + y * y > 1);
@@ -166,7 +166,7 @@ double gamma_rnd(double a)  /* ¥¬¥ó¥ŞÊ¬ÉÛ, a > 0 */
     return x;
 }
 
-double beta_rnd1(double a, double b)  /* ¥Ù¡¼¥¿Ê¬ÉÛ 1 */
+double beta_rnd1(double a, double b)  /* ãƒ™ãƒ¼ã‚¿åˆ†å¸ƒ 1 */
 {
     double x, y;
 
@@ -176,7 +176,7 @@ double beta_rnd1(double a, double b)  /* ¥Ù¡¼¥¿Ê¬ÉÛ 1 */
     return x / (x + y);
 }
 
-double beta_rnd(double a, double b)  /* ¥Ù¡¼¥¿Ê¬ÉÛ 2 */
+double beta_rnd(double a, double b)  /* ãƒ™ãƒ¼ã‚¿åˆ†å¸ƒ 2 */
 {
     double temp;
 
@@ -184,7 +184,7 @@ double beta_rnd(double a, double b)  /* ¥Ù¡¼¥¿Ê¬ÉÛ 2 */
     return temp / (temp + gamma_rnd(b));
 }
 
-double chisq_rnd1(int n)  /* ¥«¥¤2¾èÊ¬ÉÛ */
+double chisq_rnd1(int n)  /* ã‚«ã‚¤2ä¹—åˆ†å¸ƒ */
 {
     int i;
     double s, t;
@@ -194,17 +194,17 @@ double chisq_rnd1(int n)  /* ¥«¥¤2¾èÊ¬ÉÛ */
     return s;
 }
 
-double chisq_rnd(double n)  /* ¥«¥¤2¾èÊ¬ÉÛ */
+double chisq_rnd(double n)  /* ã‚«ã‚¤2ä¹—åˆ†å¸ƒ */
 {
     return 2 * gamma_rnd(0.5 * n);
 }
 
-double F_rnd(double n1, double n2)  /* FÊ¬ÉÛ */
+double F_rnd(double n1, double n2)  /* Fåˆ†å¸ƒ */
 {
     return (chisq_rnd(n1) * n2) / (chisq_rnd(n2) * n1);
 }
 
-double t_rnd(double n)  /* tÊ¬ÉÛ */
+double t_rnd(double n)  /* tåˆ†å¸ƒ */
 {
     double a, b, c;
 
@@ -217,7 +217,7 @@ double t_rnd(double n)  /* tÊ¬ÉÛ */
     return a / sqrt((1 - 2.0 / n) * (1 - b));
 }
 
-double logistic_rnd(void)  /* ¥í¥¸¥¹¥Æ¥£¥Ã¥¯Ê¬ÉÛ */
+double logistic_rnd(void)  /* ãƒ­ã‚¸ã‚¹ãƒ†ã‚£ãƒƒã‚¯åˆ†å¸ƒ */
 {
     double r;
 
@@ -225,7 +225,7 @@ double logistic_rnd(void)  /* ¥í¥¸¥¹¥Æ¥£¥Ã¥¯Ê¬ÉÛ */
     return log(r / (1 - r));
 }
 
-double Weibull_rnd(double alpha)  /* Weibull (¥ï¥¤¥Ö¥ë) Ê¬ÉÛ */
+double Weibull_rnd(double alpha)  /* Weibull (ãƒ¯ã‚¤ãƒ–ãƒ«) åˆ†å¸ƒ */
 {
     return pow(-log(1 - rnd()), 1 / alpha);
 }
@@ -241,37 +241,37 @@ int main()
     int i, choice, ix, n, histo[20];
     double a, b, x, s1, s2;
 
-    init_rnd((unsigned long) time(NULL));  /* ½é´ü²½ */
+    init_rnd((unsigned long) time(NULL));  /* åˆæœŸåŒ– */
 
-    printf("***** ¥á¥Ë¥å¡¼ *****\n");
-    printf("  1: »°³ÑÊ¬ÉÛ\n");
-    printf("  2: Îß¾èÊ¬ÉÛ 1\n");
-    printf("  3: Îß¾èÊ¬ÉÛ 2\n");
-    printf("  4: »Ø¿ôÊ¬ÉÛ\n");
-    printf("  5: ¥³¡¼¥·¡¼Ê¬ÉÛ 1\n");
-    printf("  6: ¥³¡¼¥·¡¼Ê¬ÉÛ 2\n");
-    printf("  7: Àµµ¬Ê¬ÉÛ 1\n");
-    printf("  8: Àµµ¬Ê¬ÉÛ 2\n");
-    printf("  9: Àµµ¬Ê¬ÉÛ 3\n");
-    printf(" 10: ¥¬¥ó¥ŞÊ¬ÉÛ 1\n");
-    printf(" 11: ¥¬¥ó¥ŞÊ¬ÉÛ 2\n");
-    printf(" 12: ¥Ù¡¼¥¿Ê¬ÉÛ 1\n");
-    printf(" 13: ¥Ù¡¼¥¿Ê¬ÉÛ 2\n");
-    printf(" 14: ¥«¥¤£²¾èÊ¬ÉÛ 1\n");
-    printf(" 15: ¥«¥¤£²¾èÊ¬ÉÛ 2\n");
-    printf(" 16: FÊ¬ÉÛ\n");
-    printf(" 17: tÊ¬ÉÛ\n");
-    printf(" 18: ¥í¥¸¥¹¥Æ¥£¥Ã¥¯Ê¬ÉÛ\n");
-    printf(" 19: ¥ï¥¤¥Ö¥ëÊ¬ÉÛ\n");
+    printf("***** ãƒ¡ãƒ‹ãƒ¥ãƒ¼ *****\n");
+    printf("  1: ä¸‰è§’åˆ†å¸ƒ\n");
+    printf("  2: ç´¯ä¹—åˆ†å¸ƒ 1\n");
+    printf("  3: ç´¯ä¹—åˆ†å¸ƒ 2\n");
+    printf("  4: æŒ‡æ•°åˆ†å¸ƒ\n");
+    printf("  5: ã‚³ãƒ¼ã‚·ãƒ¼åˆ†å¸ƒ 1\n");
+    printf("  6: ã‚³ãƒ¼ã‚·ãƒ¼åˆ†å¸ƒ 2\n");
+    printf("  7: æ­£è¦åˆ†å¸ƒ 1\n");
+    printf("  8: æ­£è¦åˆ†å¸ƒ 2\n");
+    printf("  9: æ­£è¦åˆ†å¸ƒ 3\n");
+    printf(" 10: ã‚¬ãƒ³ãƒåˆ†å¸ƒ 1\n");
+    printf(" 11: ã‚¬ãƒ³ãƒåˆ†å¸ƒ 2\n");
+    printf(" 12: ãƒ™ãƒ¼ã‚¿åˆ†å¸ƒ 1\n");
+    printf(" 13: ãƒ™ãƒ¼ã‚¿åˆ†å¸ƒ 2\n");
+    printf(" 14: ã‚«ã‚¤ï¼’ä¹—åˆ†å¸ƒ 1\n");
+    printf(" 15: ã‚«ã‚¤ï¼’ä¹—åˆ†å¸ƒ 2\n");
+    printf(" 16: Fåˆ†å¸ƒ\n");
+    printf(" 17: tåˆ†å¸ƒ\n");
+    printf(" 18: ãƒ­ã‚¸ã‚¹ãƒ†ã‚£ãƒƒã‚¯åˆ†å¸ƒ\n");
+    printf(" 19: ãƒ¯ã‚¤ãƒ–ãƒ«åˆ†å¸ƒ\n");
     printf("? ");  scanf("%d", &choice);
 
     switch(choice) {
     case 2: case 3: case 10: case 11: case 14: case 15: case 17: case 19:
-        printf("°ú¿ô (1¸Ä)? ");  scanf("%lf", &a);  break;
+        printf("å¼•æ•° (1å€‹)? ");  scanf("%lf", &a);  break;
     case 12: case 13: case 16:
-        printf("°ú¿ô (2¸Ä)? ");  scanf("%lf%lf", &a, &b);  break;
+        printf("å¼•æ•° (2å€‹)? ");  scanf("%lf%lf", &a, &b);  break;
     }
-    printf("¸Ä¿ô? ");  scanf("%d", &n);
+    printf("å€‹æ•°? ");  scanf("%d", &n);
 
     for (i = 0; i < 20; i++) histo[i] = 0;
     s1 = s2 = 0;
@@ -306,7 +306,7 @@ int main()
         printf("%4.1f -- %4.1f: %5.1f%%\n",
             0.5 * (i - 10), 0.5 * (i - 9), 100.0 * histo[i] / n);
     s1 /= n;  s2 = sqrt((s2 - n * s1 * s1) / (n - 1));
-    printf("Ê¿¶Ñ %g  É¸½àÊĞº¹ %g\n", s1, s2);
+    printf("å¹³å‡ %g  æ¨™æº–åå·® %g\n", s1, s2);
 
     return EXIT_SUCCESS;
 }

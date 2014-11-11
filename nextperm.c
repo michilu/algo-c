@@ -1,17 +1,17 @@
 /***********************************************************
-    nextperm.c -- 界误
+    nextperm.c -- 闋嗗垪
 ***********************************************************/
 #define N 6
 int p[N + 1];
 
-int nextperm(void)  /* 辑今及界进で肌の界误 */
+int nextperm(void)  /* 杈炴浉寮忛爢搴忋仹娆°伄闋嗗垪 */
 {
     int i, j, t;
 
     i = N - 1;
-    p[0] = 0;  /* 戎客 */
+    p[0] = 0;  /* 鐣汉 */
     while (p[i] >= p[i + 1]) i--;
-    if (i == 0) return 0;  /* 窗位 */
+    if (i == 0) return 0;  /* 瀹屼簡 */
     j = N;
     while (p[i] >= p[j]) j--;
     t = p[i];  p[i] = p[j];  p[j] = t;
@@ -19,7 +19,7 @@ int nextperm(void)  /* 辑今及界进で肌の界误 */
     while (i < j) {
         t = p[i];  p[i] = p[j];  p[j] = t;  i++;  j--;
     }
-    return 1;  /* 踏位 */
+    return 1;  /* 鏈簡 */
 }
 
 #include <stdio.h>

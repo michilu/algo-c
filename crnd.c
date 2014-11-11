@@ -1,9 +1,9 @@
 /***********************************************************
-    crnd.c -- Àş·Á¹çÆ±Ë¡
+    crnd.c -- ç·šå½¢åˆåŒæ³•
 ***********************************************************/
 #include <limits.h>
 
-static unsigned long seed = 1;  /* Ç¤°Õ */
+static unsigned long seed = 1;  /* ä»»æ„ */
 
 void init_rnd(unsigned long x)
 {
@@ -30,7 +30,7 @@ int main()
 {
     int i;
 
-    init_rnd(12345);  /* Ç¤°Õ¤Î unsigned long ¤Ç½é´ü²½. ¾ÊÎ¬²Ä. */
+    init_rnd(12345);  /* ä»»æ„ã® unsigned long ã§åˆæœŸåŒ–. çœç•¥å¯. */
     for (i = 0; i < 160; i++) printf("%10.7f", rnd());
     return EXIT_SUCCESS;
 }

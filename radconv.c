@@ -1,5 +1,5 @@
 /***********************************************************
-    radconv.c -- ´ğ¿ô¤ÎÊÑ´¹
+    radconv.c -- åŸºæ•°ã®å¤‰æ›
 ***********************************************************/
 
 int conv1(int x, int d, int m, int c[])
@@ -9,8 +9,8 @@ int conv1(int x, int d, int m, int c[])
     for (i = 0; x != 0 && i < m; i++) {
         c[i] = x % d;  x /= d;
     }
-    if (x == 0) return i;   /* ·å¿ô */
-    else        return -1;  /* ¥¨¥é¡¼ */
+    if (x == 0) return i;   /* æ¡æ•° */
+    else        return -1;  /* ã‚¨ãƒ©ãƒ¼ */
 }
 
 int conv2(int d1, int m1, int x1[], int d2, int m2, int x2[])
@@ -25,8 +25,8 @@ int conv2(int d1, int m1, int x1[], int d2, int m2, int x2[])
         x2[i] = r;
         while (m1 > 0 && x1[m1 - 1] == 0) m1--;
     }
-    if (m1 == 0) return i;   /* ·å¿ô */
-    else         return -1;  /* ¥¨¥é¡¼ */
+    if (m1 == 0) return i;   /* æ¡æ•° */
+    else         return -1;  /* ã‚¨ãƒ©ãƒ¼ */
 }
 
 #include <stdio.h>
@@ -46,7 +46,7 @@ int main()
         printf("conv1: error\n");  return EXIT_FAILURE;
     }
 
-    printf("8¿Ê(octal): ");
+    printf("8é€²(octal): ");
     for (i = m1 - 1; i >= 0; i--) printf("%d", x1[i]);
     printf("\n");
 
@@ -55,7 +55,7 @@ int main()
         printf("conv2: error\n");  return EXIT_FAILURE;
     }
 
-    printf("2¿Ê(binary): ");
+    printf("2é€²(binary): ");
     for (i = m2 - 1; i >= 0; i--) printf("%d", x2[i]);
     printf("\n");
 

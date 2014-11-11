@@ -1,59 +1,59 @@
 /***********************************************************
-    simplex.c -- Àş·Á·×²èË¡
+    simplex.c -- ç·šå½¢è¨ˆç”»æ³•
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 
-#define EPS     1E-6    /* Ìµ¸Â¾® */
-#define LARGE   1E+30   /* Ìµ¸ÂÂç */
-#define MMAX    20      /* ¹Ô (¾ò·ï) ¤Î¿ô¤Î¾å¸Â */
-#define NMAX    100     /* Îó (ÊÑ¿ô) ¤Î¿ô¤Î¾å¸Â */
+#define EPS     1E-6    /* ç„¡é™å° */
+#define LARGE   1E+30   /* ç„¡é™å¤§ */
+#define MMAX    20      /* è¡Œ (æ¡ä»¶) ã®æ•°ã®ä¸Šé™ */
+#define NMAX    100     /* åˆ— (å¤‰æ•°) ã®æ•°ã®ä¸Šé™ */
 
-float a[MMAX + 1][NMAX + 1],    /* ¾ò·ï¼°¤Î·¸¿ô */
-      c[NMAX + 1],              /* ÌÜÅª´Ø¿ô¤Î·¸¿ô */
-      q[MMAX + 1][MMAX + 1],    /* ÊÑ´¹¹ÔÎó */
-      pivotcolumn[MMAX + 1];    /* ¥Ô¥Ü¥Ã¥ÈÎó */
-int m, n,       /* ¹Ô (¾ò·ï), Îó (ÊÑ¿ô) ¤Î¿ô */
-    n1,         /* {\tt n} $+$ Éé¤Î¥¹¥é¥Ã¥¯ÊÑ¿ô¤Î¿ô */
-    n2,         /* {\tt n1} $+$ Àµ¤Î¥¹¥é¥Ã¥¯ÊÑ¿ô¤Î¿ô */
-    n3,         /* {\tt n2} $+$ ¿Í°ÙÊÑ¿ô¤Î¿ô */
-    jmax,       /* ºÇ±¦Îó¤ÎÈÖ¹æ */
-    col[MMAX + 1],  /* ³Æ¹Ô¤Î´ğÄìÊÑ¿ô¤ÎÈÖ¹æ */
+float a[MMAX + 1][NMAX + 1],    /* æ¡ä»¶å¼ã®ä¿‚æ•° */
+      c[NMAX + 1],              /* ç›®çš„é–¢æ•°ã®ä¿‚æ•° */
+      q[MMAX + 1][MMAX + 1],    /* å¤‰æ›è¡Œåˆ— */
+      pivotcolumn[MMAX + 1];    /* ãƒ”ãƒœãƒƒãƒˆåˆ— */
+int m, n,       /* è¡Œ (æ¡ä»¶), åˆ— (å¤‰æ•°) ã®æ•° */
+    n1,         /* {\tt n} $+$ è² ã®ã‚¹ãƒ©ãƒƒã‚¯å¤‰æ•°ã®æ•° */
+    n2,         /* {\tt n1} $+$ æ­£ã®ã‚¹ãƒ©ãƒƒã‚¯å¤‰æ•°ã®æ•° */
+    n3,         /* {\tt n2} $+$ äººç‚ºå¤‰æ•°ã®æ•° */
+    jmax,       /* æœ€å³åˆ—ã®ç•ªå· */
+    col[MMAX + 1],  /* å„è¡Œã®åŸºåº•å¤‰æ•°ã®ç•ªå· */
     row[NMAX + 2*MMAX + 1],
-                /* ¤½¤ÎÎó¤¬´ğÄì¤Ê¤éÂĞ±ş¤¹¤ë¾ò·ï¤ÎÈÖ¹æ, ¤½¤¦¤Ç¤Ê¤±¤ì¤Ğ0 */
-    nonzero_row[NMAX + 2*MMAX + 1]; /* ¥¹¥é¥Ã¥¯¡¦¿Í°ÙÊÑ¿ô¤Î0¤Ç¤Ê¤¤¹Ô */
+                /* ãã®åˆ—ãŒåŸºåº•ãªã‚‰å¯¾å¿œã™ã‚‹æ¡ä»¶ã®ç•ªå·, ãã†ã§ãªã‘ã‚Œã°0 */
+    nonzero_row[NMAX + 2*MMAX + 1]; /* ã‚¹ãƒ©ãƒƒã‚¯ãƒ»äººç‚ºå¤‰æ•°ã®0ã§ãªã„è¡Œ */
 char inequality[MMAX + 1];  /*  <, >, =  */
 
-void error(char *message)  /* ¥¨¥é¡¼É½¼¨, ½ªÎ» */
+void error(char *message)  /* ã‚¨ãƒ©ãƒ¼è¡¨ç¤º, çµ‚äº† */
 {
     fprintf(stderr, "\n%s\n", message);  exit(EXIT_FAILURE);
 }
 
-double getnum(void)  /* ¼Â¿ô¤òÉ¸½àÆşÎÏ¤«¤éÆÉ¤à */
+double getnum(void)  /* å®Ÿæ•°ã‚’æ¨™æº–å…¥åŠ›ã‹ã‚‰èª­ã‚€ */
 {
     int r;
     double x;
 
     while ((r = scanf("%lf", &x)) != 1) {
-        if (r == EOF) error("ÆşÎÏ¥¨¥é¡¼");
-        scanf("%*[^\n]");  /* ¥¨¥é¡¼²óÉü¤Î¤¿¤á¹ÔËö¤Ş¤ÇÆÉ¤ßÈô¤Ğ¤¹ */
+        if (r == EOF) error("å…¥åŠ›ã‚¨ãƒ©ãƒ¼");
+        scanf("%*[^\n]");  /* ã‚¨ãƒ©ãƒ¼å›å¾©ã®ãŸã‚è¡Œæœ«ã¾ã§èª­ã¿é£›ã°ã™ */
     }
     return x;
 }
 
-void readdata(void)  /* ¥Ç¡¼¥¿¤òÆÉ¤à */
+void readdata(void)  /* ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã‚€ */
 {
     int i, j;
     char s[2];
 
     m = (int)getnum();  n = (int)getnum();
     if (m < 1 || m > MMAX || n < 1 || n > NMAX)
-        error("¾ò·ï¤Î¿ô m ¤Ş¤¿¤ÏÊÑ¿ô¤Î¿ô n ¤¬ÈÏ°Ï³°¤Ç¤¹");
+        error("æ¡ä»¶ã®æ•° m ã¾ãŸã¯å¤‰æ•°ã®æ•° n ãŒç¯„å›²å¤–ã§ã™");
     for (j = 1; j <= n; j++) c[j] = getnum();
-    c[0] = -getnum();  /* {\tt c[0]}¤ÎÉä¹æ¤òµÕ¤Ë¤¹¤ë */
+    c[0] = -getnum();  /* {\tt c[0]}ã®ç¬¦å·ã‚’é€†ã«ã™ã‚‹ */
     for (i = 1; i <= m; i++) {
         for (j = 1; j <= n; j++) a[i][j] = getnum();
-        if (scanf(" %1[><=]", s) != 1) error("ÆşÎÏ¥¨¥é¡¼");
+        if (scanf(" %1[><=]", s) != 1) error("å…¥åŠ›ã‚¨ãƒ©ãƒ¼");
         inequality[i] = s[0];
         a[i][0] = getnum();
         if (a[i][0] < 0) {
@@ -67,24 +67,24 @@ void readdata(void)  /* ¥Ç¡¼¥¿¤òÆÉ¤à */
     }
 }
 
-void prepare(void)  /* ½àÈ÷ */
+void prepare(void)  /* æº–å‚™ */
 {
     int i;
 
     n1 = n;
     for (i = 1; i <= m; i++)
-        if (inequality[i] == '>') {  /* ·¸¿ô¤¬$-1$¤Î¥¹¥é¥Ã¥¯ÊÑ¿ô */
+        if (inequality[i] == '>') {  /* ä¿‚æ•°ãŒ$-1$ã®ã‚¹ãƒ©ãƒƒã‚¯å¤‰æ•° */
             n1++;  nonzero_row[n1] = i;
         }
     n2 = n1;
     for (i = 1; i <= m; i++)
-        if (inequality[i] == '<') {  /* ·¸¿ô¤¬$+1$¤Î¥¹¥é¥Ã¥¯ÊÑ¿ô */
+        if (inequality[i] == '<') {  /* ä¿‚æ•°ãŒ$+1$ã®ã‚¹ãƒ©ãƒƒã‚¯å¤‰æ•° */
             n2++;  col[i] = n2;
             nonzero_row[n2] = row[n2] = i;
         }
     n3 = n2;
     for (i = 1; i <= m; i++)
-        if (inequality[i] != '<') {  /* ¿Í°ÙÊÑ¿ô */
+        if (inequality[i] != '<') {  /* äººç‚ºå¤‰æ•° */
             n3++;  col[i] = n3;
             nonzero_row[n3] = row[n3] = i;
         }
@@ -96,7 +96,7 @@ double tableau(int i, int j)
     int k;
     double s;
 
-    if (col[i] < 0) return 0;  /* ¾Ã¤·¤¿¹Ô */
+    if (col[i] < 0) return 0;  /* æ¶ˆã—ãŸè¡Œ */
     if (j <= n) {
         s = 0;
         for (k = 0; k <= m; k++) s += q[i][k] * a[k][j];
@@ -109,7 +109,7 @@ double tableau(int i, int j)
 }
 
 void writetableau(int ipivot, int jpivot)
-    /* ¥Ç¥â¥ó¥¹¥È¥ì¡¼¥·¥ç¥ó¤Î¤¿¤á¥·¥ó¥×¥ì¥Ã¥¯¥¹É½¤ò½ĞÎÏ */
+    /* ãƒ‡ãƒ¢ãƒ³ã‚¹ãƒˆãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ã®ãŸã‚ã‚·ãƒ³ãƒ—ãƒ¬ãƒƒã‚¯ã‚¹è¡¨ã‚’å‡ºåŠ› */
 {
     int i, j;
 
@@ -123,12 +123,12 @@ void writetableau(int ipivot, int jpivot)
         }
 }
 
-void pivot(int ipivot, int jpivot)  /* Áİ¤­½Ğ¤· */
+void pivot(int ipivot, int jpivot)  /* æƒãå‡ºã— */
 {
     int i, j;
     double u;
 
-    printf("¥Ô¥Ü¥Ã¥È°ÌÃÖ (%d, %d)\n", ipivot, jpivot);
+    printf("ãƒ”ãƒœãƒƒãƒˆä½ç½® (%d, %d)\n", ipivot, jpivot);
     u = pivotcolumn[ipivot];
     for (j = 1; j <= m; j++) q[ipivot][j] /= u;
     for (i = 0; i <= m; i++)
@@ -141,20 +141,20 @@ void pivot(int ipivot, int jpivot)  /* Áİ¤­½Ğ¤· */
     col[ipivot] = jpivot;  row[jpivot] = ipivot;
 }
 
-void minimize(void)  /* ºÇ¾®²½ */
+void minimize(void)  /* æœ€å°åŒ– */
 {
     int i, ipivot, jpivot;
     double t, u;
 
     for ( ; ; ) {
-        /* ¥Ô¥Ü¥Ã¥ÈÎó jpivot ¤ò¸«¤Ä¤±¤ë */
+        /* ãƒ”ãƒœãƒƒãƒˆåˆ— jpivot ã‚’è¦‹ã¤ã‘ã‚‹ */
         for (jpivot = 1; jpivot <= jmax; jpivot++)
             if (row[jpivot] == 0) {
                 pivotcolumn[0] = tableau(0, jpivot);
                 if (pivotcolumn[0] < -EPS) break;
             }
-        if (jpivot > jmax) break;  /* ºÇ¾®²½´°Î» */
-        /* ¥Ô¥Ü¥Ã¥È¹Ô ipivot ¤ò¸«¤Ä¤±¤ë */
+        if (jpivot > jmax) break;  /* æœ€å°åŒ–å®Œäº† */
+        /* ãƒ”ãƒœãƒƒãƒˆè¡Œ ipivot ã‚’è¦‹ã¤ã‘ã‚‹ */
         u = LARGE;  ipivot = 0;
         for (i = 1; i <= m; i++) {
             pivotcolumn[i] = tableau(i, jpivot);
@@ -164,33 +164,33 @@ void minimize(void)  /* ºÇ¾®²½ */
             }
         }
         if (ipivot == 0) {
-            printf("ÌÜÅª´Ø¿ô¤Ï²¼¸Â¤¬¤¢¤ê¤Ş¤»¤ó\n");
+            printf("ç›®çš„é–¢æ•°ã¯ä¸‹é™ãŒã‚ã‚Šã¾ã›ã‚“\n");
             exit(EXIT_SUCCESS);
         }
         writetableau(ipivot, jpivot);
         pivot(ipivot, jpivot);
     }
     writetableau(-1, -1);
-    printf("ºÇ¾®ÃÍ¤Ï %g ¤Ç¤¹\n", -tableau(0, 0));
+    printf("æœ€å°å€¤ã¯ %g ã§ã™\n", -tableau(0, 0));
 }
 
-void phase1(void)  /* ¥Õ¥§¡¼¥º£± */
+void phase1(void)  /* ãƒ•ã‚§ãƒ¼ã‚ºï¼‘ */
 {
     int i, j;
     double u;
 
-    printf("¥Õ¥§¡¼¥º£±\n");
+    printf("ãƒ•ã‚§ãƒ¼ã‚ºï¼‘\n");
     jmax = n3;
     for (i = 0; i <= m; i++)
         if (col[i] > n2) q[0][i] = -1;
     minimize();
     if (tableau(0, 0) < -EPS) {
-        printf("²ÄÇ½¤Ê²ò¤Ï¤¢¤ê¤Ş¤»¤ó\n");
+        printf("å¯èƒ½ãªè§£ã¯ã‚ã‚Šã¾ã›ã‚“\n");
         exit(EXIT_SUCCESS);
     }
     for (i = 1; i <= m; i++)
         if (col[i] > n2) {
-            printf("¾ò·ï %d ¤Ï¾éÄ¹¤Ç¤¹\n", i);
+            printf("æ¡ä»¶ %d ã¯å†—é•·ã§ã™\n", i);
             col[i] = -1;
         }
     q[0][0] = 1;
@@ -205,16 +205,16 @@ void phase2(void)
 {
     int j;
 
-    printf("¥Õ¥§¡¼¥º£²\n");  jmax = n2;
-    for (j = 0; j <= n; j++) a[0][j] = c[j];  /* ÌÜÅª´Ø¿ô */
+    printf("ãƒ•ã‚§ãƒ¼ã‚ºï¼’\n");  jmax = n2;
+    for (j = 0; j <= n; j++) a[0][j] = c[j];  /* ç›®çš„é–¢æ•° */
     minimize();
 }
 
-void report(void)  /* ·ë²Ì¤Î½ĞÎÏ */
+void report(void)  /* çµæœã®å‡ºåŠ› */
 {
     int i, j;
 
-    printf("0 ¤Ç¤Ê¤¤ÊÑ¿ô¤ÎÃÍ:\n");
+    printf("0 ã§ãªã„å¤‰æ•°ã®å€¤:\n");
     for (j = 1; j <= n; j++)
         if ((i = row[j]) != 0)
             printf("x[%d] = %g\n", j, tableau(i, 0));
@@ -222,10 +222,10 @@ void report(void)  /* ·ë²Ì¤Î½ĞÎÏ */
 
 int main()
 {
-    readdata();                 /* ¥Ç¡¼¥¿¤òÆÉ¤à */
-    prepare();                  /* ²¼¤´¤·¤é¤¨ */
-    if (n3 != n2) phase1();     /* ¥Õ¥§¡¼¥º1 */
-    phase2();                   /* ¥Õ¥§¡¼¥º2 */
-    report();                   /* ·ë²Ì¤Î½ĞÎÏ */
+    readdata();                 /* ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã‚€ */
+    prepare();                  /* ä¸‹ã”ã—ã‚‰ãˆ */
+    if (n3 != n2) phase1();     /* ãƒ•ã‚§ãƒ¼ã‚º1 */
+    phase2();                   /* ãƒ•ã‚§ãƒ¼ã‚º2 */
+    report();                   /* çµæœã®å‡ºåŠ› */
     return EXIT_SUCCESS;
 }

@@ -1,5 +1,5 @@
 /***********************************************************
-    ci.c -- Í¾¸¹ÀÑÊ¬
+    ci.c -- ä½™å¼¦ç©åˆ†
 ************************************************************
     ${\rm Ci}(x) = \gamma + \log x
       + \int_{0}^{x} \frac{\cos t - 1}{t} \, dt$
@@ -17,9 +17,9 @@
 ***********************************************************/
 #include <stdio.h>
 #include <math.h>
-#define EULER 0.577215664901532860606512090082  /* Euler¤ÎÄê¿ô $\gamma$ */
+#define EULER 0.577215664901532860606512090082  /* Eulerã®å®šæ•° $\gamma$ */
 
-static double Ci_series(double x)  /* µé¿ôÅ¸³« */
+static double Ci_series(double x)  /* ç´šæ•°å±•é–‹ */
 {
     int k;
     double s, t, u;
@@ -31,11 +31,11 @@ static double Ci_series(double x)  /* µé¿ôÅ¸³« */
         u = s;  s += t / k;
         if (s == u) return s;
     }
-    printf("Si_series(): ¼ıÂ«¤·¤Ş¤»¤ó.\n");
+    printf("Si_series(): åæŸã—ã¾ã›ã‚“.\n");
     return s;
 }
 
-double Ci_asympt(double x)  /* Á²¶áÅ¸³« */
+double Ci_asympt(double x)  /* æ¼¸è¿‘å±•é–‹ */
 {
     int k, flag;
     double t, f, g, fmax, fmin, gmax, gmin;

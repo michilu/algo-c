@@ -1,10 +1,10 @@
 /***********************************************************
-    isomer.c -- °ÛÀ­ÂÎ¤ÎÌäÂê
+    isomer.c -- ç•°æ€§ä½“ã®å•é¡Œ
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
-#define C    17  /* ÃºÁÇ¸¶»Ò¤Î¿ô¤Î¾å¸Â */
-#define L  2558  /* À¸À®¤¹¤ë´ğ¤Î¸Ä¿ô¤Î¾å¸Â */
+#define C    17  /* ç‚­ç´ åŸå­ã®æ•°ã®ä¸Šé™ */
+#define L  2558  /* ç”Ÿæˆã™ã‚‹åŸºã®å€‹æ•°ã®ä¸Šé™ */
 
 int size[L], length[L], count[C + 1];
 
@@ -31,17 +31,17 @@ int main()
         for (j = 0; j <= i; j++) {
             if (length[i] != length[j]) continue;
             sj = si + size[j];  if (sj > C) continue;
-            count[sj]++;  /* ¶ö¿ô */
+            count[sj]++;  /* å¶æ•° */
             for (k = 0; k <= j; k++) {
                 sk = sj + size[k] + 1;  if (sk > C) continue;
                 for (h = 0; h <= k; h++) {
                     sh = sk + size[h];
-                    if (sh <= C) count[sh]++;  /* ´ñ¿ô */
+                    if (sh <= C) count[sh]++;  /* å¥‡æ•° */
                 }
             }
         }
     }
     for (i = 1; i <= C; i++)
-        printf("ÃºÁÇ¸¶»Ò¤¬ %2d ¸Ä¤Î¤â¤Î¤Ï %5d ¼ïÎà\n", i, count[i]);
+        printf("ç‚­ç´ åŸå­ãŒ %2d å€‹ã®ã‚‚ã®ã¯ %5d ç¨®é¡\n", i, count[i]);
     return EXIT_SUCCESS;
 }

@@ -1,5 +1,5 @@
 /***********************************************************
-    fukumen.c -- Ê¤ÌÌ»»
+    fukumen.c -- è¦†é¢ç®—
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,16 +7,16 @@
 #include <ctype.h>
 enum {FALSE, TRUE};
 
-#define N 10  /* ºÇÂç¤Î¹Ô¿ô */
+#define N 10  /* æœ€å¤§ã®è¡Œæ•° */
 
 int imax, jmax, solution,
     word[N][128], digit[256], low[256], ok[10];
 
-void found(void)  /* ²ò¤ÎÉ½¼¨ */
+void found(void)  /* è§£ã®è¡¨ç¤º */
 {
     int i, j, c;
 
-    printf("\n²ò %d\n", ++solution);
+    printf("\nè§£ %d\n", ++solution);
     for (i = 0; i <= imax; i++) {
         for (j = jmax; j >= 0; j--) {
             c = word[i][j];
@@ -27,7 +27,7 @@ void found(void)  /* ²ò¤ÎÉ½¼¨ */
     }
 }
 
-void try(int sum)  /* ºÆµ¢Åª¤Ë»î¤ß¤ë */
+void try(int sum)  /* å†å¸°çš„ã«è©¦ã¿ã‚‹ */
 {
     static int i = 0, j = 0, carry;
     int c, d;
@@ -35,7 +35,7 @@ void try(int sum)  /* ºÆµ¢Åª¤Ë»î¤ß¤ë */
     c = word[i][j];
     if (i < imax) {
         i++;
-        if ((d = digit[c]) < 0) {  /* Äê¤Ş¤Ã¤Æ¤¤¤Ê¤¤¤Ê¤é */
+        if ((d = digit[c]) < 0) {  /* å®šã¾ã£ã¦ã„ãªã„ãªã‚‰ */
             for (d = low[c]; d <= 9; d++)
                 if (ok[d]) {
                     digit[c] = d;  ok[d] = FALSE;
@@ -65,7 +65,7 @@ int main()
     static unsigned char buffer[128];
 
     jmax = 0;
-    printf("¹Ô¿ô? ");  scanf("%d", &imax);  imax--;
+    printf("è¡Œæ•°? ");  scanf("%d", &imax);  imax--;
     for (i = 0; i < N && i <= imax; i++) {
         printf("%2d: ", i + 1);
         scanf("%127s%*[^\n]", buffer);
@@ -80,6 +80,6 @@ int main()
     }
     for (i = 0; i <= 9; i++) ok[i] = TRUE;
     solution = 0;  try(0);
-    if (solution == 0) printf("²ò¤Ï¤¢¤ê¤Ş¤»¤ó.\n");
+    if (solution == 0) printf("è§£ã¯ã‚ã‚Šã¾ã›ã‚“.\n");
     return EXIT_SUCCESS;
 }

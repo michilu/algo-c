@@ -1,22 +1,22 @@
 /***********************************************************
-    5num.c -- ¸Ş¿ôÍ×Ìó
+    5num.c -- äº”æ•°è¦ç´„
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 
-int cmp(const void *k1, const void *k2)  /* Èæ³Ó */
+int cmp(const void *k1, const void *k2)  /* æ¯”è¼ƒ */
 {
     if (*((float *)k1) < *((float *)k2)) return -1;
     if (*((float *)k1) > *((float *)k2)) return  1;
     /* else */                           return  0;
 }
 
-void fivenum(int n, float x[])  /* ¸Ş¿ôÍ×Ìó */
+void fivenum(int n, float x[])  /* äº”æ•°è¦ç´„ */
 {
     int i, j;
     float t;
 
-    qsort(x, n, sizeof(float), cmp);  /* ¥¯¥¤¥Ã¥¯¥½¡¼¥È */
+    qsort(x, n, sizeof(float), cmp);  /* ã‚¯ã‚¤ãƒƒã‚¯ã‚½ãƒ¼ãƒˆ */
     for (i = 0; i < 4; i++) {
         t = (n - 1.0) * i / 4.0;  j = (int)t;
         printf("%g ", x[j] + (x[j + 1] - x[j]) * (t - j));
@@ -36,7 +36,7 @@ int main()
     n = 0;
     while (! readerror(t = getnum(stdin)))
         if (missing(t)) continue;
-        else if (n >= NMAX) error("Â¿¤¹¤®¤Ş¤¹");
+        else if (n >= NMAX) error("å¤šã™ãã¾ã™");
         else x[n++] = t;
     fivenum(n, x);
     return EXIT_SUCCESS;

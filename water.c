@@ -1,10 +1,10 @@
 /***********************************************************
-    water.c -- ¿å¤ò¤Ï¤«¤ëÌäÂê
+    water.c -- æ°´ã‚’ã¯ã‹ã‚‹å•é¡Œ
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 
-int gcd(int x, int y)  /* ºÇÂç¸øÌó¿ô */
+int gcd(int x, int y)  /* æœ€å¤§å…¬ç´„æ•° */
 {
     if (x == 0) return y;  else return gcd(y % x, x);
 }
@@ -13,27 +13,27 @@ int main()
 {
     int a, b, v, x, y;
 
-    printf("ÍÆ´ï£Á¤ÎÍÆÀÑ? ");  scanf("%d", &a);
-    printf("ÍÆ´ï£Â¤ÎÍÆÀÑ? ");  scanf("%d", &b);
-    printf("¤Ï¤«¤ê¤¿¤¤ÍÆÀÑ? ");  scanf("%d", &v);
+    printf("å®¹å™¨ï¼¡ã®å®¹ç©? ");  scanf("%d", &a);
+    printf("å®¹å™¨ï¼¢ã®å®¹ç©? ");  scanf("%d", &b);
+    printf("ã¯ã‹ã‚ŠãŸã„å®¹ç©? ");  scanf("%d", &v);
     if (v > a && v > b || v % gcd(a, b) != 0) {
-        printf("¤Ï¤«¤ì¤Ş¤»¤ó\n");  return EXIT_FAILURE;
+        printf("ã¯ã‹ã‚Œã¾ã›ã‚“\n");  return EXIT_FAILURE;
     }
     x = y = 0;
     do {
         if (x == 0) {
-            printf("£Á¤Ë¿å¤òËş¤¿¤·¤Ş¤¹\n");  x = a;
+            printf("ï¼¡ã«æ°´ã‚’æº€ãŸã—ã¾ã™\n");  x = a;
         } else if (y == b) {
-            printf("£Â¤ò¶õ¤Ë¤·¤Ş¤¹\n");  y = 0;
+            printf("ï¼¢ã‚’ç©ºã«ã—ã¾ã™\n");  y = 0;
         } else if (x < b - y) {
-            printf("£Á¤Î¿å¤ò¤¹¤Ù¤Æ£Â¤Ë°Ü¤·¤Ş¤¹\n");
+            printf("ï¼¡ã®æ°´ã‚’ã™ã¹ã¦ï¼¢ã«ç§»ã—ã¾ã™\n");
             y += x;  x = 0;
         } else {
-            printf("£Á¤Î¿å¤ò£Â¤¬¤¤¤Ã¤Ñ¤¤¤Ë¤Ê¤ë¤Ş¤Ç"
-                "£Â¤Ë°Ü¤·¤Ş¤¹\n");  x -= b - y;  y = b;
+            printf("ï¼¡ã®æ°´ã‚’ï¼¢ãŒã„ã£ã±ã„ã«ãªã‚‹ã¾ã§"
+                "ï¼¢ã«ç§»ã—ã¾ã™\n");  x -= b - y;  y = b;
         }
     } while (x != v && y != v);
-    if      (x == v) printf("£Á¤Ë¤Ï¤«¤ì¤Ş¤·¤¿\n");
-    else if (y == v) printf("£Â¤Ë¤Ï¤«¤ì¤Ş¤·¤¿\n");
+    if      (x == v) printf("ï¼¡ã«ã¯ã‹ã‚Œã¾ã—ãŸ\n");
+    else if (y == v) printf("ï¼¢ã«ã¯ã‹ã‚Œã¾ã—ãŸ\n");
     return EXIT_SUCCESS;
 }

@@ -1,5 +1,5 @@
 /***********************************************************
-    goldsect.c -- ²«¶âÊ¬³äË¡
+    goldsect.c -- é»„é‡‘åˆ†å‰²æ³•
 ***********************************************************/
 #include <math.h>
 
@@ -29,7 +29,7 @@ double goldsect(double a, double b,
 #include <stdlib.h>
 #define TEST  1
 
-double func(double x)  /* ºÇ¾®²½¤¹¤ë´Ø¿ô */
+double func(double x)  /* æœ€å°åŒ–ã™ã‚‹é–¢æ•° */
 {
     static int count = 0;
     const double xmin = 0.314;

@@ -1,11 +1,11 @@
 /**************************************************************
-    regula.c -- ¤Ï¤µ¤ß¤¦¤ÁË¡
+    regula.c -- ã¯ã•ã¿ã†ã¡æ³•
 **************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <float.h>
-#define samesign(x, y) (((x) > 0) == ((y) > 0))  /* Æ±Éä¹æ¤Ê¤é¿¿ */
+#define samesign(x, y) (((x) > 0) == ((y) > 0))  /* åŒç¬¦å·ãªã‚‰çœŸ */
 
 double regula(double a, double b, double tolerance,
         double (*f)(double), int imax, char **error)
@@ -19,7 +19,7 @@ double regula(double a, double b, double tolerance,
     fa = f(a);  if (fa == 0) return a;
     fb = f(b);  if (fb == 0) return b;
     if (samesign(fa, fb)) {
-        *error = "¶è´Ö¤ÎÎ¾Ã¼¤Ç´Ø¿ôÃÍ¤¬Æ±Éä¹æ¤Ç¤¹.";
+        *error = "åŒºé–“ã®ä¸¡ç«¯ã§é–¢æ•°å€¤ãŒåŒç¬¦å·ã§ã™.";
         return 0;
     }
     for (i = 0; ; i++) {
@@ -37,28 +37,28 @@ double regula(double a, double b, double tolerance,
     return c;
 }
 
-int count;  /* ¸Æ½Ğ¤·²ó¿ô¤Î¥«¥¦¥ó¥¿ */
-double func(double x)  /* ¥¼¥íÅÀ¤òµá¤á¤ë´Ø¿ô */
+int count;  /* å‘¼å‡ºã—å›æ•°ã®ã‚«ã‚¦ãƒ³ã‚¿ */
+double func(double x)  /* ã‚¼ãƒ­ç‚¹ã‚’æ±‚ã‚ã‚‹é–¢æ•° */
 {
     double value;
 
     value = x * x - 2;
     printf("%4d:  x = % -24.16g  f(x) = % .3g\n",
-        ++count, x, value);  /* ¥Æ¥¹¥È¤Î¤¿¤á¸Æ½Ğ¤·¤ò¥â¥Ë¥¿¡¼¤¹¤ë */
+        ++count, x, value);  /* ãƒ†ã‚¹ãƒˆã®ãŸã‚å‘¼å‡ºã—ã‚’ãƒ¢ãƒ‹ã‚¿ãƒ¼ã™ã‚‹ */
     return value;
 }
 
-int main()  /* ¥Æ¥¹¥È */
+int main()  /* ãƒ†ã‚¹ãƒˆ */
 {
     char *error;
     double x;
 
-    printf("2Ê¬Ë¡\n");  count = 0;
+    printf("2åˆ†æ³•\n");  count = 0;
     x = regula(1, 2, 0, func, 0, &error);
     if (error) printf("%s\n", error);
     else printf("x = % -24.16g\n", x);
 
-    printf("regula falsiË¡\n");  count = 0;
+    printf("regula falsiæ³•\n");  count = 0;
     x = regula(1, 2, 0, func, 1000, &error);
     if (error) printf("%s\n", error);
     else printf("x = % -24.16g\n", x);

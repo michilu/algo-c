@@ -1,8 +1,8 @@
 /***********************************************************
-    genperm.c -- ½çÎóÀ¸À®
+    genperm.c -- é †åˆ—ç”Ÿæˆ
 ***********************************************************/
 
-/***** ¶¦ÄÌ¤ÎÄêµÁ *****/
+/***** å…±é€šã®å®šç¾© *****/
 
 #include <stdio.h>
 #define N 4
@@ -17,7 +17,7 @@ void show(void)
     printf("\n");
 }
 
-/***** ÊıË¡ 1 *****/
+/***** æ–¹æ³• 1 *****/
 
 #define TRUE  1
 #define FALSE 0
@@ -46,7 +46,7 @@ void genperm1(void)
     for (k = 1; k <= N; k++) put(0, k);
 }
 
-/***** ÊıË¡ 2 *****/
+/***** æ–¹æ³• 2 *****/
 
 void put2(int pos, int k)
 {
@@ -69,7 +69,7 @@ void genperm2(void)
     for (pos = 0; pos < N; pos++) put2(pos, 1);
 }
 
-/***** ÊıË¡ 3 *****/
+/***** æ–¹æ³• 3 *****/
 
 void perm(int i)
 {
@@ -94,7 +94,7 @@ void genperm3(void)
     perm(N - 1);
 }
 
-/***** ÊıË¡ 4 *****/
+/***** æ–¹æ³• 4 *****/
 
 void genperm4(void)
 {
@@ -102,7 +102,7 @@ void genperm4(void)
 
     count = 0;
     for (i = 0; i < N; i++) p[i] = i + 1;
-    for (i = 1; i <= N; i++) c[i] = i;  /* c[N]¡â0 ¤ÏÈÖ¿Í */
+    for (i = 1; i <= N; i++) c[i] = i;  /* c[N]â‰ 0 ã¯ç•ªäºº */
     k = 1;
     while (k < N) {
         if (k & 1) i = c[k];  else i = 0;
@@ -114,15 +114,15 @@ void genperm4(void)
     }
 }
 
-/***** ³ÆÊıË¡¤Î¥Æ¥¹¥È *****/
+/***** å„æ–¹æ³•ã®ãƒ†ã‚¹ãƒˆ *****/
 
 #include <stdlib.h>
 
 int main()
 {
-    printf("ÊıË¡ 1\n");  genperm1();
-    printf("ÊıË¡ 2\n");  genperm2();
-    printf("ÊıË¡ 3\n");  genperm3();
-    printf("ÊıË¡ 4\n");  genperm4();
+    printf("æ–¹æ³• 1\n");  genperm1();
+    printf("æ–¹æ³• 2\n");  genperm2();
+    printf("æ–¹æ³• 3\n");  genperm3();
+    printf("æ–¹æ³• 4\n");  genperm4();
     return EXIT_SUCCESS;
 }

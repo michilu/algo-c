@@ -1,11 +1,11 @@
 /***********************************************************
-    repdec.c -- ¾®¿ô¤Î½Û´ÄÀá
+    repdec.c -- å°æ•°ã®å¾ªç’°ç¯€
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 
-#define N 1000   /* Ê¬Êì¤Î¾å¸Â */
-#define BASE 10  /* ²¿¿ÊË¡¤« */
+#define N 1000   /* åˆ†æ¯ã®ä¸Šé™ */
+#define BASE 10  /* ä½•é€²æ³•ã‹ */
 
 int main()
 {
@@ -14,10 +14,10 @@ int main()
 
     for (i = 0; i < N; i++) p[i] = 0;
     do {
-        printf("Ê¬Êì n = ");  scanf("%u", &n);
-        if (n > N) printf("%u °Ê²¼¤Ë¤·¤Æ¤¯¤À¤µ¤¤.\n", N);
+        printf("åˆ†æ¯ n = ");  scanf("%u", &n);
+        if (n > N) printf("%u ä»¥ä¸‹ã«ã—ã¦ãã ã•ã„.\n", N);
     } while (n > N);
-    printf("Ê¬»Ò m = ");  scanf("%u", &m);
+    printf("åˆ†å­ m = ");  scanf("%u", &m);
     a[0] = m / n;  m %= n;  k = 0;
     do {
         p[m] = ++k;

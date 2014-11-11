@@ -1,5 +1,5 @@
 /***********************************************************
-    quadeq.c -- 2¼¡ÊıÄø¼°
+    quadeq.c -- 2æ¬¡æ–¹ç¨‹å¼
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,10 +12,10 @@ int main()
     printf("b = ");  scanf("%lf", &b);
     printf("c = ");  scanf("%lf", &c);
     if (a != 0) {
-        b /= a;  c /= a;     /* $a$ ¤Ç³ä¤Ã¤Æ $x^2 + bx + c = 0$ ¤Î·Á¤Ë¤¹¤ë */
+        b /= a;  c /= a;     /* $a$ ã§å‰²ã£ã¦ $x^2 + bx + c = 0$ ã®å½¢ã«ã™ã‚‹ */
         if (c != 0) {
             b /= 2;          /* $x^2 + 2b'x + c = 0$ */
-            d = b * b - c;   /* È½ÊÌ¼° $D / 4$ */
+            d = b * b - c;   /* åˆ¤åˆ¥å¼ $D / 4$ */
             if (d > 0) {
                 if (b > 0) x = -b - sqrt(d);
                 else       x = -b + sqrt(d);
@@ -26,7 +26,7 @@ int main()
                 printf("x = %g\n", -b);
         } else printf("x = %g, 0\n", -b);
     } else if (b != 0) printf("x = %g\n", -c / b);
-    else if (c != 0) printf("²ò¤Ê¤·.\n");
-    else printf("ÉÔÄê.\n");
+    else if (c != 0) printf("è§£ãªã—.\n");
+    else printf("ä¸å®š.\n");
     return EXIT_SUCCESS;
 }

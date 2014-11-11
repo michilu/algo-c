@@ -1,10 +1,10 @@
 /***********************************************************
-    tdist.c -- tÊ¬ÉÛ
+    tdist.c -- tåˆ†å¸ƒ
 ***********************************************************/
 #include <math.h>
 #define PI 3.14159265358979323846264
 
-double p_t(int df, double t)  /* tÊ¬ÉÛ¤Î²¼Â¦ÎßÀÑ³ÎÎ¨ */
+double p_t(int df, double t)  /* tåˆ†å¸ƒã®ä¸‹å´ç´¯ç©ç¢ºç‡ */
 {
     int i;
     double c2, p, s;
@@ -15,13 +15,13 @@ double p_t(int df, double t)  /* tÊ¬ÉÛ¤Î²¼Â¦ÎßÀÑ³ÎÎ¨ */
     for (i = df % 2 + 2; i <= df; i += 2) {
         p += s;  s *= (i - 1) * c2 / i;
     }
-    if (df & 1)     /* ¼«Í³ÅÙ¤¬´ñ¿ô */
+    if (df & 1)     /* è‡ªç”±åº¦ãŒå¥‡æ•° */
         return 0.5+(p*sqrt(c2)+atan(t/sqrt(df)))/PI;
-    else            /* ¼«Í³ÅÙ¤¬¶ö¿ô */
+    else            /* è‡ªç”±åº¦ãŒå¶æ•° */
         return (1 + p) / 2;
 }
 
-double q_t(int df, double t)  /* tÊ¬ÉÛ¤Î¾åÂ¦ÎßÀÑ³ÎÎ¨ */
+double q_t(int df, double t)  /* tåˆ†å¸ƒã®ä¸Šå´ç´¯ç©ç¢ºç‡ */
 {
     return 1 - p_t(df, t);
 }

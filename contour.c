@@ -1,22 +1,22 @@
 /***********************************************************
-    contour.c -- Åù¹âÀş
+    contour.c -- ç­‰é«˜ç·š
 ***********************************************************/
-#include "plotter.c"  /* ¥é¡¼¥¸¥â¥Ç¥ë¤Ç¥³¥ó¥Ñ¥¤¥ë */
+#include "plotter.c"  /* ãƒ©ãƒ¼ã‚¸ãƒ¢ãƒ‡ãƒ«ã§ã‚³ãƒ³ãƒ‘ã‚¤ãƒ« */
 #include <math.h>
 
 void evaluate(double x, double y,
-              double *f, double *fx, double *fy)  /* Îã */
+              double *f, double *fx, double *fy)  /* ä¾‹ */
 {
     *f = x * x + 4 * y * y;  /* $f(x, y) = x^2 + 4y^2$ */
-    *fx = 2 * x;             /* $x$ ¤ÇÈùÊ¬¤·¤¿¤â¤Î: $f_x(x, y) = 2x$ */
-    *fy = 8 * y;             /* $y$ ¤ÇÈùÊ¬¤·¤¿¤â¤Î: $f_y(x, y) = 8y$ */
+    *fx = 2 * x;             /* $x$ ã§å¾®åˆ†ã—ãŸã‚‚ã®: $f_x(x, y) = 2x$ */
+    *fy = 8 * y;             /* $y$ ã§å¾®åˆ†ã—ãŸã‚‚ã®: $f_y(x, y) = 8y$ */
 }
 
 #define sq(x) ((x) * (x))    /* $x^2$ */
-#define EPS  0.001           /* µöÍÆ¸íº¹ $\varepsilon$ */
+#define EPS  0.001           /* è¨±å®¹èª¤å·® $\varepsilon$ */
 
 void newton(double fc, double *x, double *y,
-            double *fx, double *fy, double *grad2) /* NewtonË¡ */
+            double *fx, double *fy, double *grad2) /* Newtonæ³• */
 {
     double f, t;
 
@@ -29,7 +29,7 @@ void newton(double fc, double *x, double *y,
     } while (t * t * *grad2 > EPS * EPS);
 }
 
-void contour(double fc, double x, double y, double step) /* Åù¹âÀş¤òÉÁ¤¯ */
+void contour(double fc, double x, double y, double step) /* ç­‰é«˜ç·šã‚’æã */
 {
     int i;
     double fx, fy, grad2, t, x0, y0;
@@ -53,11 +53,11 @@ int main()
 
     gr_on();  gr_window(-3, -2, 3, 2, 1, GREEN);
     for ( ; ; ) {
-        printf("f(x, y) = ");                      /* Åù¹âÀş¤Î´Ø¿ôÃÍ */
+        printf("f(x, y) = ");                      /* ç­‰é«˜ç·šã®é–¢æ•°å€¤ */
         if (scanf("%lf", &fc) != 1) break;
-        printf("initial x = ");  scanf("%lf", &x); /* $x$ ¤Î½é´üÃÍ */
-        printf("initial y = ");  scanf("%lf", &y); /* $y$ ¤Î½é´üÃÍ */
-        printf("step = ");  scanf("%lf", &step);   /* ¥¹¥Æ¥Ã¥×¥µ¥¤¥º */
+        printf("initial x = ");  scanf("%lf", &x); /* $x$ ã®åˆæœŸå€¤ */
+        printf("initial y = ");  scanf("%lf", &y); /* $y$ ã®åˆæœŸå€¤ */
+        printf("step = ");  scanf("%lf", &step);   /* ã‚¹ãƒ†ãƒƒãƒ—ã‚µã‚¤ã‚º */
         contour(fc, x, y, step);
     }
     printf("Hit any key.\n");  hitanykey();

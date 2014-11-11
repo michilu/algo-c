@@ -1,8 +1,8 @@
 /***********************************************************
-    skanji.c -- •∑•’•»JIS•≥°º•…
+    skanji.c -- „Ç∑„Éï„ÉàJIS„Ç≥„Éº„Éâ
 ***********************************************************/
 
-void shift(int *ph, int *pl)  /* JIS§Ú•∑•’•»JIS§À */
+void shift(int *ph, int *pl)  /* JIS„Çí„Ç∑„Éï„ÉàJIS„Å´ */
 {
     if (*ph & 1) {
         if (*pl < 0x60)  *pl += 0x1F;
@@ -14,7 +14,7 @@ void shift(int *ph, int *pl)  /* JIS§Ú•∑•’•»JIS§À */
 
 #include <stdio.h>
 #include <stdlib.h>
-#define ESC  0x1B  /* •®•π•±°º•◊ ∏ª˙ */
+#define ESC  0x1B  /* „Ç®„Çπ„Ç±„Éº„ÉóÊñáÂ≠ó */
 
 int main()
 {
@@ -25,22 +25,22 @@ int main()
         if (c == ESC) {
             if ((c = getchar()) == '$') {
                 if ((c = getchar()) == '@' || c == 'B') {
-                    jiskanji = TRUE;  /* JIS≥´ªœ */
+                    jiskanji = TRUE;  /* JISÈñãÂßã */
                 } else {
                     putchar(ESC);  putchar('$');
                     if (c != EOF) putchar(c);
                 }
             } else if (c == '(') {
                 if ((c = getchar()) == 'H' || c == 'J') {
-                    jiskanji = FALSE;  /* JISΩ™Œª */
+                    jiskanji = FALSE;  /* JISÁµÇ‰∫Ü */
                 } else {
                     putchar(ESC);  putchar('(');
                     if (c != EOF) putchar(c);
                 }
             } else if (c == 'K') {
-                jiskanji = TRUE;   /* NECJIS≥´ªœ */
+                jiskanji = TRUE;   /* NECJISÈñãÂßã */
             } else if (c == 'H') {
-                jiskanji = FALSE;  /* NECJISΩ™Œª */
+                jiskanji = FALSE;  /* NECJISÁµÇ‰∫Ü */
             } else {
                 putchar(ESC);  if (c != EOF) putchar(c);
             }

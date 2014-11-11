@@ -1,12 +1,12 @@
 /***********************************************************
-    complex.c -- Ê£ÁÇ¿ô
+    complex.c -- è¤‡ç´ æ•°
 ***********************************************************/
 #include <stdio.h>  /* {\tt sprintf()} */
 #include <math.h>
 
-typedef struct {  double re, im;  } complex;  /* Ê£ÁÇ¿ô·¿ */
+typedef struct {  double re, im;  } complex;  /* è¤‡ç´ æ•°å‹ */
 
-complex c_conv(double x, double y)  /* $x$, $y$ ¤òÊ£ÁÇ¿ô $z = x + iy$ ¤ËÊÑ´¹ */
+complex c_conv(double x, double y)  /* $x$, $y$ ã‚’è¤‡ç´ æ•° $z = x + iy$ ã«å¤‰æ› */
 {
     complex z;
 
@@ -14,7 +14,7 @@ complex c_conv(double x, double y)  /* $x$, $y$ ¤òÊ£ÁÇ¿ô $z = x + iy$ ¤ËÊÑ´¹ */
     return z;
 }
 
-char *c_string(complex z)  /* Ê£ÁÇ¿ô $z = x + iy$ ¤òÊ¸»úÎó¤ËÊÑ´¹ */
+char *c_string(complex z)  /* è¤‡ç´ æ•° $z = x + iy$ ã‚’æ–‡å­—åˆ—ã«å¤‰æ› */
 {
     static char s[40];
 
@@ -22,13 +22,13 @@ char *c_string(complex z)  /* Ê£ÁÇ¿ô $z = x + iy$ ¤òÊ¸»úÎó¤ËÊÑ´¹ */
     return s;
 }
 
-complex c_conj(complex z)  /* ¶¦ÌòÊ£ÁÇ¿ô $\overline{z}$ */
+complex c_conj(complex z)  /* å…±å½¹è¤‡ç´ æ•° $\overline{z}$ */
 {
     z.im = - z.im;
     return z;
 }
 
-double c_abs(complex z)  /* ÀäÂĞÃÍ $|z|$ */
+double c_abs(complex z)  /* çµ¶å¯¾å€¤ $|z|$ */
 {
     double t;
 
@@ -43,26 +43,26 @@ double c_abs(complex z)  /* ÀäÂĞÃÍ $|z|$ */
     }
 }
 
-double c_arg(complex z)  /* ÊĞ³Ñ ($-\pi \le \varphi \le \pi$) */
+double c_arg(complex z)  /* åè§’ ($-\pi \le \varphi \le \pi$) */
 {
     return atan2(z.im, z.re);
 }
 
-complex c_add(complex x, complex y)  /* ÏÂ $x + y$ */
+complex c_add(complex x, complex y)  /* å’Œ $x + y$ */
 {
     x.re += y.re;
     x.im += y.im;
     return x;
 }
 
-complex c_sub(complex x, complex y)  /* º¹ $x - y$ */
+complex c_sub(complex x, complex y)  /* å·® $x - y$ */
 {
     x.re -= y.re;;
     x.im -= y.im;
     return x;
 }
 
-complex c_mul(complex x, complex y)  /* ÀÑ $xy$ */
+complex c_mul(complex x, complex y)  /* ç© $xy$ */
 {
     complex z;
 
@@ -72,7 +72,7 @@ complex c_mul(complex x, complex y)  /* ÀÑ $xy$ */
 }
 
 #if 0
-complex c_div(complex x, complex y)  /* ¾¦ $x / y$ (Ã±½ãÈÇ) */
+complex c_div(complex x, complex y)  /* å•† $x / y$ (å˜ç´”ç‰ˆ) */
 {
     double r2;
     complex z;
@@ -84,7 +84,7 @@ complex c_div(complex x, complex y)  /* ¾¦ $x / y$ (Ã±½ãÈÇ) */
 }
 #endif
 
-complex c_div(complex x, complex y)  /* ¾¦ $x / y$ (¾å°Ì·å¤¢¤Õ¤ìÂĞºöÈÇ) */
+complex c_div(complex x, complex y)  /* å•† $x / y$ (ä¸Šä½æ¡ã‚ãµã‚Œå¯¾ç­–ç‰ˆ) */
 {
     double w, d;
     complex z;
@@ -101,7 +101,7 @@ complex c_div(complex x, complex y)  /* ¾¦ $x / y$ (¾å°Ì·å¤¢¤Õ¤ìÂĞºöÈÇ) */
     return z;
 }
 
-complex c_exp(complex x)  /* »Ø¿ô´Ø¿ô $e^x$ */
+complex c_exp(complex x)  /* æŒ‡æ•°é–¢æ•° $e^x$ */
 {
     double a;
 
@@ -111,7 +111,7 @@ complex c_exp(complex x)  /* »Ø¿ô´Ø¿ô $e^x$ */
     return x;
 }
 
-complex c_log(complex x)  /* ¼«Á³ÂĞ¿ô $\log_e x$ */
+complex c_log(complex x)  /* è‡ªç„¶å¯¾æ•° $\log_e x$ */
 {
     complex z;
 
@@ -120,12 +120,12 @@ complex c_log(complex x)  /* ¼«Á³ÂĞ¿ô $\log_e x$ */
     return z;
 }
 
-complex c_pow(complex x, complex y)  /* Îß¾è $x^y$ */
+complex c_pow(complex x, complex y)  /* ç´¯ä¹— $x^y$ */
 {
     return c_exp(c_mul(y, c_log(x)));
 }
 
-complex c_sin(complex x)  /* Àµ¸¹ $\sin x$ */
+complex c_sin(complex x)  /* æ­£å¼¦ $\sin x$ */
 {
     double e, f;
 
@@ -135,7 +135,7 @@ complex c_sin(complex x)  /* Àµ¸¹ $\sin x$ */
     return x;
 }
 
-complex c_cos(complex x)  /* Í¾¸¹ $\cos x$ */
+complex c_cos(complex x)  /* ä½™å¼¦ $\cos x$ */
 {
     double e, f;
 
@@ -145,7 +145,7 @@ complex c_cos(complex x)  /* Í¾¸¹ $\cos x$ */
     return x;
 }
 
-complex c_tan(complex x)  /* ÀµÀÜ $\tan x$ */
+complex c_tan(complex x)  /* æ­£æ¥ $\tan x$ */
 {
     double e, f, d;
 
@@ -156,7 +156,7 @@ complex c_tan(complex x)  /* ÀµÀÜ $\tan x$ */
     return x;
 }
 
-complex c_sinh(complex x)  /* ÁĞ¶ÊÀşÀµ¸¹ $\sinh x$ */
+complex c_sinh(complex x)  /* åŒæ›²ç·šæ­£å¼¦ $\sinh x$ */
 {
     double e, f;
 
@@ -166,7 +166,7 @@ complex c_sinh(complex x)  /* ÁĞ¶ÊÀşÀµ¸¹ $\sinh x$ */
     return x;
 }
 
-complex c_cosh(complex x)  /* ÁĞ¶ÊÀşÍ¾¸¹ $\cosh x$ */
+complex c_cosh(complex x)  /* åŒæ›²ç·šä½™å¼¦ $\cosh x$ */
 {
     double e, f;
 
@@ -176,7 +176,7 @@ complex c_cosh(complex x)  /* ÁĞ¶ÊÀşÍ¾¸¹ $\cosh x$ */
     return x;
 }
 
-complex c_tanh(complex x)  /* ÁĞ¶ÊÀşÀµÀÜ $\tanh x$ */
+complex c_tanh(complex x)  /* åŒæ›²ç·šæ­£æ¥ $\tanh x$ */
 {
     double e, f, d;
 
@@ -189,7 +189,7 @@ complex c_tanh(complex x)  /* ÁĞ¶ÊÀşÀµÀÜ $\tanh x$ */
 
 #define SQRT05 0.707106781186547524  /* $\sqrt{0.5}$ */
 
-complex c_sqrt(complex x)  /* Ê¿Êıº¬ $\sqrt{x}$ */
+complex c_sqrt(complex x)  /* å¹³æ–¹æ ¹ $\sqrt{x}$ */
 {
     double r, w;
 
@@ -207,7 +207,7 @@ complex c_sqrt(complex x)  /* Ê¿Êıº¬ $\sqrt{x}$ */
 
 #include <stdlib.h>
 
-int main()  /* ¥Æ¥¹¥È (¤´¤¯°ìÉô) */
+int main()  /* ãƒ†ã‚¹ãƒˆ (ã”ãä¸€éƒ¨) */
 {
     double x, y;
     complex z;

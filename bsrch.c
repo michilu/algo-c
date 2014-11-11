@@ -1,5 +1,5 @@
 /***********************************************************
-    bsrch.c -- 2ʬõ��
+    bsrch.c -- 2分探索
 ***********************************************************/
 #define NOT_FOUND (-1)
 typedef int keytype;
@@ -29,13 +29,13 @@ int main()
     double r;
     static int a[N];
 
-    printf("��ʬõ���ǥ�󥹥ȥ졼�����\n");
+    printf("二分探索デモンストレーション\n");
     srand((unsigned int) time(NULL));
     r = 1.0;
     for (i = N - 1; i >= 0; i--) {
-        /* 1̤��0�ʾ�ΰ��������r�˹߽�˺�� */
+        /* 1未満0以上の一様乱数をrに降順に作る */
         r *= pow(rand() / (RAND_MAX + 1.0), 1.0 / (i + 1));
-        /* 0�ʾ�100̤����������ľ�� */
+        /* 0以上100未満の整数に直す */
         a[i] = (int)(100.0 * r);
     }
     printf("  i : ");
@@ -45,12 +45,12 @@ int main()
     for (i = 0; i < N; i++) printf(" %2d", a[i]);
     printf("\n");
 
-    printf("\n����õ���ޤ���? ");
+    printf("\n何を探しますか? ");
     scanf("%d", &x);
 
     i = bsrch(x, a, 0, N - 1);
     if (i != NOT_FOUND) printf("i = %d\n", i);
-    else                printf("���Ĥ���ޤ���\n");
+    else                printf("見つかりません\n");
 
     return EXIT_SUCCESS;
 }

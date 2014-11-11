@@ -1,16 +1,16 @@
 /***********************************************************
-    warshall.c -- ¿ä°ÜÅªÊÄÊñ
-    »ÈÍÑÎã: warshall <warshall.dat
+    warshall.c -- æ¨ç§»çš„é–‰åŒ…
+    ä½¿ç”¨ä¾‹: warshall <warshall.dat
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 
-#define NMAX 100                                /* ÅÀ¤Î¿ô¤Î¾å¸Â */
-char adjacent[NMAX + 1][NMAX + 1];              /* ÎÙÀÜ¹ÔÎó */
+#define NMAX 100                                /* ç‚¹ã®æ•°ã®ä¸Šé™ */
+char adjacent[NMAX + 1][NMAX + 1];              /* éš£æ¥è¡Œåˆ— */
 
-int n;                                          /* ÅÀ¤Î¿ô */
+int n;                                          /* ç‚¹ã®æ•° */
 
-void readgraph(void)                            /* ¥Ç¡¼¥¿ÆşÎÏ */
+void readgraph(void)                            /* ãƒ‡ãƒ¼ã‚¿å…¥åŠ› */
 {
     int i, j;
 
@@ -23,7 +23,7 @@ void readgraph(void)                            /* ¥Ç¡¼¥¿ÆşÎÏ */
     }
     while (scanf("%d%d%*[^\n]", &i, &j) == 2)
         adjacent[i][j] = 1;
-    printf("ÎÙÀÜ¹ÔÎó:\n");
+    printf("éš£æ¥è¡Œåˆ—:\n");
     for (i = 1; i <= n; i++) {
         for (j = 1; j <= n; j++) printf(" %d", adjacent[i][j]);
         printf("\n");
@@ -40,7 +40,7 @@ int main()
             if (adjacent[i][k])
                 for (j = 1; j <= n; j++)
                     adjacent[i][j] |= adjacent[k][j];
-    printf("¿ä°ÜÅªÊÄÊñ:\n");
+    printf("æ¨ç§»çš„é–‰åŒ…:\n");
     for (i = 1; i <= n; i++) {
         for (j = 1; j <= n; j++) printf(" %d", adjacent[i][j]);
         printf("\n");

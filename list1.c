@@ -1,10 +1,10 @@
 /***********************************************************
-    list1.c -- ¥ê¥¹¥È
+    list1.c -- ãƒªã‚¹ãƒˆ
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 
-#define NIL 100  /* ºÇÂç¤ÎÅº»ú + 1 */
+#define NIL 100  /* æœ€å¤§ã®æ·»å­— + 1 */
 typedef int indextype, infotype;
 
 infotype info[NIL];
@@ -17,7 +17,7 @@ indextype add_list(infotype x, indextype p)
 
     q = avail++;
     if (q == NIL) {
-        printf("ËşÇÕ¤Ç¤¹.\n");  exit(EXIT_FAILURE);
+        printf("æº€æ¯ã§ã™.\n");  exit(EXIT_FAILURE);
     }
     info[q] = x;  next[q] = p;
     return q;
@@ -47,11 +47,11 @@ int main()
     infotype x;
     indextype head;
 
-    head = NIL;                             /* ¶õ¤Î¥ê¥¹¥È */
+    head = NIL;                             /* ç©ºã®ãƒªã‚¹ãƒˆ */
     for (x = 1; x <= 9; x++)
-        head = add_list(x, head);                 /* ÅĞÏ¿ */
-    show_list(head);                              /* É½¼¨ */
-    head = reverse_list(head);        /* µÕ½ç¤ËÊÂ¤ÙÂØ¤¨¤ë */
-    show_list(head);                              /* É½¼¨ */
+        head = add_list(x, head);                 /* ç™»éŒ² */
+    show_list(head);                              /* è¡¨ç¤º */
+    head = reverse_list(head);        /* é€†é †ã«ä¸¦ã¹æ›¿ãˆã‚‹ */
+    show_list(head);                              /* è¡¨ç¤º */
     return EXIT_SUCCESS;
 }

@@ -1,13 +1,13 @@
 /***********************************************************
-    irandom.c -- ´ö²¿Ê¬ÉÛ
-              -- 2¹àÊ¬ÉÛ
-              -- Poisson (¥İ¥¢¥½¥ó) Ê¬ÉÛ
+    irandom.c -- å¹¾ä½•åˆ†å¸ƒ
+              -- 2é …åˆ†å¸ƒ
+              -- Poisson (ãƒã‚¢ã‚½ãƒ³) åˆ†å¸ƒ
 ***********************************************************/
 
-/***** °ìÍÍÍğ¿ô (Àş·Á¹çÆ±Ë¡) ******************************/
+/***** ä¸€æ§˜ä¹±æ•° (ç·šå½¢åˆåŒæ³•) ******************************/
 
 #include <limits.h>
-static unsigned long seed = 1;  /* Ç¤°Õ */
+static unsigned long seed = 1;  /* ä»»æ„ */
 
 void init_rnd(unsigned long x)
 {
@@ -29,7 +29,7 @@ double rnd(void)  /* 0 <= rnd() < 1 */
 
 #include <math.h>
 
-int geometric_rnd1(double p)  /* ´ö²¿Ê¬ÉÛ 1 */
+int geometric_rnd1(double p)  /* å¹¾ä½•åˆ†å¸ƒ 1 */
 {
     int n;
 
@@ -38,12 +38,12 @@ int geometric_rnd1(double p)  /* ´ö²¿Ê¬ÉÛ 1 */
     return n;
 }
 
-int geometric_rnd(double p)  /* ´ö²¿Ê¬ÉÛ 2 */
+int geometric_rnd(double p)  /* å¹¾ä½•åˆ†å¸ƒ 2 */
 {
     return ceil(log(1 - rnd()) / log(1 - p));
 }
 
-int binomial_rnd(int n, double p)  /* 2¹àÊ¬ÉÛ */
+int binomial_rnd(int n, double p)  /* 2é …åˆ†å¸ƒ */
 {
     int i, r;
 
@@ -53,7 +53,7 @@ int binomial_rnd(int n, double p)  /* 2¹àÊ¬ÉÛ */
     return r;
 }
 
-int Poisson_rnd(double lambda)  /* Poisson (¥İ¥¢¥½¥ó) Ê¬ÉÛ */
+int Poisson_rnd(double lambda)  /* Poisson (ãƒã‚¢ã‚½ãƒ³) åˆ†å¸ƒ */
 {
     int k;
 
@@ -76,22 +76,22 @@ int main()
     int i, choice, x, n, histo[20];
     double a, b, s1, s2;
 
-    init_rnd((unsigned long) time(NULL));  /* ½é´ü²½ */
+    init_rnd((unsigned long) time(NULL));  /* åˆæœŸåŒ– */
 
-    printf("***** ¥á¥Ë¥å¡¼ *****\n");
-    printf("  1: ´ö²¿Ê¬ÉÛ 1\n");
-    printf("  2: ´ö²¿Ê¬ÉÛ 2\n");
-    printf("  3: £²¹àÊ¬ÉÛ\n");
-    printf("  4: ¥İ¥¢¥½¥óÊ¬ÉÛ\n");
+    printf("***** ãƒ¡ãƒ‹ãƒ¥ãƒ¼ *****\n");
+    printf("  1: å¹¾ä½•åˆ†å¸ƒ 1\n");
+    printf("  2: å¹¾ä½•åˆ†å¸ƒ 2\n");
+    printf("  3: ï¼’é …åˆ†å¸ƒ\n");
+    printf("  4: ãƒã‚¢ã‚½ãƒ³åˆ†å¸ƒ\n");
     printf("? ");  scanf("%d", &choice);
 
     switch(choice) {
     case 1: case 2: case 4:
-        printf("°ú¿ô (1¸Ä)? ");  scanf("%lf", &a);  break;
+        printf("å¼•æ•° (1å€‹)? ");  scanf("%lf", &a);  break;
     case 3:
-        printf("°ú¿ô (2¸Ä)? ");  scanf("%lf%lf", &a, &b);  break;
+        printf("å¼•æ•° (2å€‹)? ");  scanf("%lf%lf", &a, &b);  break;
     }
-    printf("¸Ä¿ô? ");  scanf("%d", &n);
+    printf("å€‹æ•°? ");  scanf("%d", &n);
 
     for (i = 0; i < 20; i++) histo[i] = 0;
     s1 = s2 = 0;
@@ -109,7 +109,7 @@ int main()
     for (i = 0; i < 20; i++)
         printf("%4d: %5.1f%%\n", i, 100.0 * histo[i] / n);
     s1 /= n;  s2 = sqrt((s2 - n * s1 * s1) / (n - 1));
-    printf("Ê¿¶Ñ %g  É¸½àÊĞº¹ %g\n", s1, s2);
+    printf("å¹³å‡ %g  æ¨™æº–åå·® %g\n", s1, s2);
 
     return EXIT_SUCCESS;
 }

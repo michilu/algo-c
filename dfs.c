@@ -1,15 +1,15 @@
 /***********************************************************
-    dfs.c -- ½Ä·ÁÃµº÷
+    dfs.c -- ç¸¦å½¢æ¢ç´¢
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
-#define NMAX 100                                /* ÅÀ¤Î¿ô¤Î¾å¸Â */
-char adjacent[NMAX + 1][NMAX + 1];              /* ÎÙÀÜ¹ÔÎó */
+#define NMAX 100                                /* ç‚¹ã®æ•°ã®ä¸Šé™ */
+char adjacent[NMAX + 1][NMAX + 1];              /* éš£æ¥è¡Œåˆ— */
 
-int n = 7;                                      /* ÅÀ¤Î¿ô (Îã) */
-int data[] = { 1, 2, 2, 3, 1, 3, 2, 4, 5, 7 };  /* ¥Ç¡¼¥¿ (Îã) */
+int n = 7;                                      /* ç‚¹ã®æ•° (ä¾‹) */
+int data[] = { 1, 2, 2, 3, 1, 3, 2, 4, 5, 7 };  /* ãƒ‡ãƒ¼ã‚¿ (ä¾‹) */
 
-void readgraph(void)  /* ¥°¥é¥ÕÆşÎÏ */
+void readgraph(void)  /* ã‚°ãƒ©ãƒ•å…¥åŠ› */
 {
     int i, j, k;
 
@@ -22,16 +22,16 @@ void readgraph(void)  /* ¥°¥é¥ÕÆşÎÏ */
             adjacent[i][j] = adjacent[j][i] = 1;
         }
     }
-    printf("ÎÙÀÜ¹ÔÎó:\n");
+    printf("éš£æ¥è¡Œåˆ—:\n");
     for (i = 1; i <= n; i++) {
         for (j = 1; j <= n; j++) printf(" %d", adjacent[i][j]);
         printf("\n");
     }
 }
 
-char visited[NMAX + 1];  /* Ë¬¤ì¤¿¤Ê¤é1 */
+char visited[NMAX + 1];  /* è¨ªã‚ŒãŸãªã‚‰1 */
 
-void visit(int i)  /* ÅÀ {\tt i} ¤òË¬¤ì¤ë (ºÆµ¢Åª) */
+void visit(int i)  /* ç‚¹ {\tt i} ã‚’è¨ªã‚Œã‚‹ (å†å¸°çš„) */
 {
     int j;
 
@@ -44,10 +44,10 @@ int main()
 {
     int i, count;
 
-    readgraph();                              /* ¥°¥é¥Õ¤Î¥Ç¡¼¥¿¤òÆÉ¤à */
-    for (i = 1; i <= n; i++) visited[i] = 0;  /* ¤Ş¤À¤É¤³¤âË¬¤ì¤Æ¤¤¤Ê¤¤ */
-    printf("Ï¢·ëÀ®Ê¬:\n");
-    count = 0;                                /* Ï¢·ëÀ®Ê¬¤ò¿ô¤¨¤ë */
+    readgraph();                              /* ã‚°ãƒ©ãƒ•ã®ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã‚€ */
+    for (i = 1; i <= n; i++) visited[i] = 0;  /* ã¾ã ã©ã“ã‚‚è¨ªã‚Œã¦ã„ãªã„ */
+    printf("é€£çµæˆåˆ†:\n");
+    count = 0;                                /* é€£çµæˆåˆ†ã‚’æ•°ãˆã‚‹ */
     for (i = 1; i <= n; i++)
         if (! visited[i]) {
             printf("%3d:", ++count);

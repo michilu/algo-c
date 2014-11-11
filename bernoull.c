@@ -1,12 +1,12 @@
 /***********************************************************
-    bernoull.c -- Bernoulli (¥Ù¥ë¥Ì¡¼¥¤) ¿ô
+    bernoull.c -- Bernoulli (ãƒ™ãƒ«ãƒŒãƒ¼ã‚¤) æ•°
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <float.h>
 
-double gcd(double x, double y)  /* ºÇÂç¸øÌó¿ô */
+double gcd(double x, double y)  /* æœ€å¤§å…¬ç´„æ•° */
 {
     double t;
 

@@ -1,7 +1,7 @@
 /***********************************************************
-    sosrh.c -- ¼«¸ÊÁÈ¿¥²½Ãµº÷
+    sosrh.c -- è‡ªå·±çµ„ç¹”åŒ–æ¢ç´¢
 ***********************************************************/
-/* ÃÖ´¹Ë¡ */
+/* ç½®æ›æ³• */
 
 #define NOT_FOUND (-1)
 typedef int keytype;
@@ -11,11 +11,11 @@ int sosrch(keytype x, keytype a[], int imin, int imax)
     int i;
 
     if (imin > imax) return NOT_FOUND;
-    a[imax + 1] = x;  /* ÈÖ¿Í */
+    a[imax + 1] = x;  /* ç•ªäºº */
     i = imin;  while (a[i] != x) i++;
     if (i > imax) return NOT_FOUND;
     if (i != imin) {
-        a[i] = a[i - 1];  i--;  a[i] = x;  /* °ì¤ÄÁ°¤È¸ò´¹ */
+        a[i] = a[i - 1];  i--;  a[i] = x;  /* ä¸€ã¤å‰ã¨äº¤æ› */
     }
     return i;
 }
@@ -24,18 +24,18 @@ int sosrch(keytype x, keytype a[], int imin, int imax)
 #include <stdlib.h>
 #define N 8
 
-int main()  /* ¥Æ¥¹¥ÈÍÑ */
+int main()  /* ãƒ†ã‚¹ãƒˆç”¨ */
 {
     int i, x, a[N + 1];
 
     for (i = 0; i < N; i++) a[i] = rand() / (RAND_MAX / 100 + 1);
     for ( ; ; ) {
         for (i = 0; i < N; i++) printf("  a[%d]=%d", i, a[i]);
-        printf("\n¤É¤ì¤òÃµ¤·¤Ş¤¹¤«? ");
+        printf("\nã©ã‚Œã‚’æ¢ã—ã¾ã™ã‹? ");
         scanf("%d", &x);  if (x < 0) break;
         i = sosrch(x, a, 0, N - 1);
         if (i != NOT_FOUND) printf("i = %d\n", i);
-        else printf("¸«¤Ä¤«¤ê¤Ş¤»¤ó.\n");
+        else printf("è¦‹ã¤ã‹ã‚Šã¾ã›ã‚“.\n");
     }
     return EXIT_SUCCESS;
 }

@@ -1,5 +1,5 @@
 /***********************************************************
-    corrcoef.c -- Áê´Ø·¸¿ô
+    corrcoef.c -- ç›¸é–¢ä¿‚æ•°
 ***********************************************************/
 #include <stdio.h>
 #include <math.h>
@@ -21,7 +21,7 @@ void corrcoef1(int n, float x[], float y[])
     sxx = sqrt(sxx / (n - 1));
     syy = sqrt(syy / (n - 1));
     sxy /= (n - 1) * sxx * syy;
-    printf("É¸½àÊĞº¹ %g %g  Áê´Ø·¸¿ô %g\n", sxx, syy, sxy);
+    printf("æ¨™æº–åå·® %g %g  ç›¸é–¢ä¿‚æ•° %g\n", sxx, syy, sxy);
 }
 
 void corrcoef2(int n, float x[], float y[])
@@ -41,7 +41,7 @@ void corrcoef2(int n, float x[], float y[])
     if (sxx > 0) sxx = sqrt(sxx);  else sxx = 0;
     if (syy > 0) syy = sqrt(syy);  else syy = 0;
     sxy = (sxy - n * sx * sy) / ((n - 1) * sxx * syy);
-    printf("É¸½àÊĞº¹ %g %g  Áê´Ø·¸¿ô %g\n", sxx, syy, sxy);
+    printf("æ¨™æº–åå·® %g %g  ç›¸é–¢ä¿‚æ•° %g\n", sxx, syy, sxy);
 }
 
 void corrcoef3(int n, float x[], float y[])
@@ -60,7 +60,7 @@ void corrcoef3(int n, float x[], float y[])
     sxx = sqrt(sxx / (n - 1));
     syy = sqrt(syy / (n - 1));
     sxy /= (n - 1) * sxx * syy;
-    printf("É¸½àÊĞº¹ %g %g  Áê´Ø·¸¿ô %g\n", sxx, syy, sxy);
+    printf("æ¨™æº–åå·® %g %g  ç›¸é–¢ä¿‚æ•° %g\n", sxx, syy, sxy);
 }
 
 #include <stdlib.h>
@@ -78,10 +78,10 @@ int main()
         t = getnum(stdin);  u = getnum(stdin);
         if (readerror(t) || readerror(u)) break;
         if (missing(t) || missing(u)) continue;
-        if (n >= NMAX) error("Â¿¤¹¤®¤Ş¤¹");
+        if (n >= NMAX) error("å¤šã™ãã¾ã™");
         x[n] = t;  y[n] = u;  n++;
     }
-    printf("¥Ç¡¼¥¿¤Î·ï¿ô %d\n", n);
+    printf("ãƒ‡ãƒ¼ã‚¿ã®ä»¶æ•° %d\n", n);
     corrcoef1(n, x, y);
     corrcoef2(n, x, y);
     corrcoef3(n, x, y);

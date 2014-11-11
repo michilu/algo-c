@@ -1,13 +1,13 @@
 /***********************************************************
-    sboymoo.c -- Boyer--MooreË¡
+    sboymoo.c -- Boyer--Mooreæ³•
 ***********************************************************/
-/* ´ÊÎ¬Boyer-MooreË¡ */
+/* ç°¡ç•¥Boyer-Mooreæ³• */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>  /* #define UCHAR_MAX 255 */
-#define DEMO         /* ¥Ç¥â¥ó¥¹¥È¥ì¡¼¥·¥ç¥ó */
+#define DEMO         /* ãƒ‡ãƒ¢ãƒ³ã‚¹ãƒˆãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ */
 
 int position(unsigned char text[], unsigned char pattern[])
 {
@@ -15,34 +15,34 @@ int position(unsigned char text[], unsigned char pattern[])
     static int skip[UCHAR_MAX + 1];
     unsigned char c, tail;
 
-    len = strlen((char *)pattern);  /* Ê¸»úÎó¤ÎÄ¹¤µ */
-    if (len == 0) return -1;        /* ¥¨¥é¡¼: Ä¹¤µ0 */
-    tail = pattern[len - 1];        /* ºÇ¸å¤ÎÊ¸»ú */
-    if (len == 1) {                 /* Ä¹¤µ1¤Ê¤é´ÊÃ±! */
+    len = strlen((char *)pattern);  /* æ–‡å­—åˆ—ã®é•·ã• */
+    if (len == 0) return -1;        /* ã‚¨ãƒ©ãƒ¼: é•·ã•0 */
+    tail = pattern[len - 1];        /* æœ€å¾Œã®æ–‡å­— */
+    if (len == 1) {                 /* é•·ã•1ãªã‚‰ç°¡å˜! */
         for (i = 0; text[i] != '\0'; i++)
             if (text[i] == tail) return i;
-    } else {                        /* Ä¹¤µ2°Ê¾å¤Ê¤éÉ½¤òºî¤Ã¤Æ¡Ä */
+    } else {                        /* é•·ã•2ä»¥ä¸Šãªã‚‰è¡¨ã‚’ä½œã£ã¦â€¦ */
         for (i = 0; i <= UCHAR_MAX; i++) skip[i] = len;
         for (i = 0; i < len - 1; i++)
             skip[pattern[i]] = len - 1 - i;
-        /* i = len - 1; */          /* ¤¤¤è¤¤¤è¾È¹ç */
+        /* i = len - 1; */          /* ã„ã‚ˆã„ã‚ˆç…§åˆ */
         while ((c = text[i]) != '\0') {
-#ifdef DEMO                         /* ¥Ç¥â¥ó¥¹¥È¥ì¡¼¥·¥ç¥óÍÑ */
-            printf("¥Æ: %s\n", text);
-            printf("¾È: %*s\n", i + 1, pattern);
+#ifdef DEMO                         /* ãƒ‡ãƒ¢ãƒ³ã‚¹ãƒˆãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ç”¨ */
+            printf("ãƒ†: %s\n", text);
+            printf("ç…§: %*s\n", i + 1, pattern);
 #endif
             if (c == tail) {
                 j = len - 1;  k = i;
                 while (pattern[--j] == text[--k])
-                    if (j == 0) return k;  /* ¸«¤Ä¤«¤Ã¤¿ */
+                    if (j == 0) return k;  /* è¦‹ã¤ã‹ã£ãŸ */
             }
             i += skip[c];
         }
     }
-    return -1;  /* ¸«¤Ä¤«¤é¤Ê¤«¤Ã¤¿ */
+    return -1;  /* è¦‹ã¤ã‹ã‚‰ãªã‹ã£ãŸ */
 }
 
-int mygets(int n, unsigned char s[])  /* n Ê¸»ú¤Ş¤Ç s[] ¤ËÆÉ¤ß¹ş¤à */
+int mygets(int n, unsigned char s[])  /* n æ–‡å­—ã¾ã§ s[] ã«èª­ã¿è¾¼ã‚€ */
 {
     int i, c;
 
@@ -61,14 +61,14 @@ int main()
         pattern[128];
 
     for ( ; ; ) {
-        printf("¥Æ¥­¥¹¥ÈÊ¸»úÎó (¥ê¥¿¡¼¥ó: %s)\n  ? ", text);
+        printf("ãƒ†ã‚­ã‚¹ãƒˆæ–‡å­—åˆ— (ãƒªã‚¿ãƒ¼ãƒ³: %s)\n  ? ", text);
         if ((n = mygets(127, text)) == 0) n = strlen((char *)text);
-        printf("¾È¹çÊ¸»úÎó (¥ê¥¿¡¼¥ó: ½ªÎ»)\n  ? ");
+        printf("ç…§åˆæ–‡å­—åˆ— (ãƒªã‚¿ãƒ¼ãƒ³: çµ‚äº†)\n  ? ");
         if ((m = mygets(127, pattern)) == 0) break;
         memset(text + n, 0, m);
         p = position(text, pattern);
-        if (p >= 0) printf("°ÌÃÖ = %d\n\n", p);
-        else        printf("¸«¤Ä¤«¤ê¤Ş¤»¤ó.\n\n");
+        if (p >= 0) printf("ä½ç½® = %d\n\n", p);
+        else        printf("è¦‹ã¤ã‹ã‚Šã¾ã›ã‚“.\n\n");
     }
     return EXIT_SUCCESS;
 }

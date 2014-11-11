@@ -1,12 +1,12 @@
 /***********************************************************
-    optmult.c -- ¹ÔÎó¤ÎÀÑ
+    optmult.c -- è¡Œåˆ—ã®ç©
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
 
-#define N  4                        /* ¹ÔÎó¤Î¿ô */
-int nrow[N + 1] = {4, 2, 6, 3, 5},  /* Îã¤¨¤Ğ */
+#define N  4                        /* è¡Œåˆ—ã®æ•° */
+int nrow[N + 1] = {4, 2, 6, 3, 5},  /* ä¾‹ãˆã° */
     mincost[N][N], split[N][N];
 
 void printresult(int left, int right)

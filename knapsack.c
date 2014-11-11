@@ -1,11 +1,11 @@
 /***********************************************************
-    knapsack.c -- ¥Ê¥Ã¥×¥¶¥Ã¥¯¤ÎÌäÂê
+    knapsack.c -- ãƒŠãƒƒãƒ—ã‚¶ãƒƒã‚¯ã®å•é¡Œ
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAXSIZE 1000  /* ¥Ê¥Ã¥×¥¶¥Ã¥¯¤ÎÂç¤­¤µ¤Î¾å¸Â */
-#define MAXITEM  100  /* ÉÊÌÜ¿ô¤Î¾å¸Â */
+#define MAXSIZE 1000  /* ãƒŠãƒƒãƒ—ã‚¶ãƒƒã‚¯ã®å¤§ãã•ã®ä¸Šé™ */
+#define MAXITEM  100  /* å“ç›®æ•°ã®ä¸Šé™ */
 int maxsofar[MAXSIZE + 1], newitem[MAXSIZE + 1];
 int size[MAXITEM], price[MAXITEM];
 
@@ -13,13 +13,13 @@ int main()
 {
     int i, n, knapsize, s, space, newvalue, smallest;
 
-    printf("¥Ê¥Ã¥×¥¶¥Ã¥¯¤ÎÂç¤­¤µ? ");  scanf("%d", &knapsize);
+    printf("ãƒŠãƒƒãƒ—ã‚¶ãƒƒã‚¯ã®å¤§ãã•? ");  scanf("%d", &knapsize);
     if (knapsize <= 0 || knapsize > MAXSIZE) return EXIT_FAILURE;
-    printf("ÉÊÌÜ¿ô? ");  scanf("%d", &n);
+    printf("å“ç›®æ•°? ");  scanf("%d", &n);
     if (n <= 0 || n > MAXITEM) return EXIT_FAILURE;
     for (i = 0; i < n; i++) {
-        printf("ÉÊÌÜ %d ¤ÎÂç¤­¤µ? ", i);  scanf("%d", &size[i]);
-        printf("ÉÊÌÜ %d ¤Î²Á³Ê  ? ", i);  scanf("%d", &price[i]);
+        printf("å“ç›® %d ã®å¤§ãã•? ", i);  scanf("%d", &size[i]);
+        printf("å“ç›® %d ã®ä¾¡æ ¼  ? ", i);  scanf("%d", &price[i]);
     }
 
     smallest = knapsize + 1;
@@ -37,10 +37,10 @@ int main()
         }
     }
 
-    printf("ÉÊÌÜ  ²Á³Ê\n");
+    printf("å“ç›®  ä¾¡æ ¼\n");
     for (s = knapsize; s >= smallest; s -= size[newitem[s]])
         printf("%4d %5d\n", newitem[s], price[newitem[s]]);
-    printf("¹ç·× %5d\n", maxsofar[knapsize]);
+    printf("åˆè¨ˆ %5d\n", maxsofar[knapsize]);
 
     return EXIT_SUCCESS;
 }

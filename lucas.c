@@ -1,5 +1,5 @@
 /***********************************************************
-    lucas.c -- ÁÇ¿ô¤ÎLucas¥Æ¥¹¥È
+    lucas.c -- ç´ æ•°ã®Lucasãƒ†ã‚¹ãƒˆ
 ***********************************************************/
 #define N 1000
 char a[N + 1], x[N];
@@ -30,7 +30,7 @@ int prime(int p)
                 }
             }
     }
-    a[p] = 1 - a[0];  /* ÈÖ¿Í */
+    a[p] = 1 - a[0];  /* ç•ªäºº */
     i = 1;
     while (a[i] == a[0]) i++;
     return (i == p);
@@ -43,10 +43,10 @@ int main()
 {
     int p;
 
-    printf("2^p - 1 ¤ÏÁÇ¿ô¤«¤É¤¦¤«Ä´¤Ù¤Ş¤¹ (p: ÁÇ¿ô).\n");
+    printf("2^p - 1 ã¯ç´ æ•°ã‹ã©ã†ã‹èª¿ã¹ã¾ã™ (p: ç´ æ•°).\n");
     printf("p? ");  scanf("%d", &p);
     if (p < 3 || p > N) return EXIT_FAILURE;
-    if (prime(p)) printf("2^%d - 1 ¤ÏÁÇ¿ô¤Ç¤¹.\n", p);
-    else          printf("2^%d - 1 ¤Ï¹çÀ®¿ô¤Ç¤¹.\n", p);
+    if (prime(p)) printf("2^%d - 1 ã¯ç´ æ•°ã§ã™.\n", p);
+    else          printf("2^%d - 1 ã¯åˆæˆæ•°ã§ã™.\n", p);
     return EXIT_SUCCESS;
 }

@@ -1,7 +1,7 @@
 /***********************************************************
-    gray2.c -- Gray (���쥤) ���
+    gray2.c -- Gray (グレイ) 符号
 ***********************************************************/
-#define N  6  /* ��� */
+#define N  6  /* 桁数 */
 #define HIGHBIT  (1U << (N - 1))
 
 unsigned int num_to_Gray(unsigned int x)
@@ -12,7 +12,7 @@ unsigned int num_to_Gray(unsigned int x)
     sw = Off;
     for (mask = HIGHBIT; mask != 0; mask >>= 1)
         if (sw) {
-            x ^= mask;  /* �ӥå�ȿž ($0 \leftrightarrow 1$) */
+            x ^= mask;  /* ビット反転 ($0 \leftrightarrow 1$) */
             if (x & mask) sw = Off;
         } else
             if (x & mask) sw = On;
@@ -28,7 +28,7 @@ unsigned int Gray_to_num(unsigned int x)
     for (mask = HIGHBIT; mask != 0; mask >>= 1)
         if (sw) {
             if (x & mask) sw = Off;
-            x ^= mask;  /* �ӥå�ȿž ($0 \leftrightarrow 1$) */
+            x ^= mask;  /* ビット反転 ($0 \leftrightarrow 1$) */
         } else
             if (x & mask) sw = On;
     return x;

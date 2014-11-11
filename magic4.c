@@ -1,7 +1,7 @@
 /***********************************************************
-    magic4.c -- À‚ ˝øÿ
+    magic4.c -- È≠îÊñπÈô£
 ***********************************************************/
-/* 4º°§ŒÀ‚ ˝øÿ */
+/* 4Ê¨°„ÅÆÈ≠îÊñπÈô£ */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -31,7 +31,7 @@ int main()
     forall(e) B(e) i = 34 - a - e - m;
     B(i) h = 34 - e - f - g; B(h) l = 34 - i - j - k;
     if (ok[l]) {
-        printf("≤Ú %d\n", ++count);
+        printf("Ëß£ %d\n", ++count);
         printf(FORMAT, a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p);
         E(h) E(i) E(e) E(o) E(n) E(j) E(g) E(k)
         E(f) E(c) E(b) E(p) E(m) E(d) E(a)

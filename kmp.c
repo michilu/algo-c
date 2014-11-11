@@ -1,5 +1,5 @@
 /***********************************************************
-    kmp.c -- Knuth--Morris--PrattË¡
+    kmp.c -- Knuth--Morris--Prattæ³•
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,7 +14,7 @@ int position(char text[], char pattern[])
     if (pattern[0] == '\0') return 0;
     i = 1;  j = 0;  next[1] = 0;
     while (pattern[i] != '\0') {
-        if (i >= M) return -1;  /* ¥¨¥é¡¼: {\tt pattern}¤¬Ä¹¤¹¤®¤ë */
+        if (i >= M) return -1;  /* ã‚¨ãƒ©ãƒ¼: {\tt pattern}ãŒé•·ã™ãã‚‹ */
         if (pattern[i] == pattern[j]) {  i++;  j++;  next[i] = j;  }
         else if (j == 0) {  i++;  next[i] = j;  }
         else j = next[j];
@@ -31,7 +31,7 @@ int position(char text[], char pattern[])
         else j = next[j];
     }
     if (pattern[j] == '\0') return i - j;
-    return -1;  /* ¸«¤Ä¤«¤é¤Ê¤¤ */
+    return -1;  /* è¦‹ã¤ã‹ã‚‰ãªã„ */
 }
 
 int main()

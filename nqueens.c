@@ -1,10 +1,10 @@
 /***********************************************************
-    nqueens.c -- N²¦ÈŞ¤ÎÌäÂê
+    nqueens.c -- Nç‹å¦ƒã®å•é¡Œ
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 
-#define N  8  /* N¡ßN ¤ÎÈ×ÌÌ */
+#define N  8  /* NÃ—N ã®ç›¤é¢ */
 int a[N], b[2 * N - 1], c[2 * N - 1], x[N];
 
 void found(void)
@@ -12,7 +12,7 @@ void found(void)
     int i, j;
     static solution = 0;
 
-    printf("\n²ò %d\n", ++solution);
+    printf("\nè§£ %d\n", ++solution);
     for (i = 0; i < N; i++) {
         for (j = 0; j < N; j++)
             if (x[i] == j) printf(" Q");

@@ -1,14 +1,14 @@
 /**************************************************************
-    hypot.c -- Ä¾³Ñ»°³Ñ·Á¤Î¼ĞÊÕ¤ÎÄ¹¤µ
+    hypot.c -- ç›´è§’ä¸‰è§’å½¢ã®æ–œè¾ºã®é•·ã•
 **************************************************************/
 #include <math.h>
 
-double hypot0(double x, double y)  /* ÄÌ¾ï¤ÎÊıË¡ */
+double hypot0(double x, double y)  /* é€šå¸¸ã®æ–¹æ³• */
 {
     return sqrt(x * x + y * y);
 }
 
-double hypot1(double x, double y)  /* ¤ä¤äÇ°Æş¤ê¤ÊÊıË¡ */
+double hypot1(double x, double y)  /* ã‚„ã‚„å¿µå…¥ã‚Šãªæ–¹æ³• */
 {
     double t;
 
@@ -23,7 +23,7 @@ double hypot1(double x, double y)  /* ¤ä¤äÇ°Æş¤ê¤ÊÊıË¡ */
     }
 }
 
-double hypot2(double x, double y)  /* Moler-MorrisonË¡ */
+double hypot2(double x, double y)  /* Moler-Morrisonæ³• */
 {
     int i;
     double t;

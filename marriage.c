@@ -1,9 +1,9 @@
 /***********************************************************
-    marriage.c -- °ÂÄê¤Ê·ëº§¤ÎÌäÂê
+    marriage.c -- å®‰å®šãªçµå©šã®å•é¡Œ
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
-#define N  3  /* ³ÆÀ­¤Î¿Í¿ô */
+#define N  3  /* å„æ€§ã®äººæ•° */
 
 int boy[N+1], girl[N+1][N+1], position[N+1], rank[N+1][N+1];
 
@@ -11,13 +11,13 @@ int main()
 {
     int b, g, r, s, t;
 
-    for (g = 1; g <= N; g++) {  /* ³Æ½÷À­¤Î¹¥¤ß */
+    for (g = 1; g <= N; g++) {  /* å„å¥³æ€§ã®å¥½ã¿ */
         for (r = 1; r <= N; r++) {
             scanf("%d", &b);  rank[g][b] = r;
         }
-        boy[g] = 0;  rank[g][0] = N + 1;  /* ÈÖ¿Í */
+        boy[g] = 0;  rank[g][0] = N + 1;  /* ç•ªäºº */
     }
-    for (b = 1; b <= N; b++) {  /* ³ÆÃËÀ­¤Î¹¥¤ß */
+    for (b = 1; b <= N; b++) {  /* å„ç”·æ€§ã®å¥½ã¿ */
         for (r = 1; r <= N; r++) scanf("%d", &girl[b][r]);
         position[b] = 0;
     }
@@ -31,6 +31,6 @@ int main()
         }
     }
     for (g = 1; g <= N; g++)
-        printf("½÷ %d - ÃË %d\n", g, boy[g]);
+        printf("å¥³ %d - ç”· %d\n", g, boy[g]);
     return EXIT_SUCCESS;
 }

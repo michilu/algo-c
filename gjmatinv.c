@@ -1,5 +1,5 @@
 /***********************************************************
-    gjmatinv.c -- µÕ¹ÔÎó
+    gjmatinv.c -- é€†è¡Œåˆ—
 ***********************************************************/
 #include "matutil.c"
 
@@ -24,14 +24,14 @@ double matinv(int n, matrix a)
     return det;
 }
 
-/************** °Ê²¼¤Ï¥Æ¥¹¥ÈÍÑ *****************/
+/************** ä»¥ä¸‹ã¯ãƒ†ã‚¹ãƒˆç”¨ *****************/
 
 #include <math.h>
 #include <limits.h>
 
-double rnd(void)  /* Íğ¿ô  0 < rnd() < 1 */
+double rnd(void)  /* ä¹±æ•°  0 < rnd() < 1 */
 {
-    static unsigned long seed = 123456789UL;  /* ´ñ¿ô */
+    static unsigned long seed = 123456789UL;  /* å¥‡æ•° */
 
     return (seed *= 69069UL) / (ULONG_MAX + 1.0);
 }
@@ -50,7 +50,7 @@ int main()
     printf("A\n");
     matprint(a, n, 7, "%10.6f");
     s = matinv(n, b);
-    printf("¹ÔÎó¼° = %g\n", s);
+    printf("è¡Œåˆ—å¼ = %g\n", s);
     printf("A^{-1}\n");
     matprint(b, n, 7, "%10.6f");
     t = 0;
@@ -61,7 +61,7 @@ int main()
                 s -= a[i][k] * b[k][j];
             t += s * s;
         }
-    printf("A A^{-1} ¤ÎÀ®Ê¬¤ÎÆó¾èÊ¿¶Ñ¸íº¹ %g\n",
+    printf("A A^{-1} ã®æˆåˆ†ã®äºŒä¹—å¹³å‡èª¤å·® %g\n",
         sqrt(t / (n * n)));
     t = 0;
     for (i = 0; i < n; i++)
@@ -71,7 +71,7 @@ int main()
                 s -= b[i][k] * a[k][j];
             t += s * s;
         }
-    printf("A^{-1} A ¤ÎÀ®Ê¬¤ÎÆó¾èÊ¿¶Ñ¸íº¹ %g\n",
+    printf("A^{-1} A ã®æˆåˆ†ã®äºŒä¹—å¹³å‡èª¤å·® %g\n",
         sqrt(t / (n * n)));
     return EXIT_SUCCESS;
 }

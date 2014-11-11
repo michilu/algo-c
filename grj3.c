@@ -1,10 +1,10 @@
 /***********************************************************
-    grj3.c -- ¥°¥é¥Õ¥£¥Ã¥¯¥¹
+    grj3.c -- ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹
 ************************************************************
-    ¥°¥é¥Õ¥£¥Ã¥¯¥¹´ğËÜ¥ë¡¼¥Á¥ó (J-3100)
-    ¥é¡¼¥¸¥â¥Ç¥ë, ¥³¥ó¥Ñ¥¯¥È¥â¥Ç¥ë, ¥Ò¥å¡¼¥¸¥â¥Ç¥ë¤Ê¤É,
-    ¥Ç¡¼¥¿ÍÑ¥İ¥¤¥ó¥¿¤ÎÉı¤¬32¥Ó¥Ã¥È¤Î¥â¡¼¥É¤Ç¥³¥ó¥Ñ¥¤¥ë
-    ¤·¤Æ¤¯¤À¤µ¤¤.
+    ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹åŸºæœ¬ãƒ«ãƒ¼ãƒãƒ³ (J-3100)
+    ãƒ©ãƒ¼ã‚¸ãƒ¢ãƒ‡ãƒ«, ã‚³ãƒ³ãƒ‘ã‚¯ãƒˆãƒ¢ãƒ‡ãƒ«, ãƒ’ãƒ¥ãƒ¼ã‚¸ãƒ¢ãƒ‡ãƒ«ãªã©,
+    ãƒ‡ãƒ¼ã‚¿ç”¨ãƒã‚¤ãƒ³ã‚¿ã®å¹…ãŒ32ãƒ“ãƒƒãƒˆã®ãƒ¢ãƒ¼ãƒ‰ã§ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
+    ã—ã¦ãã ã•ã„.
 ***********************************************************/
 #ifndef GRJ3_C
 #define GRJ3_C
@@ -14,23 +14,23 @@
 #include <string.h>  /* memset */
 #include <dos.h>     /* union REGS, int86 */
 
-#define XMAX  640U  /* ²£¥É¥Ã¥È¿ô */
-#define YMAX  400U  /* ½Ä¥É¥Ã¥È¿ô */
-enum {BLACK, BLUE, RED, MAGENTA, GREEN, CYAN, YELLOW, WHITE};  /* ¿§¥³¡¼¥É */
+#define XMAX  640U  /* æ¨ªãƒ‰ãƒƒãƒˆæ•° */
+#define YMAX  400U  /* ç¸¦ãƒ‰ãƒƒãƒˆæ•° */
+enum {BLACK, BLUE, RED, MAGENTA, GREEN, CYAN, YELLOW, WHITE};  /* è‰²ã‚³ãƒ¼ãƒ‰ */
 
 #define PLANE ((unsigned char *)0xb8000000L)
 
-static union REGS regs;  /* 8086¥ì¥¸¥¹¥¿ */
-static unsigned int offset;  /* GVRAM ¤Î¥ª¥Õ¥»¥Ã¥È */
+static union REGS regs;  /* 8086ãƒ¬ã‚¸ã‚¹ã‚¿ */
+static unsigned int offset;  /* GVRAM ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆ */
 
-static int dgetc(void)  /* ctrl-C ¤Ç»ß¤Ş¤é¤Ê¤¤1Ê¸»úÆşÎÏ */
-{                       /* ¥­¡¼¤¬²¡¤µ¤ì¤Æ¤¤¤Ê¤±¤ì¤Ğ0¤òÊÖ¤¹ */
+static int dgetc(void)  /* ctrl-C ã§æ­¢ã¾ã‚‰ãªã„1æ–‡å­—å…¥åŠ› */
+{                       /* ã‚­ãƒ¼ãŒæŠ¼ã•ã‚Œã¦ã„ãªã‘ã‚Œã°0ã‚’è¿”ã™ */
     regs.h.ah = 6;  regs.h.dl = 0xff;
     int86(0x21, &regs, &regs);  /* DOS call */
     return regs.h.al;
 }
 
-void hitanykey(void)  /* ¥­¡¼¤ò²¡¤¹¤Ş¤ÇÂÔ¤Ä */
+void hitanykey(void)  /* ã‚­ãƒ¼ã‚’æŠ¼ã™ã¾ã§å¾…ã¤ */
 {
     fputc('\a', stderr);    /* beep */
     while (dgetc() != 0) ;  /* flush key buffer */
@@ -38,7 +38,7 @@ void hitanykey(void)  /* ¥­¡¼¤ò²¡¤¹¤Ş¤ÇÂÔ¤Ä */
 }
 
 void gr_dot(unsigned int x, unsigned int y,
-            unsigned int color)  /* ÅÀ¤òÉ½¼¨ (color¤Ï¥À¥ß¡¼) */
+            unsigned int color)  /* ç‚¹ã‚’è¡¨ç¤º (colorã¯ãƒ€ãƒŸãƒ¼) */
 {
     static unsigned char
         count = 100,
@@ -53,12 +53,12 @@ void gr_dot(unsigned int x, unsigned int y,
         + (y & 3) * 0x2000] |= mask[x & 7];
 }
 
-void gr_off(void)  /* ¥°¥é¥Õ¥£¥Ã¥¯²èÌÌ¥¯¥ê¥¢ */
+void gr_off(void)  /* ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ç”»é¢ã‚¯ãƒªã‚¢ */
 {
     memset(PLANE, 0, 0x8000);
 }
 
-void gr_on(void)  /* ¥°¥é¥Õ¥£¥Ã¥¯²èÌÌ½é´ü²½ */
+void gr_on(void)  /* ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ç”»é¢åˆæœŸåŒ– */
 {
     static int first = 1;
 
@@ -69,13 +69,13 @@ void gr_on(void)  /* ¥°¥é¥Õ¥£¥Ã¥¯²èÌÌ½é´ü²½ */
         offset = regs.x.ax;
         first = 0;
     }
-    gr_off();                  /* ¥°¥é¥Õ¥£¥Ã¥¯²èÌÌ¥¯¥ê¥¢ */
-    fputs("\x1b[2J", stderr);  /* ¥Æ¥­¥¹¥È²èÌÌ¥¯¥ê¥¢ */
+    gr_off();                  /* ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ç”»é¢ã‚¯ãƒªã‚¢ */
+    fputs("\x1b[2J", stderr);  /* ãƒ†ã‚­ã‚¹ãƒˆç”»é¢ã‚¯ãƒªã‚¢ */
 }
 
 #endif  /* GRJ3_C */
 
-#if 0  /* ¥Æ¥¹¥È */
+#if 0  /* ãƒ†ã‚¹ãƒˆ */
 int main()
 {
     int i, j;
@@ -87,4 +87,4 @@ int main()
     hitanykey();
     return EXIT_SUCCESS;
 }
-#endif /* ¥Æ¥¹¥È */
+#endif /* ãƒ†ã‚¹ãƒˆ */

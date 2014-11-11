@@ -1,12 +1,12 @@
 /***********************************************************
-    log.c -- ÂĞ¿ô
+    log.c -- å¯¾æ•°
 ***********************************************************/
 #include <stdio.h>
 #include <math.h>
 #define LOG2  0.693147180559945309417232121458L /* log(2) */
 #define SQRT2 1.41421356237309504880168872421L /* sqrt(2) */
 
-long double llog(long double x)  /* ¼«Á³ÂĞ¿ô (µé¿ôÅ¸³«ÈÇ) */
+long double llog(long double x)  /* è‡ªç„¶å¯¾æ•° (ç´šæ•°å±•é–‹ç‰ˆ) */
 {
     int i, k;
     long double x2, s, last;
@@ -23,8 +23,8 @@ long double llog(long double x)  /* ¼«Á³ÂĞ¿ô (µé¿ôÅ¸³«ÈÇ) */
     return LOG2 * k + 2 * s;
 }
 
-#define N  9  /* ËÜÊ¸»²¾È */
-long double llog_cf(long double x)  /* ¼«Á³ÂĞ¿ô (Ï¢Ê¬¿ôÈÇ) */
+#define N  9  /* æœ¬æ–‡å‚ç…§ */
+long double llog_cf(long double x)  /* è‡ªç„¶å¯¾æ•° (é€£åˆ†æ•°ç‰ˆ) */
 {
     int i, k;
     long double s;

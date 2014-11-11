@@ -1,5 +1,5 @@
 /**************************************************************
-    evalcf.c -- Ï¢Ê¬¿ô
+    evalcf.c -- é€£åˆ†æ•°
 **************************************************************/
 #include <stdio.h>   /* printf */
 #include <float.h>   /* DBL_MAX */
@@ -29,7 +29,7 @@ double cf_descend(int n, double c[], double b[])
             p1 /= q2;  q1 /= q2;  p2 /= q2;  q2 = 1;
             printf("%3d: %g\n", i, p2);
         } else
-            printf("%3d: Ìµ¸ÂÂç\n", i);
+            printf("%3d: ç„¡é™å¤§\n", i);
     }
     if (q2 != 0) return p2;  else return DBL_MAX;
 }

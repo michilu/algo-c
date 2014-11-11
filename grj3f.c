@@ -1,7 +1,7 @@
 /***********************************************************
-    grj3.c -- •∞•È•’•£•√•Ø•π
+    grj3.c -- „Ç∞„É©„Éï„Ç£„ÉÉ„ÇØ„Çπ
 ************************************************************
-    •∞•È•’•£•√•Ø•π¥À‹•Î°º•¡•Û (J-3100, LSI C-86, farª»Õ—)
+    „Ç∞„É©„Éï„Ç£„ÉÉ„ÇØ„ÇπÂü∫Êú¨„É´„Éº„ÉÅ„É≥ (J-3100, LSI C-86, far‰ΩøÁî®)
 ***********************************************************/
 #ifndef GRJ3_C
 #define GRJ3_C
@@ -12,24 +12,24 @@
 #include <dos.h>     /* union REGS, int86 */
 #include <farstr.h>  /* LSI C-86 far functions */
 
-#define XMAX  640U  /* ≤£•…•√•»øÙ */
-#define YMAX  400U  /* Ωƒ•…•√•»øÙ */
+#define XMAX  640U  /* Ê®™„Éâ„ÉÉ„ÉàÊï∞ */
+#define YMAX  400U  /* Á∏¶„Éâ„ÉÉ„ÉàÊï∞ */
 enum {BLACK, BLUE, RED, MAGENTA, GREEN, CYAN, YELLOW, WHITE};
-    /* øß•≥°º•… (º¬∫›§œ BLACK ∞ ≥∞§œ§π§Ÿ§∆«Ú) */
+    /* Ëâ≤„Ç≥„Éº„Éâ (ÂÆüÈöõ„ÅØ BLACK ‰ª•Â§ñ„ÅØ„Åô„Åπ„Å¶ÁôΩ) */
 
 #define PLANE ((unsigned char far *)0xb8000000L)
 
-static union REGS regs;  /* 8086•Ï•∏•π•ø */
-static unsigned int offset;  /* GVRAM §Œ•™•’•ª•√•» */
+static union REGS regs;  /* 8086„É¨„Ç∏„Çπ„Çø */
+static unsigned int offset;  /* GVRAM „ÅÆ„Ç™„Éï„Çª„ÉÉ„Éà */
 
-static int dgetc(void)  /* ctrl-C §«ªﬂ§ﬁ§È§ §§1 ∏ª˙∆˛Œœ */
-{                       /* •≠°º§¨≤°§µ§Ï§∆§§§ §±§Ï§–0§Ú ÷§π */
+static int dgetc(void)  /* ctrl-C „ÅßÊ≠¢„Åæ„Çâ„Å™„ÅÑ1ÊñáÂ≠óÂÖ•Âäõ */
+{                       /* „Ç≠„Éº„ÅåÊäº„Åï„Çå„Å¶„ÅÑ„Å™„Åë„Çå„Å∞0„ÇíËøî„Åô */
     regs.h.ah = 6;  regs.h.dl = 0xff;
     int86(0x21, &regs, &regs);  /* DOS call */
     return regs.h.al;
 }
 
-void hitanykey(void)  /* •≠°º§Ú≤°§π§ﬁ§«¬‘§ƒ */
+void hitanykey(void)  /* „Ç≠„Éº„ÇíÊäº„Åô„Åæ„ÅßÂæÖ„Å§ */
 {
     fputc('\a', stderr);    /* beep */
     while (dgetc() != 0) ;  /* flush key buffer */
@@ -37,7 +37,7 @@ void hitanykey(void)  /* •≠°º§Ú≤°§π§ﬁ§«¬‘§ƒ */
 }
 
 void gr_dot(unsigned int x, unsigned int y,
-            unsigned int color)  /* ≈¿§Ú…Ωº® */
+            unsigned int color)  /* ÁÇπ„ÇíË°®Á§∫ */
 {
     static unsigned char
         count = 100,
@@ -57,19 +57,19 @@ void gr_dot(unsigned int x, unsigned int y,
             + (y & 3) * 0x2000] &= mask2[x & 7];
 }
 
-void gr_off(void)  /* •∞•È•’•£•√•Ø≤ËÃÃ•Ø•Í•¢ */
+void gr_off(void)  /* „Ç∞„É©„Éï„Ç£„ÉÉ„ÇØÁîªÈù¢„ÇØ„É™„Ç¢ */
 {
-    far_memset(PLANE, 0, 0x8000);  /* •∞•È•’•£•√•Ø≤ËÃÃ•Ø•Í•¢ */
-    fputs("\x1b[>5l", stderr);  /* •´°º•Ω•Î…Ωº® */
+    far_memset(PLANE, 0, 0x8000);  /* „Ç∞„É©„Éï„Ç£„ÉÉ„ÇØÁîªÈù¢„ÇØ„É™„Ç¢ */
+    fputs("\x1b[>5l", stderr);  /* „Ç´„Éº„ÇΩ„É´Ë°®Á§∫ */
 }
 
-void gr_on(void)  /* •∞•È•’•£•√•Ø≤ËÃÃΩÈ¥¸≤Ω */
+void gr_on(void)  /* „Ç∞„É©„Éï„Ç£„ÉÉ„ÇØÁîªÈù¢ÂàùÊúüÂåñ */
 {
     static int first = 1;
 
     if (first) {  atexit(gr_off);  first = 0;  }
-    far_memset(PLANE, 0, 0x8000);  /* •∞•È•’•£•√•Ø≤ËÃÃ•Ø•Í•¢ */
-    /* ≤ËÃÃ•Ø•Í•¢, •´°º•Ω•Î»Û…Ωº®, ∫«≤ºπ‘•Ê°º•∂ª»Õ— */
+    far_memset(PLANE, 0, 0x8000);  /* „Ç∞„É©„Éï„Ç£„ÉÉ„ÇØÁîªÈù¢„ÇØ„É™„Ç¢ */
+    /* ÁîªÈù¢„ÇØ„É™„Ç¢, „Ç´„Éº„ÇΩ„É´ÈùûË°®Á§∫, ÊúÄ‰∏ãË°å„É¶„Éº„Ç∂‰ΩøÁî® */
     fputs("\x1b[2J\x1b[>5h\x1b[>1h", stderr);
     regs.x.ax = 0x8300;
     int86(0x10, &regs, &regs);
@@ -78,7 +78,7 @@ void gr_on(void)  /* •∞•È•’•£•√•Ø≤ËÃÃΩÈ¥¸≤Ω */
 
 #endif  /* GRJ3_C */
 
-#if 0  /* •∆•π•» */
+#if 0  /* „ÉÜ„Çπ„Éà */
 int main()
 {
     int i, j, k, c, d;
@@ -94,4 +94,4 @@ int main()
     hitanykey();
     return EXIT_SUCCESS;
 }
-#endif /* •∆•π•» */
+#endif /* „ÉÜ„Çπ„Éà */

@@ -1,13 +1,13 @@
 /***********************************************************
-    jacobi.c -- Jacobi (¥ä¥³¥Ó) Ë¡
+    jacobi.c -- Jacobi (ãƒ¤ã‚³ãƒ“) æ³•
 ***********************************************************/
-#include "matutil.c"  /* ¹ÔÎóÍÑ¾®Æ»¶ñ½¸ */
+#include "matutil.c"  /* è¡Œåˆ—ç”¨å°é“å…·é›† */
 #include <math.h>
 #define TEST
 
-#define EPS         1E-6  /* µöÍÆ¸íº¹ */
-#define TINY        1E-20 /* 0 ¤È¸«¤Ê¤·¤Æ¤è¤¤ÃÍ */
-#define MAX_ITER    100   /* ºÇÂç¤Î·«ÊÖ¤·¿ô */
+#define EPS         1E-6  /* è¨±å®¹èª¤å·® */
+#define TINY        1E-20 /* 0 ã¨è¦‹ãªã—ã¦ã‚ˆã„å€¤ */
+#define MAX_ITER    100   /* æœ€å¤§ã®ç¹°è¿”ã—æ•° */
 #define forall(i)   for (i = 0; i < n; i++)
 #define rotate(a, i, j, k, l) {      \
     double x = a[i][j], y = a[k][l]; \
@@ -54,7 +54,7 @@ int jacobi(int n, matrix a, matrix w)
             }
         }
     }
-    if (iter > MAX_ITER) return EXIT_FAILURE;  /* ¼ıÂ«¤»¤º */
+    if (iter > MAX_ITER) return EXIT_FAILURE;  /* åæŸã›ãš */
     for (i = 0; i < n - 1; i++) {
         k = i;  t = a[k][k];
         for (j = i + 1; j < n; j++)
@@ -62,14 +62,14 @@ int jacobi(int n, matrix a, matrix w)
         a[k][k] = a[i][i];  a[i][i] = t;
         v = w[k];  w[k] = w[i];  w[i] = v;
     }
-    return EXIT_SUCCESS;  /* À®¸ù */
+    return EXIT_SUCCESS;  /* æˆåŠŸ */
 }
 
-/*************** °Ê²¼¤Ï¥Æ¥¹¥ÈÍÑ *****************/
+/*************** ä»¥ä¸‹ã¯ãƒ†ã‚¹ãƒˆç”¨ *****************/
 
 #include <limits.h>
 static unsigned long seed;
-double rnd(void)  /* Íğ¿ô  0 < rnd() < 1 */
+double rnd(void)  /* ä¹±æ•°  0 < rnd() < 1 */
 {
     return (seed *= 69069UL) / (ULONG_MAX + 1.0);
 }
@@ -82,7 +82,7 @@ int main()
     vector lambda;
 
     printf("n = ");  scanf("%d", &n);
-    printf("Íğ¿ô¤Î¼ï (Àµ¤ÎÀ°¿ô) = ");
+    printf("ä¹±æ•°ã®ç¨® (æ­£ã®æ•´æ•°) = ");
     scanf("%ul", &seed);  seed |= 1;
     a = new_matrix(n, n);
     b = new_matrix(n, n);
@@ -93,9 +93,9 @@ int main()
         b[i][j] = b[j][i] = rnd() - rnd();
     matprint(a, n, 7, "%10.6f");
     if (jacobi(n, a, w) == EXIT_FAILURE)
-        printf("¼ıÂ«¤·¤Ş¤»¤ó\n");
+        printf("åæŸã—ã¾ã›ã‚“\n");
     forall(i) lambda[i] = a[i][i];
-    printf("¸ÇÍ­ÃÍ:\n");
+    printf("å›ºæœ‰å€¤:\n");
     vecprint(lambda, n, 5, "% -14g");
     e = 0;
     forall(i) forall(j) {
@@ -103,6 +103,6 @@ int main()
         forall(k) s -= lambda[k] * w[k][i] * w[k][j];
         e += s * s;
     }
-    printf("Æó¾èÊ¿¶Ñ¸íº¹: %g\n", sqrt(e / (n * n)));
+    printf("äºŒä¹—å¹³å‡èª¤å·®: %g\n", sqrt(e / (n * n)));
     return EXIT_SUCCESS;
 }

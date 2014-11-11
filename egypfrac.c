@@ -1,5 +1,5 @@
 /***********************************************************
-    egypfrac.c -- ¥¨¥¸¥×¥È¤ÎÊ¬¿ô
+    egypfrac.c -- ã‚¨ã‚¸ãƒ—ãƒˆã®åˆ†æ•°
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,8 +7,8 @@ int main()
 {
     int m, n, q;
 
-    printf(" Ê¬»Ò m = ");  scanf("%d", &m);
-    printf(" Ê¬Êì n = ");  scanf("%d", &n);
+    printf(" åˆ†å­ m = ");  scanf("%d", &m);
+    printf(" åˆ†æ¯ n = ");  scanf("%d", &n);
     printf("%d/%d = ", m, n);
     while (n % m != 0) {
         q = n / m + 1;

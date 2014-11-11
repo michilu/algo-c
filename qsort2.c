@@ -1,5 +1,5 @@
 /***********************************************************
-    qsort2.c -- ¥¯¥¤¥Ã¥¯¥½¡¼¥È
+    qsort2.c -- ã‚¯ã‚¤ãƒƒã‚¯ã‚½ãƒ¼ãƒˆ
 ***********************************************************/
 typedef int keytype;
 
@@ -17,7 +17,7 @@ void inssort(int n, keytype a[])
 }
 
 #define THRESHOLD 10
-#define STACKSIZE 32  /* ¤¿¤«¤À¤« int ¤Î¥Ó¥Ã¥È¿ôÄøÅÙ */
+#define STACKSIZE 32  /* ãŸã‹ã ã‹ int ã®ãƒ“ãƒƒãƒˆæ•°ç¨‹åº¦ */
 
 void quicksort(int n, keytype a[])
 {

@@ -1,15 +1,15 @@
 /***********************************************************
-    huffman.c -- Huffman (¥Ï¥Õ¥Ş¥ó) Ë¡
+    huffman.c -- Huffman (ãƒãƒ•ãƒãƒ³) æ³•
 ***********************************************************/
-#include "bitio.c"              /* ¥Ó¥Ã¥ÈÆş½ĞÎÏ */
+#include "bitio.c"              /* ãƒ“ãƒƒãƒˆå…¥å‡ºåŠ› */
 
-#define N       256             /* Ê¸»ú¤Î¼ïÎà */
-#define CHARBITS  8             /* 1¥Ğ¥¤¥È¤Î¥Ó¥Ã¥È¿ô */
-int heapsize, heap[2*N-1],      /* Í¥ÀèÂÔ¤Á¹ÔÎóÍÑ¥Ò¡¼¥× */
-    parent[2*N-1], left[2*N-1], right[2*N-1];  /* HuffmanÌÚ */
-unsigned long int freq[2*N-1];  /* ³ÆÊ¸»ú¤Î½Ğ¸½ÉÑÅÙ */
+#define N       256             /* æ–‡å­—ã®ç¨®é¡ */
+#define CHARBITS  8             /* 1ãƒã‚¤ãƒˆã®ãƒ“ãƒƒãƒˆæ•° */
+int heapsize, heap[2*N-1],      /* å„ªå…ˆå¾…ã¡è¡Œåˆ—ç”¨ãƒ’ãƒ¼ãƒ— */
+    parent[2*N-1], left[2*N-1], right[2*N-1];  /* Huffmanæœ¨ */
+unsigned long int freq[2*N-1];  /* å„æ–‡å­—ã®å‡ºç¾é »åº¦ */
 
-static void downheap(int i)  /* Í¥ÀèÂÔ¤Á¹ÔÎó¤ËÁŞÆş */
+static void downheap(int i)  /* å„ªå…ˆå¾…ã¡è¡Œåˆ—ã«æŒ¿å…¥ */
 {
     int j, k;
 
@@ -23,46 +23,46 @@ static void downheap(int i)  /* Í¥ÀèÂÔ¤Á¹ÔÎó¤ËÁŞÆş */
     heap[i] = k;
 }
 
-void writetree(int i)  /* »Ş¤ò½ĞÎÏ */
+void writetree(int i)  /* æã‚’å‡ºåŠ› */
 {
-    if (i < N) {  /* ÍÕ */
+    if (i < N) {  /* è‘‰ */
         putbit(0);
-        putbits(CHARBITS, i);  /* Ê¸»ú¤½¤Î¤â¤Î */
-    } else {      /* Àá */
+        putbits(CHARBITS, i);  /* æ–‡å­—ãã®ã‚‚ã® */
+    } else {      /* ç¯€ */
         putbit(1);
-        writetree(left[i]);  writetree(right[i]);  /* º¸±¦¤Î»Ş */
+        writetree(left[i]);  writetree(right[i]);  /* å·¦å³ã®æ */
     }
 }
 
-void encode(void)  /* °µ½Ì */
+void encode(void)  /* åœ§ç¸® */
 {
     int i, j, k, avail, tablesize;
     unsigned long int incount, cr;
-    static char codebit[N];  /* Éä¹æ¸ì */
+    static char codebit[N];  /* ç¬¦å·èª */
 
-    for (i = 0; i < N; i++) freq[i] = 0;  /* ÉÑÅÙ¤Î½é´ü²½ */
-    while ((i = getc(infile)) != EOF) freq[i]++;  /* ÉÑÅÙ¿ô¤¨ */
-    heap[1] = 0;  /* Ä¹¤µ0¤Î¥Õ¥¡¥¤¥ë¤ËÈ÷¤¨¤ë */
+    for (i = 0; i < N; i++) freq[i] = 0;  /* é »åº¦ã®åˆæœŸåŒ– */
+    while ((i = getc(infile)) != EOF) freq[i]++;  /* é »åº¦æ•°ãˆ */
+    heap[1] = 0;  /* é•·ã•0ã®ãƒ•ã‚¡ã‚¤ãƒ«ã«å‚™ãˆã‚‹ */
     heapsize = 0;
     for (i = 0; i < N; i++)
-        if (freq[i] != 0) heap[++heapsize] = i;  /* Í¥ÀèÂÔ¤Á¹ÔÎó¤ËÅĞÏ¿ */
-    for (i = heapsize / 2; i >= 1; i--) downheap(i);  /* ¥Ò¡¼¥×ºî¤ê */
-    for (i = 0; i < 2 * N - 1; i++) parent[i] = 0;  /* Ç°¤Î¤¿¤á */
-    k = heap[1];  /* °Ê²¼¤Î¥ë¡¼¥×¤¬1²ó¤â¼Â¹Ô¤µ¤ì¤Ê¤¤¾ì¹ç¤ËÈ÷¤¨¤ë */
-    avail = N;  /* °Ê²¼¤Î¥ë¡¼¥×¤Ç¥Ï¥Õ¥Ş¥óÌÚ¤òºî¤ë */
-    while (heapsize > 1) {  /* 2¸Ä°Ê¾å»Ä¤ê¤¬¤¢¤ë´Ö */
-        i = heap[1];  /* ºÇ¾®¤ÎÍ×ÁÇ¤ò¼è¤ê½Ğ¤¹ */
-        heap[1] = heap[heapsize--];  downheap(1);  /* ¥Ò¡¼¥×ºÆ¹½À® */
-        j = heap[1];  /* ¼¡¤ËºÇ¾®¤ÎÍ×ÁÇ¤ò¼è¤ê½Ğ¤¹ */
-        k = avail++;  /* ¿·¤·¤¤Àá¤òÀ¸À®¤¹¤ë */
-        freq[k] = freq[i] + freq[j];  /* ÉÑÅÙ¤ò¹ç·× */
-        heap[1] = k;  downheap(1);  /* ÂÔ¤Á¹ÔÎó¤ËÅĞÏ¿ */
-        parent[i] = k;  parent[j] = -k;  /* ÌÚ¤òºî¤ë */
-        left[k] = i;  right[k] = j;      /* ¡· */
+        if (freq[i] != 0) heap[++heapsize] = i;  /* å„ªå…ˆå¾…ã¡è¡Œåˆ—ã«ç™»éŒ² */
+    for (i = heapsize / 2; i >= 1; i--) downheap(i);  /* ãƒ’ãƒ¼ãƒ—ä½œã‚Š */
+    for (i = 0; i < 2 * N - 1; i++) parent[i] = 0;  /* å¿µã®ãŸã‚ */
+    k = heap[1];  /* ä»¥ä¸‹ã®ãƒ«ãƒ¼ãƒ—ãŒ1å›ã‚‚å®Ÿè¡Œã•ã‚Œãªã„å ´åˆã«å‚™ãˆã‚‹ */
+    avail = N;  /* ä»¥ä¸‹ã®ãƒ«ãƒ¼ãƒ—ã§ãƒãƒ•ãƒãƒ³æœ¨ã‚’ä½œã‚‹ */
+    while (heapsize > 1) {  /* 2å€‹ä»¥ä¸Šæ®‹ã‚ŠãŒã‚ã‚‹é–“ */
+        i = heap[1];  /* æœ€å°ã®è¦ç´ ã‚’å–ã‚Šå‡ºã™ */
+        heap[1] = heap[heapsize--];  downheap(1);  /* ãƒ’ãƒ¼ãƒ—å†æ§‹æˆ */
+        j = heap[1];  /* æ¬¡ã«æœ€å°ã®è¦ç´ ã‚’å–ã‚Šå‡ºã™ */
+        k = avail++;  /* æ–°ã—ã„ç¯€ã‚’ç”Ÿæˆã™ã‚‹ */
+        freq[k] = freq[i] + freq[j];  /* é »åº¦ã‚’åˆè¨ˆ */
+        heap[1] = k;  downheap(1);  /* å¾…ã¡è¡Œåˆ—ã«ç™»éŒ² */
+        parent[i] = k;  parent[j] = -k;  /* æœ¨ã‚’ä½œã‚‹ */
+        left[k] = i;  right[k] = j;      /* ã€ƒ */
     }
-    writetree(k);  /* ÌÚ¤ò½ĞÎÏ */
-    tablesize = (int) outcount;  /* É½¤ÎÂç¤­¤µ */
-    incount = 0;  rewind(infile);  /* ºÆÁöºº */
+    writetree(k);  /* æœ¨ã‚’å‡ºåŠ› */
+    tablesize = (int) outcount;  /* è¡¨ã®å¤§ãã• */
+    incount = 0;  rewind(infile);  /* å†èµ°æŸ» */
     while ((j = getc(infile)) != EOF) {
         k = 0;
         while ((j = parent[j]) != 0)
@@ -70,68 +70,68 @@ void encode(void)  /* °µ½Ì */
             else {     codebit[k++] = 1;  j = -j;  }
         while (--k >= 0) putbit(codebit[k]);
         if ((++incount & 1023) == 0)
-            printf("%12lu\r", incount);  /* ¾õ¶·Êó¹ğ */
+            printf("%12lu\r", incount);  /* çŠ¶æ³å ±å‘Š */
     }
-    putbits(7, 0);  /* ¥Ğ¥Ã¥Õ¥¡¤Î»Ä¤ê¤ò¥Õ¥é¥Ã¥·¥å */
-    printf("In : %lu bytes\n", incount);  /* ·ë²ÌÊó¹ğ */
+    putbits(7, 0);  /* ãƒãƒƒãƒ•ã‚¡ã®æ®‹ã‚Šã‚’ãƒ•ãƒ©ãƒƒã‚·ãƒ¥ */
+    printf("In : %lu bytes\n", incount);  /* çµæœå ±å‘Š */
     printf("Out: %lu bytes (table: %d bytes)\n",
         outcount, tablesize);
-    if (incount != 0) {  /* °µ½ÌÈæ¤òµá¤á¤ÆÊó¹ğ */
+    if (incount != 0) {  /* åœ§ç¸®æ¯”ã‚’æ±‚ã‚ã¦å ±å‘Š */
         cr = (1000 * outcount + incount / 2) / incount;
         printf("Out/In: %lu.%03lu\n", cr / 1000, cr % 1000);
     }
 }
 
-int readtree(void)  /* ÌÚ¤òÆÉ¤à */
+int readtree(void)  /* æœ¨ã‚’èª­ã‚€ */
 {
     int i;
     static int avail = N;
 
-    if (getbit()) {  /* bit=1: ÍÕ¤Ç¤Ê¤¤Àá */
-        if ((i = avail++) >= 2 * N - 1) error("É½¤¬´Ö°ã¤Ã¤Æ¤¤¤Ş¤¹");
-        left [i] = readtree();  /* º¸¤Î»Ş¤òÆÉ¤à */
-        right[i] = readtree();  /* ±¦¤Î»Ş¤òÆÉ¤à */
-        return i;               /* Àá¤òÊÖ¤¹ */
-    } else return (int) getbits(CHARBITS);  /* Ê¸»ú */
+    if (getbit()) {  /* bit=1: è‘‰ã§ãªã„ç¯€ */
+        if ((i = avail++) >= 2 * N - 1) error("è¡¨ãŒé–“é•ã£ã¦ã„ã¾ã™");
+        left [i] = readtree();  /* å·¦ã®æã‚’èª­ã‚€ */
+        right[i] = readtree();  /* å³ã®æã‚’èª­ã‚€ */
+        return i;               /* ç¯€ã‚’è¿”ã™ */
+    } else return (int) getbits(CHARBITS);  /* æ–‡å­— */
 }
 
-void decode(unsigned long int size)  /* Éü¸µ */
+void decode(unsigned long int size)  /* å¾©å…ƒ */
 {
     int j, root;
     unsigned long int k;
 
-    root = readtree();  /* ÌÚ¤òÆÉ¤à */
-    for (k = 0; k < size; k++) {  /* ³ÆÊ¸»ú¤òÉü¸µ */
-        j = root;  /* º¬ */
+    root = readtree();  /* æœ¨ã‚’èª­ã‚€ */
+    for (k = 0; k < size; k++) {  /* å„æ–‡å­—ã‚’å¾©å…ƒ */
+        j = root;  /* æ ¹ */
         while (j >= N)
             if (getbit()) j = right[j];  else j = left[j];
         putc(j, outfile);
-        if ((k & 1023) == 0) printf("%12lu\r", k);  /* ½ĞÎÏ¥Ğ¥¤¥È¿ô */
+        if ((k & 1023) == 0) printf("%12lu\r", k);  /* å‡ºåŠ›ãƒã‚¤ãƒˆæ•° */
     }
-    printf("%12lu\n", size);  /* Éü¸µ¤·¤¿¥Ğ¥¤¥È¿ô */
+    printf("%12lu\n", size);  /* å¾©å…ƒã—ãŸãƒã‚¤ãƒˆæ•° */
 }
 
 int main(int argc, char *argv[])
 {
     int c;
-    unsigned long int size;  /* ¸µ¤Î¥Ğ¥¤¥È¿ô */
+    unsigned long int size;  /* å…ƒã®ãƒã‚¤ãƒˆæ•° */
 
     if (argc != 4 || ((c = *argv[1]) != 'E' && c != 'e'
                                 && c != 'D' && c != 'd'))
-        error("»ÈÍÑË¡¤ÏËÜÊ¸¤ò»²¾È¤·¤Æ¤¯¤À¤µ¤¤");
+        error("ä½¿ç”¨æ³•ã¯æœ¬æ–‡ã‚’å‚ç…§ã—ã¦ãã ã•ã„");
     if ((infile  = fopen(argv[2], "rb")) == NULL)
-        error("ÆşÎÏ¥Õ¥¡¥¤¥ë¤¬³«¤­¤Ş¤»¤ó");
+        error("å…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«ãŒé–‹ãã¾ã›ã‚“");
     if ((outfile = fopen(argv[3], "wb")) == NULL)
-        error("½ĞÎÏ¥Õ¥¡¥¤¥ë¤¬³«¤­¤Ş¤»¤ó");
+        error("å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«ãŒé–‹ãã¾ã›ã‚“");
     if (c == 'E' || c == 'e') {
-        fseek(infile, 0L, SEEK_END);  /* infile ¤ÎËöÈø¤òÃµ¤¹ */
-        size = ftell(infile);     /* infile ¤Î¥Ğ¥¤¥È¿ô */
+        fseek(infile, 0L, SEEK_END);  /* infile ã®æœ«å°¾ã‚’æ¢ã™ */
+        size = ftell(infile);     /* infile ã®ãƒã‚¤ãƒˆæ•° */
         fwrite(&size, sizeof size, 1, outfile);
         rewind(infile);
-        encode();  /* °µ½Ì */
+        encode();  /* åœ§ç¸® */
     } else {
-        fread(&size, sizeof size, 1, infile);  /* ¸µ¤Î¥Ğ¥¤¥È¿ô */
-        decode(size);  /* Éü¸µ */
+        fread(&size, sizeof size, 1, infile);  /* å…ƒã®ãƒã‚¤ãƒˆæ•° */
+        decode(size);  /* å¾©å…ƒ */
     }
     fclose(infile);  fclose(outfile);
     return EXIT_SUCCESS;

@@ -1,16 +1,16 @@
 /***********************************************************
-    ibeta.c -- ÉÔ´°Á´¥Ù¡¼¥¿´Ø¿ô
+    ibeta.c -- ä¸å®Œå…¨ãƒ™ãƒ¼ã‚¿é–¢æ•°
 ***********************************************************/
 #include <stdio.h>
 #include <math.h>
 
-/************ loggamma(x) -- gamma.c ¤è¤êºÆ·Ç *************/
+/************ loggamma(x) -- gamma.c ã‚ˆã‚Šå†æ² *************/
 
 #define PI      3.14159265358979324  /* $\pi$ */
 #define LOG_2PI 1.83787706640934548  /* $\log 2\pi$ */
 #define N       8
 
-#define B0  1                 /* °Ê²¼¤ÏBernoulli¿ô */
+#define B0  1                 /* ä»¥ä¸‹ã¯Bernoulliæ•° */
 #define B1  (-1.0 / 2.0)
 #define B2  ( 1.0 / 6.0)
 #define B4  (-1.0 / 30.0)
@@ -21,7 +21,7 @@
 #define B14 ( 7.0 / 6.0)
 #define B16 (-3617.0 / 510.0)
 
-double loggamma(double x)  /* ¥¬¥ó¥Ş´Ø¿ô¤ÎÂĞ¿ô */
+double loggamma(double x)  /* ã‚¬ãƒ³ãƒé–¢æ•°ã®å¯¾æ•° */
 {
     double v, w;
 
@@ -69,7 +69,7 @@ double p_beta(double x, double a, double b)
         p1 /= q2;  q1 /= q2;  p2 /= q2;  q2 = 1;
         if (p2 == previous) return p2;
     }
-    printf("p_beta: ¼ıÂ«¤·¤Ş¤»¤ó.\n");
+    printf("p_beta: åæŸã—ã¾ã›ã‚“.\n");
     return p2;
 }
 
@@ -78,7 +78,7 @@ double q_beta(double x, double a, double b)
     return 1 - p_beta(x, a, b);
 }
 
-#if 0  /***** »²¹Í: µé¿ôÅ¸³«¤Ë¤è¤ëÈÇ *****/
+#if 0  /***** å‚è€ƒ: ç´šæ•°å±•é–‹ã«ã‚ˆã‚‹ç‰ˆ *****/
 
 double p_beta2(double x, double a, double b)
 {
@@ -101,41 +101,41 @@ double p_beta2(double x, double a, double b)
         previous = result;  result += term;
         if (result == previous) return result;
     }
-    fprintf(stderr, "p_beta2: ¼ıÂ«¤·¤Ş¤»¤ó.\n");
+    fprintf(stderr, "p_beta2: åæŸã—ã¾ã›ã‚“.\n");
     return result;
 }
-#endif  /* µé¿ôÅ¸³«¤Ë¤è¤ëÈÇ */
+#endif  /* ç´šæ•°å±•é–‹ã«ã‚ˆã‚‹ç‰ˆ */
 
-double p_t(double t, int df)  /* t Ê¬ÉÛ¤Î²¼Â¦³ÎÎ¨ */
+double p_t(double t, int df)  /* t åˆ†å¸ƒã®ä¸‹å´ç¢ºç‡ */
 {
     return 1 - 0.5 * p_beta(df / (df + t * t), 0.5 * df, 0.5);
 }
 
-double q_t(double t, int df)  /* t Ê¬ÉÛ¤Î¾åÂ¦³ÎÎ¨ */
+double q_t(double t, int df)  /* t åˆ†å¸ƒã®ä¸Šå´ç¢ºç‡ */
 {
     return 0.5 * p_beta(df / (df + t * t), 0.5 * df, 0.5);
 }
 
-double p_f(double f, int df1, int df2)  /* F Ê¬ÉÛ¤Î²¼Â¦³ÎÎ¨ */
+double p_f(double f, int df1, int df2)  /* F åˆ†å¸ƒã®ä¸‹å´ç¢ºç‡ */
 {
     if (f <= 0) return 0;
     return p_beta(df1 / (df1 + df2 / f), 0.5 * df1, 0.5 * df2);
 }
 
-double q_f(double f, int df1, int df2)  /* F Ê¬ÉÛ¤Î¾åÂ¦³ÎÎ¨ */
+double q_f(double f, int df1, int df2)  /* F åˆ†å¸ƒã®ä¸Šå´ç¢ºç‡ */
 {
     if (f <= 0) return 1;
     return p_beta(df2 / (df2 + df1 * f), 0.5 * df2, 0.5 * df1);
 }
 
-double p_binomial(int n, double p, int k) /* 2¹àÊ¬ÉÛ B(n,p) ¤Î X <= k ¤Î³ÎÎ¨ */
+double p_binomial(int n, double p, int k) /* 2é …åˆ†å¸ƒ B(n,p) ã® X <= k ã®ç¢ºç‡ */
 {
     if (k <  0) return 0;
     if (k >= n) return 1;
     return p_beta(1 - p, k + 1, n - k);
 }
 
-double q_binomial(int n, double p, int k) /* 2¹àÊ¬ÉÛ B(n,p) ¤Î X >= k ¤Î³ÎÎ¨ */
+double q_binomial(int n, double p, int k) /* 2é …åˆ†å¸ƒ B(n,p) ã® X >= k ã®ç¢ºç‡ */
 {
     if (k <= 0) return 1;
     if (k >  n) return 0;
@@ -144,16 +144,16 @@ double q_binomial(int n, double p, int k) /* 2¹àÊ¬ÉÛ B(n,p) ¤Î X >= k ¤Î³ÎÎ¨ */
 
 #include <stdlib.h>
 
-int main()  /* ¼ã´³¤Î¥Æ¥¹¥È */
+int main()  /* è‹¥å¹²ã®ãƒ†ã‚¹ãƒˆ */
 {
     int i;
     double x, a, b;
 
-    printf("(1) ÉÔ´°Á´¥Ù¡¼¥¿´Ø¿ô I_x(a,b), 1 - I_x(a,b)\n");
-    printf("(2) tÊ¬ÉÛ¤Î²¼¡¦¾åÂ¦³ÎÎ¨\n");
-    printf("(3) FÊ¬ÉÛ¤Î²¼¡¦¾åÂ¦³ÎÎ¨\n");
-    printf("(4) 2¹àÊ¬ÉÛ B(p,k) ¤Î X <= k,  X >= k ¤Î³ÎÎ¨\n");
-    printf("¤É¤ì¤Ë¤·¤Ş¤¹¤«? ");  scanf("%d", &i);
+    printf("(1) ä¸å®Œå…¨ãƒ™ãƒ¼ã‚¿é–¢æ•° I_x(a,b), 1 - I_x(a,b)\n");
+    printf("(2) tåˆ†å¸ƒã®ä¸‹ãƒ»ä¸Šå´ç¢ºç‡\n");
+    printf("(3) Fåˆ†å¸ƒã®ä¸‹ãƒ»ä¸Šå´ç¢ºç‡\n");
+    printf("(4) 2é …åˆ†å¸ƒ B(p,k) ã® X <= k,  X >= k ã®ç¢ºç‡\n");
+    printf("ã©ã‚Œã«ã—ã¾ã™ã‹? ");  scanf("%d", &i);
     switch (i) {
     case 1:
         printf("a? ");  scanf("%lf", &a);
@@ -165,7 +165,7 @@ int main()  /* ¼ã´³¤Î¥Æ¥¹¥È */
         }
         break;
     case 2:
-        printf("¼«Í³ÅÙ? ");  scanf("%lf", &a);
+        printf("è‡ªç”±åº¦? ");  scanf("%lf", &a);
         for (i = 0; i <= 20; i++) {
             x = i / 5.0;
             printf("%3.1f %20.15f %20.15f\n",
@@ -173,8 +173,8 @@ int main()  /* ¼ã´³¤Î¥Æ¥¹¥È */
         }
         break;
     case 3:
-        printf("¼«Í³ÅÙ df1 ? ");  scanf("%lf", &a);
-        printf("¼«Í³ÅÙ df2 ? ");  scanf("%lf", &b);
+        printf("è‡ªç”±åº¦ df1 ? ");  scanf("%lf", &a);
+        printf("è‡ªç”±åº¦ df2 ? ");  scanf("%lf", &b);
         for (x = 0; x <= 10; x++)
             printf("%4.1f %20.15f %20.15f\n",
                 x, p_f(x, (int)a, (int)b),

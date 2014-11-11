@@ -1,8 +1,8 @@
 /***********************************************************
-    rank1.c -- ½ç°Ì¤Å¤±
+    rank1.c -- é †ä½ã¥ã‘
 ***********************************************************/
 
-int rank1(int i, int n, int a[])  /* a[i] ¤Î½ç°Ì (³ØÎÏ¥Æ¥¹¥È) */
+int rank1(int i, int n, int a[])  /* a[i] ã®é †ä½ (å­¦åŠ›ãƒ†ã‚¹ãƒˆ) */
 {
     int k, r, x;
 
@@ -12,7 +12,7 @@ int rank1(int i, int n, int a[])  /* a[i] ¤Î½ç°Ì (³ØÎÏ¥Æ¥¹¥È) */
     return r;
 }
 
-float rank2(int i, int n, int a[])  /* a[i] ¤Î½ç°Ì (Åı·×³Ø) */
+float rank2(int i, int n, int a[])  /* a[i] ã®é †ä½ (çµ±è¨ˆå­¦) */
 {
     int k, n_eq, n_lt, x;
 
@@ -25,8 +25,8 @@ float rank2(int i, int n, int a[])  /* a[i] ¤Î½ç°Ì (Åı·×³Ø) */
 
 #include <stdio.h>
 #include <stdlib.h>
-#define N    20  /* ¿Í¿ô */
-#define MAX 100  /* ËşÅÀ */
+#define N    20  /* äººæ•° */
+#define MAX 100  /* æº€ç‚¹ */
 
 int main()
 {

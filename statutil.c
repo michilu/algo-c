@@ -1,14 +1,14 @@
 /***********************************************************
-    statutil.c -- Â¿ÊÑÎÌ¥Ç¡¼¥¿
+    statutil.c -- å¤šå¤‰é‡ãƒ‡ãƒ¼ã‚¿
 ***********************************************************/
-#include "matutil.c"   /* ¹ÔÎóÍÑ¤Î¾®Æ»¶ñ½¸ */
+#include "matutil.c"   /* è¡Œåˆ—ç”¨ã®å°é“å…·é›† */
 #include <errno.h>     /* {\tt errno} */
 #include <limits.h>    /* {\TT INT\_MAX} */
 #include <math.h>      /* {\tt fabs()} */
 #include <string.h>    /* {\tt strchr()} */
 
-#define READERROR -1.00E+37;  /* ÆÉ¹ş¥¨¥é¡¼ */
-#define MISSING   -0.98E+37;  /* ·çÂ¬ÃÍ */
+#define READERROR -1.00E+37;  /* èª­è¾¼ã‚¨ãƒ©ãƒ¼ */
+#define MISSING   -0.98E+37;  /* æ¬ æ¸¬å€¤ */
 #define readerror(x) ((x) < -0.99E+37)
 #define missing(x)   ((x) < -0.97E+37)
 
@@ -35,16 +35,16 @@ FILE *open_data(char *filename, int *addr_n, int *addr_m)
 
     *addr_n = *addr_m = 0;
     if ((datafile = fopen(filename, "r")) == NULL) {
-        fprintf(stderr, "¥Ç¡¼¥¿¥Õ¥¡¥¤¥ë¤¬³«¤­¤Ş¤»¤ó.\n");
+        fprintf(stderr, "ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ãŒé–‹ãã¾ã›ã‚“.\n");
         return NULL;
     }
     x = getnum(datafile);  y = getnum(datafile);
     if (x <= 0 || x > INT_MAX || y <= 0 || y > INT_MAX) {
-        fprintf(stderr, "¹Ô¿ô¡¦Îó¿ô¤¬ÆÉ¤á¤Ş¤»¤ó.\n");
+        fprintf(stderr, "è¡Œæ•°ãƒ»åˆ—æ•°ãŒèª­ã‚ã¾ã›ã‚“.\n");
         fclose(datafile);  return NULL;
     }
     *addr_n = (int)x;  *addr_m = (int)y;
-    fprintf(stderr, "%d ¹Ô %d Îó¤Î¥Ç¡¼¥¿¤Ç¤¹.\n",
+    fprintf(stderr, "%d è¡Œ %d åˆ—ã®ãƒ‡ãƒ¼ã‚¿ã§ã™.\n",
         *addr_n, *addr_m);
     return datafile;
 }
@@ -61,35 +61,35 @@ int read_data(FILE *datafile, int n, int m, matrix x)
         t = getnum(datafile);  x[j][i] = (SCALAR)t;
         if (! missing(t)) continue;
         if (readerror(t)) {
-            fprintf(stderr, "ÆÉ¹ş¤ß¥¨¥é¡¼(%d,%d)\n", i+1, j+1);
+            fprintf(stderr, "èª­è¾¼ã¿ã‚¨ãƒ©ãƒ¼(%d,%d)\n", i+1, j+1);
             err = 2;
         } else missings++;
     }
-    fprintf(stderr, "ÆÉ¹ş¤ß½ªÎ» (·çÂ¬ÃÍ %lu ¸Ä)\n", missings);
+    fprintf(stderr, "èª­è¾¼ã¿çµ‚äº† (æ¬ æ¸¬å€¤ %lu å€‹)\n", missings);
     return err | (missings != 0);
 }
 
-#ifdef TEST  /* °Ê²¼¤Ï»ÈÍÑÎã */
+#ifdef TEST  /* ä»¥ä¸‹ã¯ä½¿ç”¨ä¾‹ */
 
 int main()
 {
     int i, j, n, m;
-    matrix x;  /* {\tt matrix} ·¿¤Ï {\tt matutil.c} ¤ÇÄêµÁ */
+    matrix x;  /* {\tt matrix} å‹ã¯ {\tt matutil.c} ã§å®šç¾© */
     FILE *datafile;
     char filename[256];
 
-    printf("¥Ç¡¼¥¿¥Õ¥¡¥¤¥ëÌ¾? ");
+    printf("ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«å? ");
     scanf("%255s", filename);
-    datafile = open_data(filename, &n, &m);     /* ¥Ç¡¼¥¿¥Õ¥¡¥¤¥ë¤ò³«¤¯ */
-    if (datafile == NULL) return EXIT_FAILURE;  /* ¼ºÇÔ */
-    x = new_matrix(m, n);                       /* ¹ÔÎó¤òÀ¸À® */
-    read_data(datafile, n, m, x);               /* ¥Ç¡¼¥¿¤òÆÉ¤à */
+    datafile = open_data(filename, &n, &m);     /* ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã */
+    if (datafile == NULL) return EXIT_FAILURE;  /* å¤±æ•— */
+    x = new_matrix(m, n);                       /* è¡Œåˆ—ã‚’ç”Ÿæˆ */
+    read_data(datafile, n, m, x);               /* ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã‚€ */
     fclose(datafile);
     for (i = 0; i < n; i++) {
         for (j = 0; j < m; j++)
-            if (readerror(x[j][i]))    printf(" E");  /* ÆÉ¹ş¼ºÇÔ */
-            else if (missing(x[j][i])) printf(" .");  /* ·çÂ¬ÃÍ */
-            else             printf(" %g", x[j][i]);  /* Àµ¾ï */
+            if (readerror(x[j][i]))    printf(" E");  /* èª­è¾¼å¤±æ•— */
+            else if (missing(x[j][i])) printf(" .");  /* æ¬ æ¸¬å€¤ */
+            else             printf(" %g", x[j][i]);  /* æ­£å¸¸ */
         printf("\n");
     }
     return EXIT_SUCCESS;

@@ -1,7 +1,7 @@
 /***********************************************************
-    imandel.c -- Mandelbrot (¥Ş¥ó¥Ç¥ë¥Ö¥í¡¼¥È) ½¸¹ç
+    imandel.c -- Mandelbrot (ãƒãƒ³ãƒ‡ãƒ«ãƒ–ãƒ­ãƒ¼ãƒˆ) é›†åˆ
 ***********************************************************/
-#include "gr98.c"  /* ¥é¡¼¥¸¥â¥Ç¥ë¤Ç¥³¥ó¥Ñ¥¤¥ë */
+#include "gr98.c"  /* ãƒ©ãƒ¼ã‚¸ãƒ¢ãƒ‡ãƒ«ã§ã‚³ãƒ³ãƒ‘ã‚¤ãƒ« */
 #define M  1000
 
 int main()
@@ -9,7 +9,7 @@ int main()
     int count, i, j, maxiter;
     static int color[M + 1];
     long int x, y, a, b, a2, b2, ixmin, ixmax, iymin, iymax,
-             dx, dy, d;  /* 32¥Ó¥Ã¥È, 2¤ÎÊä¿ôÉ½¸½ */
+             dx, dy, d;  /* 32ãƒ“ãƒƒãƒˆ, 2ã®è£œæ•°è¡¨ç¾ */
     double xmin, xmax, ymin, ymax;
 
     printf("xmin = ");  scanf("%lf", &xmin);

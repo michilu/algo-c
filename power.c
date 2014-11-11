@@ -1,12 +1,12 @@
 /***********************************************************
-    power.c -- Îß¾è
+    power.c -- ç´¯ä¹—
 ***********************************************************/
 #include <stdio.h>   /* fprintf() */
 #include <stdlib.h>  /* abs() */
 #include <math.h>    /* exp(), log() */
 #include <limits.h>  /* INT_MAX */
 
-double ipower(double x, int n)  /* À°¿ô¾è */
+double ipower(double x, int n)  /* æ•´æ•°ä¹— */
 {
     int abs_n;
     double r;
@@ -19,7 +19,7 @@ double ipower(double x, int n)  /* À°¿ô¾è */
     if (n >= 0) return r;  else return 1 / r;
 }
 
-double power(double x, double y)  /* Îß¾è */
+double power(double x, double y)  /* ç´¯ä¹— */
 {
     if (y <= INT_MAX && y >= -INT_MAX && y == (int)y)
         return ipower(x, y);

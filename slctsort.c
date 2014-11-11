@@ -1,10 +1,10 @@
 /***********************************************************
-    slctsort.c -- ÁªÂò¥½¡¼¥È
+    slctsort.c -- é¸æŠã‚½ãƒ¼ãƒˆ
 ***********************************************************/
 
-typedef int keytype;  /* À°Îó¥­¡¼¤Î·¿ */
+typedef int keytype;  /* æ•´åˆ—ã‚­ãƒ¼ã®å‹ */
 
-void selectsort(int n, keytype a[])  /* a[0..n-1] ¤ò¾º½ç¤Ë */
+void selectsort(int n, keytype a[])  /* a[0..n-1] ã‚’æ˜‡é †ã« */
 {
     int i, j, k;
     keytype min;

@@ -1,57 +1,57 @@
 /***********************************************************
-    maze.c -- ÌÂÏ©
+    maze.c -- è¿·è·¯
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
-#define XMAX  80  /* ÌÂÏ©¤Î²£¤ÎÂç¤­¤µ (¶ö¿ô) */
-#define YMAX  24  /* ÌÂÏ©¤Î½Ä¤ÎÂç¤­¤µ (¶ö¿ô) */
-#define MAXSITE  (XMAX * YMAX / 4)  /* ºÇÂç¥µ¥¤¥È¿ô */
-char map[XMAX + 1][YMAX + 1];       /* ÃÏ¿Ş */
-int nsite = 0;                      /* ÅĞÏ¿¥µ¥¤¥È¿ô */
-int xx[MAXSITE], yy[MAXSITE];       /* ÅĞÏ¿¥µ¥¤¥ÈºÂÉ¸ */
-int dx[4] = { 2, 0, -2,  0 };       /* ÊÑ°Ì¥Ù¥¯¥È¥ë */
-int dy[4] = { 0, 2,  0, -2 };       /* ÊÑ°Ì¥Ù¥¯¥È¥ë */
-int dirtable[24][4] = {             /* Êı¸şÉ½ */
+#define XMAX  80  /* è¿·è·¯ã®æ¨ªã®å¤§ãã• (å¶æ•°) */
+#define YMAX  24  /* è¿·è·¯ã®ç¸¦ã®å¤§ãã• (å¶æ•°) */
+#define MAXSITE  (XMAX * YMAX / 4)  /* æœ€å¤§ã‚µã‚¤ãƒˆæ•° */
+char map[XMAX + 1][YMAX + 1];       /* åœ°å›³ */
+int nsite = 0;                      /* ç™»éŒ²ã‚µã‚¤ãƒˆæ•° */
+int xx[MAXSITE], yy[MAXSITE];       /* ç™»éŒ²ã‚µã‚¤ãƒˆåº§æ¨™ */
+int dx[4] = { 2, 0, -2,  0 };       /* å¤‰ä½ãƒ™ã‚¯ãƒˆãƒ« */
+int dy[4] = { 0, 2,  0, -2 };       /* å¤‰ä½ãƒ™ã‚¯ãƒˆãƒ« */
+int dirtable[24][4] = {             /* æ–¹å‘è¡¨ */
     0,1,2,3, 0,1,3,2, 0,2,1,3, 0,2,3,1, 0,3,1,2, 0,3,2,1,
     1,0,2,3, 1,0,3,2, 1,2,0,3, 1,2,3,0, 1,3,0,2, 1,3,2,0,
     2,0,1,3, 2,0,3,1, 2,1,0,3, 2,1,3,0, 2,3,0,1, 2,3,1,0,
     3,0,1,2, 3,0,2,1, 3,1,0,2, 3,1,2,0, 3,2,0,1, 3,2,1,0 };
 
-void add(int i, int j)  /* ¥µ¥¤¥È¤Ë²Ã¤¨¤ë */
+void add(int i, int j)  /* ã‚µã‚¤ãƒˆã«åŠ ãˆã‚‹ */
 {
     xx[nsite] = i;  yy[nsite] = j;  nsite++;
 }
 
-int select(int *i, int *j)  /* ¥µ¥¤¥È¤òÍğ¿ô¤ÇÁª¤Ö */
+int select(int *i, int *j)  /* ã‚µã‚¤ãƒˆã‚’ä¹±æ•°ã§é¸ã¶ */
 {
     int r;
 
-    if (nsite == 0) return 0;  /* ¥µ¥¤¥È¤¬¿Ô¤­¤¿ */
+    if (nsite == 0) return 0;  /* ã‚µã‚¤ãƒˆãŒå°½ããŸ */
     nsite--;  r = (int)(nsite * (rand() / (RAND_MAX + 1.0)));
     *i = xx[r];  xx[r] = xx[nsite];
-    *j = yy[r];  yy[r] = yy[nsite];  return 1;  /* À®¸ù */
+    *j = yy[r];  yy[r] = yy[nsite];  return 1;  /* æˆåŠŸ */
 }
 
 int main()
 {
     int i, j, i1, j1, d, t, *tt;
 
-    srand((unsigned)time(NULL));  /* »ş¹ï¤ÇÍğ¿ô¤ò½é´ü²½ */
-    for (i = 0; i <= XMAX; i++)   /* ÃÏ¿Ş¤ò½é´ü²½ */
+    srand((unsigned)time(NULL));  /* æ™‚åˆ»ã§ä¹±æ•°ã‚’åˆæœŸåŒ– */
+    for (i = 0; i <= XMAX; i++)   /* åœ°å›³ã‚’åˆæœŸåŒ– */
         for (j = 0; j <= YMAX; j++) map[i][j] = 1;
     for (i = 3; i <= XMAX - 3; i++)
         for (j = 3; j <= YMAX - 3; j++) map[i][j] = 0;
     map[2][3] = 0;  map[XMAX - 2][YMAX - 3] = 0;
-    for (i = 4; i <= XMAX - 4; i += 2) {  /* ¥µ¥¤¥È¤ò²Ã¤¨¤ë */
+    for (i = 4; i <= XMAX - 4; i += 2) {  /* ã‚µã‚¤ãƒˆã‚’åŠ ãˆã‚‹ */
         add(i, 2);  add(i, YMAX - 2);
     }
     for (j = 4; j <= YMAX - 4; j += 2) {
         add(2, j);  add(XMAX - 2, j);
     }
-    while (select(&i, &j)) {  /* ¥µ¥¤¥È¤òÁª¤Ö */
-        for ( ; ; ) {         /* ¤½¤³¤«¤é±ä¤Ğ¤·¤Æ¤¤¤¯ */
+    while (select(&i, &j)) {  /* ã‚µã‚¤ãƒˆã‚’é¸ã¶ */
+        for ( ; ; ) {         /* ãã“ã‹ã‚‰å»¶ã°ã—ã¦ã„ã */
             tt = dirtable[(int)(24 * (rand() / (RAND_MAX + 1.0)))];
             for (d = 3; d >= 0; d--) {
                 t = tt[d];  i1 = i + dx[t];  j1 = j + dy[t];

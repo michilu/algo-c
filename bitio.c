@@ -1,32 +1,32 @@
 /***********************************************************
-    bitio.c -- Huffman (¥Ï¥Õ¥Ş¥ó) Ë¡
+    bitio.c -- Huffman (ãƒãƒ•ãƒãƒ³) æ³•
 ***********************************************************/
 
-/* HuffmanË¡¤Ê¤É¤Ç»È¤¦¥Ó¥Ã¥ÈÆş½ĞÎÏ¥ë¡¼¥Á¥ó */
+/* Huffmanæ³•ãªã©ã§ä½¿ã†ãƒ“ãƒƒãƒˆå…¥å‡ºåŠ›ãƒ«ãƒ¼ãƒãƒ³ */
 
 #include <stdio.h>
 #include <stdlib.h>
 
-FILE *infile, *outfile;      /* ÆşÎÏ¥Õ¥¡¥¤¥ë, ½ĞÎÏ¥Õ¥¡¥¤¥ë */
-unsigned long outcount = 0;  /* ½ĞÎÏ¥Ğ¥¤¥È¿ô¥«¥¦¥ó¥¿ */
-static int getcount = 0, putcount = 8;  /* ¥Ó¥Ã¥ÈÆş½ĞÎÏ¥«¥¦¥ó¥¿ */
-static unsigned bitbuf = 0;  /* ¥Ó¥Ã¥ÈÆş½ĞÎÏ¥Ğ¥Ã¥Õ¥¡ */
-#define rightbits(n, x) ((x) & ((1U << (n)) - 1U))  /* x¤Î±¦n¥Ó¥Ã¥È */
+FILE *infile, *outfile;      /* å…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«, å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ« */
+unsigned long outcount = 0;  /* å‡ºåŠ›ãƒã‚¤ãƒˆæ•°ã‚«ã‚¦ãƒ³ã‚¿ */
+static int getcount = 0, putcount = 8;  /* ãƒ“ãƒƒãƒˆå…¥å‡ºåŠ›ã‚«ã‚¦ãƒ³ã‚¿ */
+static unsigned bitbuf = 0;  /* ãƒ“ãƒƒãƒˆå…¥å‡ºåŠ›ãƒãƒƒãƒ•ã‚¡ */
+#define rightbits(n, x) ((x) & ((1U << (n)) - 1U))  /* xã®å³nãƒ“ãƒƒãƒˆ */
 
-void error(char *message)  /* ¥á¥Ã¥»¡¼¥¸¤òÉ½¼¨¤·½ªÎ» */
+void error(char *message)  /* ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’è¡¨ç¤ºã—çµ‚äº† */
 {
     fprintf(stderr, "\n%s\n", message);
     exit(EXIT_FAILURE);
 }
 
-unsigned getbit(void)  /* 1¥Ó¥Ã¥ÈÆÉ¤à */
+unsigned getbit(void)  /* 1ãƒ“ãƒƒãƒˆèª­ã‚€ */
 {
     if (--getcount >= 0) return (bitbuf >> getcount) & 1U;
     getcount = 7;  bitbuf = getc(infile);
     return (bitbuf >> 7) & 1U;
 }
 
-unsigned getbits(int n)  /* n¥Ó¥Ã¥ÈÆÉ¤à */
+unsigned getbits(int n)  /* nãƒ“ãƒƒãƒˆèª­ã‚€ */
 {
     unsigned x;
 
@@ -40,22 +40,22 @@ unsigned getbits(int n)  /* n¥Ó¥Ã¥ÈÆÉ¤à */
     return x | rightbits(n, bitbuf >> getcount);
 }
 
-void putbit(unsigned bit)  /* 1¥Ó¥Ã¥È½ñ¤­½Ğ¤¹ */
+void putbit(unsigned bit)  /* 1ãƒ“ãƒƒãƒˆæ›¸ãå‡ºã™ */
 {
     putcount--;
     if (bit != 0) bitbuf |= (1 << putcount);
     if (putcount == 0) {
-        if (putc(bitbuf, outfile) == EOF) error("½ñ¤±¤Ş¤»¤ó");
+        if (putc(bitbuf, outfile) == EOF) error("æ›¸ã‘ã¾ã›ã‚“");
         bitbuf = 0;  putcount = 8;  outcount++;
     }
 }
 
-void putbits(int n, unsigned x)  /* n¥Ó¥Ã¥È½ñ¤­½Ğ¤¹ */
+void putbits(int n, unsigned x)  /* nãƒ“ãƒƒãƒˆæ›¸ãå‡ºã™ */
 {
     while (n >= putcount) {
         n -= putcount;
         bitbuf |= rightbits(putcount, x >> n);
-        if (putc(bitbuf, outfile) == EOF) error("½ñ¤±¤Ş¤»¤ó");
+        if (putc(bitbuf, outfile) == EOF) error("æ›¸ã‘ã¾ã›ã‚“");
         bitbuf = 0U;  putcount = 8;  outcount++;
     }
     putcount -= n;

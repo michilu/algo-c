@@ -1,30 +1,30 @@
 /***********************************************************
-    squeeze.c -- LZË¡
+    squeeze.c -- LZæ³•
 ***********************************************************/
-/* Æ°Åª¼­½ñË¡ */
+/* å‹•çš„è¾æ›¸æ³• */
 
 #include "bitio.c"
-#define N        256    /* Ê¸»ú¤Î¼ïÎà (Ê¸»ú = 0..N-1) */
-#define MAXDICT 4096    /* ¼­½ñ¥µ¥¤¥º 4096, 8192, ... */
-#define MAXMATCH 100    /* ºÇÂç°ìÃ×Ä¹ */
-#define NIL  MAXDICT    /* ¥Î¡¼¥ÉÈÖ¹æ¤È¤·¤ÆÂ¸ºß¤·¤Ê¤¤ÃÍ */
+#define N        256    /* æ–‡å­—ã®ç¨®é¡ (æ–‡å­— = 0..N-1) */
+#define MAXDICT 4096    /* è¾æ›¸ã‚µã‚¤ã‚º 4096, 8192, ... */
+#define MAXMATCH 100    /* æœ€å¤§ä¸€è‡´é•· */
+#define NIL  MAXDICT    /* ãƒãƒ¼ãƒ‰ç•ªå·ã¨ã—ã¦å­˜åœ¨ã—ãªã„å€¤ */
 
 static unsigned char character[MAXDICT];
-static int parent[MAXDICT], lchild[MAXDICT],  /* ¿Æ, º¸¤Î»Ò */
-           rsib[MAXDICT], lsib[MAXDICT],  /* ±¦º¸¤Î¤­¤ç¤¦¤À¤¤ */
-           dictsize = N;  /* ¸½ºß¤Î¼­½ñ¥µ¥¤¥º */
-static int newer[MAXDICT], older[MAXDICT];  /* ÂÔ¤Á¹ÔÎó¥İ¥¤¥ó¥¿ */
-static int qin = NIL, qout = NIL;       /* ÂÔ¤Á¹ÔÎó¤ÎÆş¸ı, ½Ğ¸ı */
-static int match[MAXMATCH];  /* °ìÃ×Ê¸»úÎó */
-static int bitlen = 1;  /* ¸½ºß¤ÎÉä¹æ¸ì¤ÎÄ¹¤µ */
+static int parent[MAXDICT], lchild[MAXDICT],  /* è¦ª, å·¦ã®å­ */
+           rsib[MAXDICT], lsib[MAXDICT],  /* å³å·¦ã®ãã‚‡ã†ã ã„ */
+           dictsize = N;  /* ç¾åœ¨ã®è¾æ›¸ã‚µã‚¤ã‚º */
+static int newer[MAXDICT], older[MAXDICT];  /* å¾…ã¡è¡Œåˆ—ãƒã‚¤ãƒ³ã‚¿ */
+static int qin = NIL, qout = NIL;       /* å¾…ã¡è¡Œåˆ—ã®å…¥å£, å‡ºå£ */
+static int match[MAXMATCH];  /* ä¸€è‡´æ–‡å­—åˆ— */
+static int bitlen = 1;  /* ç¾åœ¨ã®ç¬¦å·èªã®é•·ã• */
 static int bitmax = 2;  /* 1 << bitlen */
 
-/* ¥Î¡¼¥É p ¤ò LRU ÂÔ¤Á¹ÔÎó¤«¤é³°¤¹ (size > 1; p ¤ÏºÇ¸å¤Ç¤Ê¤¤) */
+/* ãƒãƒ¼ãƒ‰ p ã‚’ LRU å¾…ã¡è¡Œåˆ—ã‹ã‚‰å¤–ã™ (size > 1; p ã¯æœ€å¾Œã§ãªã„) */
 void dequeue(int p)
 {
     int n, o;
 
-    if (p == qout) {  /* ÀèÆ¬¤Î¾ì¹ç */
+    if (p == qout) {  /* å…ˆé ­ã®å ´åˆ */
         qout = newer[p];  older[qout] = NIL;
     } else {
         o = older[p];  n = newer[p];
@@ -32,25 +32,25 @@ void dequeue(int p)
     }
 }
 
-/* ¥Î¡¼¥É p ¤òÂÔ¤Á¹ÔÎó¤ÎÍ×ÁÇ q ¤Î¸å¤í¤ËÁŞÆş (q ¤¬ NIL ¤Ê¤éºÇ½é¤Ë) */
+/* ãƒãƒ¼ãƒ‰ p ã‚’å¾…ã¡è¡Œåˆ—ã®è¦ç´  q ã®å¾Œã‚ã«æŒ¿å…¥ (q ãŒ NIL ãªã‚‰æœ€åˆã«) */
 void enqueue(int p, int q)
 {
-    if (qin == NIL) {  /* ÂÔ¤Á¹ÔÎó¤¬¶õ */
+    if (qin == NIL) {  /* å¾…ã¡è¡Œåˆ—ãŒç©º */
         older[p] = newer[p] = NIL;  qin = qout = p;
-    } else if (q == NIL) {  /* ÂÔ¤Á¹ÔÎó¤ÎºÇ½é¤ËÉÕ¤±¤ë */
+    } else if (q == NIL) {  /* å¾…ã¡è¡Œåˆ—ã®æœ€åˆã«ä»˜ã‘ã‚‹ */
         older[p] = NIL;  newer[p] = qout;
         qout = older[qout] = p;
-    } else if (q == qin) {  /* ÂÔ¤Á¹ÔÎó¤ÎºÇ¸å¤ËÉÕ¤±¤ë */
+    } else if (q == qin) {  /* å¾…ã¡è¡Œåˆ—ã®æœ€å¾Œã«ä»˜ã‘ã‚‹ */
         older[p] = qin;  newer[p] = NIL;
         qin = newer[qin] = p;
-    } else {  /* ÂÔ¤Á¹ÔÎó¤ÎÅÓÃæ¤Ë³ä¤êÆş¤ë */
+    } else {  /* å¾…ã¡è¡Œåˆ—ã®é€”ä¸­ã«å‰²ã‚Šå…¥ã‚‹ */
         older[p] = q;
         newer[p] = newer[q];
         newer[q] = older[newer[p]] = p;
     }
 }
 
-/* ¥Î¡¼¥É p ¤ÎÊ¸»ú c ¤ËÅö¤¿¤ë»Ò¤òÊÖ¤¹ (¤Ê¤±¤ì¤Ğ NIL) */
+/* ãƒãƒ¼ãƒ‰ p ã®æ–‡å­— c ã«å½“ãŸã‚‹å­ã‚’è¿”ã™ (ãªã‘ã‚Œã° NIL) */
 int child(int p, int c)
 {
     p = lchild[p];
@@ -58,7 +58,7 @@ int child(int p, int c)
     return p;
 }
 
-/* ¿Æ¥Î¡¼¥É parp ¤ÎÊ¸»ú c ¤ËÅö¤¿¤ë»Ò¤È¤·¤ÆÍÕ¥Î¡¼¥É p ¤òÁŞÆş */
+/* è¦ªãƒãƒ¼ãƒ‰ parp ã®æ–‡å­— c ã«å½“ãŸã‚‹å­ã¨ã—ã¦è‘‰ãƒãƒ¼ãƒ‰ p ã‚’æŒ¿å…¥ */
 void addleaf(int parp, int p, int c)
 {
     int q;
@@ -71,7 +71,7 @@ void addleaf(int parp, int p, int c)
     lchild[parp] = p;
 }
 
-/* ÍÕ¥Î¡¼¥É p ¤òºï½ü */
+/* è‘‰ãƒãƒ¼ãƒ‰ p ã‚’å‰Šé™¤ */
 void deleteleaf(int p)
 {
     int left, right;
@@ -82,7 +82,7 @@ void deleteleaf(int p)
     if (right != NIL) lsib[right] = left;
 }
 
-/* ¼­½ñÌÚ¤Î½é´ü²½ */
+/* è¾æ›¸æœ¨ã®åˆæœŸåŒ– */
 void init_tree(void)
 {
     int i;
@@ -93,7 +93,7 @@ void init_tree(void)
     }
 }
 
-/* ÌÚ¤Î¹¹¿· */
+/* æœ¨ã®æ›´æ–° */
 void update(int *match, int curlen, int prevp, int prevlen)
 {
     int p, c, i;
@@ -141,7 +141,7 @@ int input(void)
     return i + N;
 }
 
-void encode(void)  /* °µ½Ì */
+void encode(void)  /* åœ§ç¸® */
 {
     int p, c, q, curptr, curlen, prevptr, prevlen;
     unsigned long int incount, printcount, cr;
@@ -164,7 +164,7 @@ void encode(void)  /* °µ½Ì */
             printf("%12lu\r", incount);  printcount += 1024;
         }
     }
-    putbits(7, 0);  /* ¥Ó¥Ã¥È¥Ğ¥Ã¥Õ¥¡¤ò¥Õ¥é¥Ã¥·¥å */
+    putbits(7, 0);  /* ãƒ“ãƒƒãƒˆãƒãƒƒãƒ•ã‚¡ã‚’ãƒ•ãƒ©ãƒƒã‚·ãƒ¥ */
     printf("In : %lu bytes\n", incount);
     printf("Out: %lu bytes\n", outcount);
     if (incount != 0) {
@@ -173,7 +173,7 @@ void encode(void)  /* °µ½Ì */
     }
 }
 
-void decode(unsigned long int size)  /* Éü¸µ */
+void decode(unsigned long int size)  /* å¾©å…ƒ */
 {
     int p, i, curptr, curlen, prevptr, prevlen, *base;
     unsigned long int count, printcount;
@@ -181,8 +181,8 @@ void decode(unsigned long int size)  /* Éü¸µ */
     init_tree();
     curptr = NIL;  curlen = 0;  count = printcount = 0;
     while (count < size) {
-        if ((p = input()) == EOF) error("ÆÉ¤á¤Ş¤»¤ó");
-        if (p >= dictsize) error("ÆşÎÏ¥¨¥é¡¼");
+        if ((p = input()) == EOF) error("èª­ã‚ã¾ã›ã‚“");
+        if (p >= dictsize) error("å…¥åŠ›ã‚¨ãƒ©ãƒ¼");
         prevptr = curptr;  prevlen = curlen;
         curptr = p;  curlen = 0;
         while (p != NIL) {
@@ -206,24 +206,24 @@ void decode(unsigned long int size)  /* Éü¸µ */
 int main(int argc, char *argv[])
 {
     int c;
-    unsigned long int size;  /* ¸µ¤Î¥Ğ¥¤¥È¿ô */
+    unsigned long int size;  /* å…ƒã®ãƒã‚¤ãƒˆæ•° */
 
     if (argc != 4 || ((c = *argv[1]) != 'E' && c != 'e'
                                 && c != 'D' && c != 'd'))
-        error("»ÈÍÑË¡¤ÏËÜÊ¸¤ò»²¾È¤·¤Æ¤¯¤À¤µ¤¤");
+        error("ä½¿ç”¨æ³•ã¯æœ¬æ–‡ã‚’å‚ç…§ã—ã¦ãã ã•ã„");
     if ((infile  = fopen(argv[2], "rb")) == NULL)
-        error("ÆşÎÏ¥Õ¥¡¥¤¥ë¤¬³«¤­¤Ş¤»¤ó");
+        error("å…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«ãŒé–‹ãã¾ã›ã‚“");
     if ((outfile = fopen(argv[3], "wb")) == NULL)
-        error("½ĞÎÏ¥Õ¥¡¥¤¥ë¤¬³«¤­¤Ş¤»¤ó");
+        error("å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«ãŒé–‹ãã¾ã›ã‚“");
     if (c == 'E' || c == 'e') {
-        fseek(infile, 0L, SEEK_END);  /* infile ¤ÎËöÈø¤òÃµ¤¹ */
-        size = ftell(infile);     /* infile ¤Î¥Ğ¥¤¥È¿ô */
+        fseek(infile, 0L, SEEK_END);  /* infile ã®æœ«å°¾ã‚’æ¢ã™ */
+        size = ftell(infile);     /* infile ã®ãƒã‚¤ãƒˆæ•° */
         fwrite(&size, sizeof size, 1, outfile);
         rewind(infile);
-        encode();  /* °µ½Ì */
+        encode();  /* åœ§ç¸® */
     } else {
-        fread(&size, sizeof size, 1, infile);  /* ¸µ¤Î¥Ğ¥¤¥È¿ô */
-        decode(size);  /* Éü¸µ */
+        fread(&size, sizeof size, 1, infile);  /* å…ƒã®ãƒã‚¤ãƒˆæ•° */
+        decode(size);  /* å¾©å…ƒ */
     }
     fclose(infile);  fclose(outfile);
     return EXIT_SUCCESS;

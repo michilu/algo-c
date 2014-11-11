@@ -1,9 +1,9 @@
 /***********************************************************
-    sqrt.c -- Ê¿Êýº¬
+    sqrt.c -- å¹³æ–¹æ ¹
 ***********************************************************/
 #include <stdio.h>
 
-double mysqrt(double x)  /* ¼«²ÈÈÇ $\sqrt{x}$ */
+double mysqrt(double x)  /* è‡ªå®¶ç‰ˆ $\sqrt{x}$ */
 {
     double s, last;
 
@@ -18,7 +18,7 @@ double mysqrt(double x)  /* ¼«²ÈÈÇ $\sqrt{x}$ */
     return 0;
 }
 
-long double lsqrt(long double x)  /* {\tt long double}ÈÇ $\sqrt{x}$ */
+long double lsqrt(long double x)  /* {\tt long double}ç‰ˆ $\sqrt{x}$ */
 {
     long double s;
 

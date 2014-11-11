@@ -1,12 +1,12 @@
 /***********************************************************
-    poweigen.c -- Îß¾èË¡
+    poweigen.c -- ç´¯ä¹—æ³•
 ***********************************************************/
-#include "matutil.c"  /* ¹ÔÎóÍÑ¾®Æ»¶ñ½¸ */
+#include "matutil.c"  /* è¡Œåˆ—ç”¨å°é“å…·é›† */
 #include <math.h>
-#define TEST  /* ¤³¤ì¤¬¤¢¤ë¤ÈÅÓÃæ·Ğ²á¤òÊó¹ğ */
+#define TEST  /* ã“ã‚ŒãŒã‚ã‚‹ã¨é€”ä¸­çµŒéã‚’å ±å‘Š */
 
-#define EPS       1E-6  /* ¸ÇÍ­¥Ù¥¯¥È¥ë¤ÎµöÍÆ¸íº¹ */
-#define MAX_ITER  200   /* ºÇÂç·«ÊÖ¤·¿ô */
+#define EPS       1E-6  /* å›ºæœ‰ãƒ™ã‚¯ãƒˆãƒ«ã®è¨±å®¹èª¤å·® */
+#define MAX_ITER  200   /* æœ€å¤§ç¹°è¿”ã—æ•° */
 #define forall(i) for (i = 0; i < n; i++)
 
 int power(int n, int m, matrix a, vector lambda, matrix x)
@@ -15,11 +15,11 @@ int power(int n, int m, matrix a, vector lambda, matrix x)
     double s, s1, t, u, d, d1, e;
     vector xk, y;
 
-    y = new_vector(n);  /* {\tt y[0..n-1]} ¤Îµ­²±ÎÎ°è¤ò³ÎÊİ */
-    kk = m;             /* ¼Âºİ¤Ëµá¤á¤é¤ì¤¿¸ÇÍ­ÃÍ¡¦¸ÇÍ­¥Ù¤Î¸Ä¿ô */
-    for (k = 0; k < m; k++) { /* {\tt k} ÈÖÌÜ¤Î¸ÇÍ­ÃÍ¡¦¸ÇÍ­¥Ù¤òµá¤á¤ë */
+    y = new_vector(n);  /* {\tt y[0..n-1]} ã®è¨˜æ†¶é ˜åŸŸã‚’ç¢ºä¿ */
+    kk = m;             /* å®Ÿéš›ã«æ±‚ã‚ã‚‰ã‚ŒãŸå›ºæœ‰å€¤ãƒ»å›ºæœ‰ãƒ™ã®å€‹æ•° */
+    for (k = 0; k < m; k++) { /* {\tt k} ç•ªç›®ã®å›ºæœ‰å€¤ãƒ»å›ºæœ‰ãƒ™ã‚’æ±‚ã‚ã‚‹ */
         xk = x[k];  t = 1 / sqrt(n);
-        forall(i) xk[i] = t;   /* Âç¤­¤µ1¤Î½é´üÃÍ¥Ù¥¯¥È¥ë */
+        forall(i) xk[i] = t;   /* å¤§ãã•1ã®åˆæœŸå€¤ãƒ™ã‚¯ãƒˆãƒ« */
         d = s = 0;  iter = 0;
         do {
             d1 = d;  s1 = s;  s = e = 0;
@@ -31,9 +31,9 @@ int power(int n, int m, matrix a, vector lambda, matrix x)
             s = sqrt(s);  if (s1 < 0) s = -s;  /* $s = \pm \| y \|$ */
             forall(i) {
                 t = y[i] / s;  u = xk[i] - t;
-                e += u * u;  xk[i] = t;  /* {\tt xk[]}: ¸ÇÍ­¥Ù¥¯¥È¥ë */
+                e += u * u;  xk[i] = t;  /* {\tt xk[]}: å›ºæœ‰ãƒ™ã‚¯ãƒˆãƒ« */
             }
-            if (e > 2) s = -s;  /* ¥Ù¥¯¥È¥ë¤¬È¿Å¾¤·¤¿¤Ê¤é¸ÇÍ­ÃÍ¤ÏÉé */
+            if (e > 2) s = -s;  /* ãƒ™ã‚¯ãƒˆãƒ«ãŒåè»¢ã—ãŸãªã‚‰å›ºæœ‰å€¤ã¯è²  */
             d = sqrt(e);  d1 -= d;
             #ifdef TEST
                 printf("iter = %3d  lambda[%d] = %10.6f  "
@@ -41,18 +41,18 @@ int power(int n, int m, matrix a, vector lambda, matrix x)
             #endif
         } while (++iter < MAX_ITER && e > EPS * d1);
         if (iter >= MAX_ITER && kk == m) kk = k;
-        lambda[k] = s;  /* ¸ÇÍ­ÃÍ */
+        lambda[k] = s;  /* å›ºæœ‰å€¤ */
         if (k < m - 1)
             forall(i) forall(j)
                 a[i][j] -= s * xk[i] * xk[j];
     }
     free_vector(y);
-    return kk;  /* ¼ıÂ«¤·¤¿¸ÇÍ­¥Ù¥¯¥È¥ë¤Î¿ô */
+    return kk;  /* åæŸã—ãŸå›ºæœ‰ãƒ™ã‚¯ãƒˆãƒ«ã®æ•° */
 }
 
 #include <limits.h>
 static unsigned long seed;
-double rnd(void)  /* Íğ¿ô  0 < rnd() < 1 */
+double rnd(void)  /* ä¹±æ•°  0 < rnd() < 1 */
 {
     return (seed *= 69069UL) / (ULONG_MAX + 1.0);
 }
@@ -65,7 +65,7 @@ int main()
     vector lambda;
 
     printf("n = ");  scanf("%d", &n);
-    printf("Íğ¿ô¤Î¼ï (Àµ¤ÎÀ°¿ô) = ");
+    printf("ä¹±æ•°ã®ç¨® (æ­£ã®æ•´æ•°) = ");
     scanf("%ul", &seed);  seed |= 1;
     a = new_matrix(n, n);
     b = new_matrix(n, n);
@@ -76,8 +76,8 @@ int main()
         b[i][j] = b[j][i] = rnd() - rnd();
     matprint(a, n, 7, "%10.6f");
     k = power(n, n, a, lambda, x);
-    printf("¼ıÂ«¤·¤¿¸ÇÍ­¥Ù¥¯¥È¥ë¤Î¿ô: %d\n", k);
-    printf("¸ÇÍ­ÃÍ:\n");
+    printf("åæŸã—ãŸå›ºæœ‰ãƒ™ã‚¯ãƒˆãƒ«ã®æ•°: %d\n", k);
+    printf("å›ºæœ‰å€¤:\n");
     vecprint(lambda, n, 5, "% -14g");
     e = 0;
     forall(i) forall(j) {
@@ -85,6 +85,6 @@ int main()
         forall(k) s -= lambda[k] * x[k][i] * x[k][j];
         e += s * s;
     }
-    printf("Æó¾èÊ¿¶Ñ¸íº¹: %g\n", sqrt(e / (n * n)));
+    printf("äºŒä¹—å¹³å‡èª¤å·®: %g\n", sqrt(e / (n * n)));
     return EXIT_SUCCESS;
 }

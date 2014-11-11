@@ -1,5 +1,5 @@
 /***********************************************************
-    gauss.c -- Gauss (¥¬¥¦¥¹) Ë¡
+    gauss.c -- Gauss (ã‚¬ã‚¦ã‚¹) æ³•
 ***********************************************************/
 #include "matutil.c"
 
@@ -24,9 +24,9 @@ void gauss(int n, matrix a)
 
 #include <limits.h>
 
-double rnd(void)  /* Íð¿ô  0 < rnd() < 1 */
+double rnd(void)  /* ä¹±æ•°  0 < rnd() < 1 */
 {
-    static unsigned long seed = 123456789UL;  /* ´ñ¿ô */
+    static unsigned long seed = 123456789UL;  /* å¥‡æ•° */
 
     return (seed *= 69069UL) / (ULONG_MAX + 1.0);
 }
@@ -45,10 +45,10 @@ int main()
             a[i][j] = b[i][j] = rnd() - rnd();
     for (i = 0; i < n; i++)
         a[i][n] = b[i][n] = rnd() - rnd();
-    printf("·¸¿ô¹ÔÎó (±¦ÊÕ¤â´Þ¤à)\n");
+    printf("ä¿‚æ•°è¡Œåˆ— (å³è¾ºã‚‚å«ã‚€)\n");
     matprint(a, n + 1, 10, "%7.3f");
     gauss(n, a);
-    printf("²ò¤È, ²ò¤òÂåÆþ¤·¤¿¤È¤­¤ÎÎ¾ÊÕ¤Îº¹\n");
+    printf("è§£ã¨, è§£ã‚’ä»£å…¥ã—ãŸã¨ãã®ä¸¡è¾ºã®å·®\n");
     for (i = 0; i < n; i++) {
         s = b[i][n];
         for (j = 0; j < n; j++) s -= b[i][j] * a[j][n];

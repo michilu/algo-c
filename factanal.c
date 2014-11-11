@@ -1,17 +1,17 @@
 /***********************************************************
-    factanal.c -- °ø»ÒÊ¬ÀÏ
+    factanal.c -- å› å­åˆ†æ
 ***********************************************************/
-#include "statutil.c"     /* Â¿ÊÑÎÌ¥Ç¡¼¥¿ÆşÎÏ¥ë¡¼¥Á¥ó */
+#include "statutil.c"     /* å¤šå¤‰é‡ãƒ‡ãƒ¼ã‚¿å…¥åŠ›ãƒ«ãƒ¼ãƒãƒ³ */
 
-#define EPS         1E-6  /* ÈóÂĞ³ÑÀ®Ê¬¤ÎµöÍÆ¸íº¹ */
-#define MAX_ITER    100   /* ºÇÂç¤Î·«ÊÖ¤·¿ô */
+#define EPS         1E-6  /* éå¯¾è§’æˆåˆ†ã®è¨±å®¹èª¤å·® */
+#define MAX_ITER    100   /* æœ€å¤§ã®ç¹°è¿”ã—æ•° */
 
-double house(int n, vector x)  /* HouseholderÊÑ´¹ */
+double house(int n, vector x)  /* Householderå¤‰æ› */
 {
     int i;
     double s, t;
 
-    s = sqrt(innerproduct(n, x, x));  /* ÆâÀÑ¤ÎÊ¿Êıº¬, ¤¹¤Ê¤ï¤ÁÂç¤­¤µ */
+    s = sqrt(innerproduct(n, x, x));  /* å†…ç©ã®å¹³æ–¹æ ¹, ã™ãªã‚ã¡å¤§ãã• */
     if (s != 0) {
         if (x[0] < 0) s = -s;
         x[0] += s;  t = 1 / sqrt(x[0] * s);
@@ -20,7 +20,7 @@ double house(int n, vector x)  /* HouseholderÊÑ´¹ */
     return -s;
 }
 
-void tridiagonalize(int n, matrix a, vector d, vector e) /* 3½ÅÂĞ³Ñ²½ */
+void tridiagonalize(int n, matrix a, vector d, vector e) /* 3é‡å¯¾è§’åŒ– */
 {
     int i, j, k;
     double s, t, p, q;
@@ -67,12 +67,12 @@ int eigen(int n, matrix a, vector d, vector e)
     double c, s, t, w, x, y;
     vector v;
 
-    tridiagonalize(n, a, d, &e[1]);  /* 3½ÅÂĞ³Ñ²½ */
-    e[0] = 0;  /* ÈÖ¿Í */
-    for (h = n - 1; h > 0; h--) {  /* ¹ÔÎó¤Î¥µ¥¤¥º¤ò¾®¤µ¤¯¤·¤Æ¤¤¤¯ */
+    tridiagonalize(n, a, d, &e[1]);  /* 3é‡å¯¾è§’åŒ– */
+    e[0] = 0;  /* ç•ªäºº */
+    for (h = n - 1; h > 0; h--) {  /* è¡Œåˆ—ã®ã‚µã‚¤ã‚ºã‚’å°ã•ãã—ã¦ã„ã */
         j = h;
         while (fabs(e[j]) > EPS * (fabs(d[j - 1]) + fabs(d[j])))
-            j--;  /* $\mbox{\tt e[$j$]} \ne 0$ ¤Î¥Ö¥í¥Ã¥¯¤Î»ÏÅÀ¤ò¸«¤Ä¤±¤ë */
+            j--;  /* $\mbox{\tt e[$j$]} \ne 0$ ã®ãƒ–ãƒ­ãƒƒã‚¯ã®å§‹ç‚¹ã‚’è¦‹ã¤ã‘ã‚‹ */
         if (j == h) continue;
         iter = 0;
         do {
@@ -94,11 +94,11 @@ int eigen(int n, matrix a, vector d, vector e)
                 d[k] -= t;  d[k + 1] += t;
                 if (k > j) e[k] = c * e[k] - s * y;
                 e[k + 1] += s * (c * w - 2 * s * e[k + 1]);
-                for (i = 0; i < n; i++) {           /* ¸ÇÍ­¥Ù */
-                    x = a[k][i];  y = a[k + 1][i];  /* ¥¯¥È¥ë */
-                    a[k    ][i] = c * x - s * y;    /* ¤òµá¤á */
-                    a[k + 1][i] = s * x + c * y;    /* ¤Ê¤¤¤Ê */
-                }                                   /* ¤éÉÔÍ× */
+                for (i = 0; i < n; i++) {           /* å›ºæœ‰ãƒ™ */
+                    x = a[k][i];  y = a[k + 1][i];  /* ã‚¯ãƒˆãƒ« */
+                    a[k    ][i] = c * x - s * y;    /* ã‚’æ±‚ã‚ */
+                    a[k + 1][i] = s * x + c * y;    /* ãªã„ãª */
+                }                                   /* ã‚‰ä¸è¦ */
                 if (k < h - 1) {
                     x = e[k + 1];  y = -s * e[k + 2];
                     e[k + 2] *= c;
@@ -117,11 +117,11 @@ int eigen(int n, matrix a, vector d, vector e)
     return EXIT_SUCCESS;
 }
 /*
-  {\tt r[0..m-1][0..m-1]} ¤ËÆş¤Ã¤¿Áê´Ø·¸¿ô¤Î¹ÔÎó¤ËÂĞ¤·¤Æ°ø»ÒÊ¬ÀÏ¤ò¹Ô¤¤,
-  {\tt nfac} ($< {\tt m}) ¸Ä¤Î¶¦ÄÌ°ø»Ò¤òÃê½Ğ¤¹¤ë.
-  {\tt r} ¤ÎÂĞ³ÑÀ®Ê¬¤Ï¶¦ÄÌÀ­¤Î¿äÄêÃÍ¤Ç¾å½ñ¤­¤µ¤ì¤ë.
-  {\tt q[$k$][$j$]} ¤Ë¤ÏÂè $j + 1$ ÊÑ¿ô¤ÎÂè $k + 1$ °ø»ÒÉé²ÙÎÌ ($0 \le
-  k < {\tt nfac}$, $0 \le j < {\tt m}$ ¤¬Æş¤ë.
+  {\tt r[0..m-1][0..m-1]} ã«å…¥ã£ãŸç›¸é–¢ä¿‚æ•°ã®è¡Œåˆ—ã«å¯¾ã—ã¦å› å­åˆ†æã‚’è¡Œã„,
+  {\tt nfac} ($< {\tt m}) å€‹ã®å…±é€šå› å­ã‚’æŠ½å‡ºã™ã‚‹.
+  {\tt r} ã®å¯¾è§’æˆåˆ†ã¯å…±é€šæ€§ã®æ¨å®šå€¤ã§ä¸Šæ›¸ãã•ã‚Œã‚‹.
+  {\tt q[$k$][$j$]} ã«ã¯ç¬¬ $j + 1$ å¤‰æ•°ã®ç¬¬ $k + 1$ å› å­è² è·é‡ ($0 \le
+  k < {\tt nfac}$, $0 \le j < {\tt m}$ ãŒå…¥ã‚‹.
 */
 void factor(int m, int nfac, matrix r, matrix q,
             vector lambda, vector work)
@@ -132,36 +132,36 @@ void factor(int m, int nfac, matrix r, matrix q,
     iter = maxiter = 0;
     for ( ; ; ) {
         if (++iter > maxiter) {
-            printf("·«ÊÖ¤·¿ô (0:·«ÊÖ¤·½ªÎ») ? ");
+            printf("ç¹°è¿”ã—æ•° (0:ç¹°è¿”ã—çµ‚äº†) ? ");
             scanf("%d", &i);  if (i <= 0) break;
             maxiter += i;
         }
         for (j = 0; j < m; j++) for (k = 0; k < m; k++)
             q[j][k] = r[j][k];
-        if (eigen(m, q, lambda, work)) error("¼ıÂ«¤·¤Ş¤»¤ó");
+        if (eigen(m, q, lambda, work)) error("åæŸã—ã¾ã›ã‚“");
         s = innerproduct(m - nfac, &lambda[nfac], &lambda[nfac]);
-        printf("%3d: ÈóÂĞ³ÑÀ®Ê¬¤ÎRMS¸íº¹ %.3g\n",
-            iter, sqrt(s / (m * (m - 1)))); /* RMS: root mean square (2¾è¤ÎÊ¿¶Ñ¤ÎÊ¿Êıº¬) */
+        printf("%3d: éå¯¾è§’æˆåˆ†ã®RMSèª¤å·® %.3g\n",
+            iter, sqrt(s / (m * (m - 1)))); /* RMS: root mean square (2ä¹—ã®å¹³å‡ã®å¹³æ–¹æ ¹) */
         for (j = 0; j < m; j++) {
             s = 0;
             for (k = 0; k < nfac; k++)
                 s += lambda[k] * q[k][j] * q[k][j];
-            r[j][j] = s;  /* ¶¦ÄÌÀ­ */
+            r[j][j] = s;  /* å…±é€šæ€§ */
         }
     }
     t = 0;  /* trace */
     for (k = 0; k < m; k++) t += lambda[k];
-    printf("°ø»Ò    ¸ÇÍ­ÃÍ     ¡ó  ÎßÀÑ¡ó\n");
+    printf("å› å­    å›ºæœ‰å€¤     ï¼…  ç´¯ç©ï¼…\n");
     s = 0;
     for (k = 0; k < m; k++) {
         printf((k < nfac) ? " %3d " : "(%3d)", k + 1);
         percent = 100 * lambda[k] / t;  s += percent;
         printf(" %8.4f  %5.1f  %5.1f\n", lambda[k], percent, s);
     }
-    printf("¹ç·×  %8.4f  %5.1f\n", t, s);
+    printf("åˆè¨ˆ  %8.4f  %5.1f\n", t, s);
     for (k = 0; k < nfac; k++)
-        work[k] = sqrt(fabs(lambda[k]));    /* {\tt lambda[k]} ¤ÏÉé¤«¤â */
-    printf("ÊÑ¿ô  ¶¦ÄÌÀ­   °ø»ÒÉé²ÙÎÌ\n");
+        work[k] = sqrt(fabs(lambda[k]));    /* {\tt lambda[k]} ã¯è² ã‹ã‚‚ */
+    printf("å¤‰æ•°  å…±é€šæ€§   å› å­è² è·é‡\n");
     for (j = 0; j < m; j++) {
         printf("%4d  %6.3f ", j + 1, r[j][j]);
         for (k = 0; k < nfac; k++) {
@@ -170,33 +170,33 @@ void factor(int m, int nfac, matrix r, matrix q,
         }
         printf("\n");
     }
-#ifdef CHECK  /* ¸íº¹¤Î¥Á¥§¥Ã¥¯ÍÑ */
+#ifdef CHECK  /* èª¤å·®ã®ãƒã‚§ãƒƒã‚¯ç”¨ */
     t = 0;
     for (j = 0; j < m; j++) for (k = 0; k < j; k++) {
         s = 0;
         for (i = 0; i < nfac; i++) s += q[i][j] * q[i][k];
         t += (r[j][k] - s) * (r[j][k] - s);
     }
-    printf("°ø»ÒÉé²ÙÎÌ¤«¤éºÆ¸½¤·¤¿Áê´Ø·¸¿ô¤ÎRMS¸íº¹: %g\n",
+    printf("å› å­è² è·é‡ã‹ã‚‰å†ç¾ã—ãŸç›¸é–¢ä¿‚æ•°ã®RMSèª¤å·®: %g\n",
         sqrt(t / (m * (m - 1) / 2)));
 #endif /* CHECK */
 }
 /*
-  °ø»ÒÊ¬ÀÏ¤Î¥á¥¤¥ó¥ë¡¼¥Á¥ó. Ã±¤ËÁê´Ø·¸¿ô¤òµá¤á¤ë¤À¤±¤Ç¤¢¤ë¤¬,
-  ¥Ç¡¼¥¿¤ò¼çµ­²±¤Ë°ìÅÙ¤ËÆÉ¤ß¹ş¤à¤Î¤Ç¤Ê¤¯,
-  Á²²½¼°¤ò»È¤Ã¤ÆÊ¿¶Ñ, Ê¬»¶, Áê´Ø·¸¿ô¤ò¹¹¿·¤¹¤ëÊıË¡¤òÍÑ¤¤¤Æ¤¤¤ë.
+  å› å­åˆ†æã®ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒãƒ³. å˜ã«ç›¸é–¢ä¿‚æ•°ã‚’æ±‚ã‚ã‚‹ã ã‘ã§ã‚ã‚‹ãŒ,
+  ãƒ‡ãƒ¼ã‚¿ã‚’ä¸»è¨˜æ†¶ã«ä¸€åº¦ã«èª­ã¿è¾¼ã‚€ã®ã§ãªã,
+  æ¼¸åŒ–å¼ã‚’ä½¿ã£ã¦å¹³å‡, åˆ†æ•£, ç›¸é–¢ä¿‚æ•°ã‚’æ›´æ–°ã™ã‚‹æ–¹æ³•ã‚’ç”¨ã„ã¦ã„ã‚‹.
 */
 int main(int argc, char *argv[])
 {
     int i, j, k, n, m, nfac;
     double t;
-    vector mean, lambda, work;  /* Ê¿¶Ñ, ¸ÇÍ­ÃÍ, ºî¶ÈÍÑ */
-    matrix r, q;                /* Áê´Ø·¸¿ô, ¸ÇÍ­¥Ù¥¯¥È¥ë */
+    vector mean, lambda, work;  /* å¹³å‡, å›ºæœ‰å€¤, ä½œæ¥­ç”¨ */
+    matrix r, q;                /* ç›¸é–¢ä¿‚æ•°, å›ºæœ‰ãƒ™ã‚¯ãƒˆãƒ« */
     FILE *datafile;
 
-    if (argc != 2) error("»ÈÍÑË¡: factanal filename");
+    if (argc != 2) error("ä½¿ç”¨æ³•: factanal filename");
     datafile = open_data(argv[1], &n, &m);
-    if (datafile == NULL) error("¥Ç¡¼¥¿ÉÔÎÉ");
+    if (datafile == NULL) error("ãƒ‡ãƒ¼ã‚¿ä¸è‰¯");
     r = new_matrix(m, m);  q = new_matrix(m, m);
     mean = new_vector(m);  lambda = new_vector(m);
     work = new_vector(m);
@@ -205,8 +205,8 @@ int main(int argc, char *argv[])
         for (k = 0; k <= j; k++) r[j][k] = 0;
     }
     for (i = 0; i < n; i++) for (j = 0; j < m; j++) {
-        t = getnum(datafile);                          /* ¿ôÃÍÆşÎÏ */
-        if (missing(t)) error("¥Ç¡¼¥¿ÉÔÎÉ");           /* ·çÂ¬ÃÍ¤«¥¨¥é¡¼ */
+        t = getnum(datafile);                          /* æ•°å€¤å…¥åŠ› */
+        if (missing(t)) error("ãƒ‡ãƒ¼ã‚¿ä¸è‰¯");           /* æ¬ æ¸¬å€¤ã‹ã‚¨ãƒ©ãƒ¼ */
         work[j] = t - mean[j];  mean[j] += work[j] / (i + 1);
         for (k = 0; k <= j; k++)
             r[j][k] += i * work[j] * work[k] / (i + 1);
@@ -218,17 +218,17 @@ int main(int argc, char *argv[])
         }
     }
     t = 1 / sqrt(n - 1.0);
-    printf("ÊÑ¿ô  Ê¿¶ÑÃÍ        É¸½àÊĞº¹\n");
+    printf("å¤‰æ•°  å¹³å‡å€¤        æ¨™æº–åå·®\n");
     for (j = 0; j < m; j++)
         printf("%4d  % -12.5g  % -12.5g\n",
             j + 1, mean[j], t * work[j]);
-    printf("Áê´Ø·¸¿ô\n");                     /* º¸²¼È¾Ê¬¤À¤±É½¼¨ */
+    printf("ç›¸é–¢ä¿‚æ•°\n");                     /* å·¦ä¸‹åŠåˆ†ã ã‘è¡¨ç¤º */
     for (j = 0; j < m; j++) {
         for (k = 0; k <= j; k++) printf("%8.4f", r[j][k]);
         printf("\n");
     }
     for ( ; ; ) {
-        printf("\n¶¦ÄÌ°ø»Ò¤Î¿ô (0:¼Â¹Ô½ªÎ») ? ");
+        printf("\nå…±é€šå› å­ã®æ•° (0:å®Ÿè¡Œçµ‚äº†) ? ");
         scanf("%d", &nfac);
         if (nfac > m) nfac = m;
         if (nfac < 1) break;

@@ -1,7 +1,7 @@
 /***********************************************************
-    movebloc.c -- •÷•Ì•√•Ø∞‹∆∞
+    movebloc.c -- „Éñ„É≠„ÉÉ„ÇØÁßªÂãï
 ***********************************************************/
-char a[] = "SUPERCALIFRAGILISTICEXPIALIDOCIOUS"; /* Mary Poppins§ŒÀ‚À°§Œ∏¿Õ’ */
+char a[] = "SUPERCALIFRAGILISTICEXPIALIDOCIOUS"; /* Mary Poppins„ÅÆÈ≠îÊ≥ï„ÅÆË®ÄËëâ */
 
 void reverse(int i, int j)
 {

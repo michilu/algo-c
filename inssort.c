@@ -1,10 +1,10 @@
 /***********************************************************
-    inssort.c -- ÁŞÆş¥½¡¼¥È
+    inssort.c -- æŒ¿å…¥ã‚½ãƒ¼ãƒˆ
 ***********************************************************/
 
-typedef int keytype;  /* À°Îó¥­¡¼¤Î·¿ */
+typedef int keytype;  /* æ•´åˆ—ã‚­ãƒ¼ã®å‹ */
 
-void inssort(int n, keytype a[])  /* a[0..n-1] ¤ò¾º½ç¤Ë */
+void inssort(int n, keytype a[])  /* a[0..n-1] ã‚’æ˜‡é †ã« */
 {
     int i, j;
     keytype x;
@@ -17,16 +17,16 @@ void inssort(int n, keytype a[])  /* a[0..n-1] ¤ò¾º½ç¤Ë */
     }
 }
 
-#if 0  /***** a[N] ¤òÈÖ¿Í¤È¤·¤Æ»È¤¦ **************/
+#if 0  /***** a[N] ã‚’ç•ªäººã¨ã—ã¦ä½¿ã† **************/
 
-#include <limits.h>  /* INT_MAX ¤ÎÄêµÁ¤ò´Ş¤à¥Õ¥¡¥¤¥ë */
+#include <limits.h>  /* INT_MAX ã®å®šç¾©ã‚’å«ã‚€ãƒ•ã‚¡ã‚¤ãƒ« */
 
 void inssort(int n, keytype a[])
 {
     int i, j;
     keytype x;
 
-    a[n] = INT_MAX;  /* ÈÖ¿Í */
+    a[n] = INT_MAX;  /* ç•ªäºº */
     for (i = n - 2; i >= 0; i--) {
         x = a[i];
         for (j = i + 1; a[j] < x; j++)
@@ -41,7 +41,7 @@ void inssort(int n, keytype a[])
 #include <stdlib.h>
 
 #define N 20
-int a[N + 1];  /* ÈÖ¿Í¤ò»È¤ï¤Ê¤¤¤Ê¤é a[N] ¤Ç¤è¤¤ */
+int a[N + 1];  /* ç•ªäººã‚’ä½¿ã‚ãªã„ãªã‚‰ a[N] ã§ã‚ˆã„ */
 
 int main()
 {

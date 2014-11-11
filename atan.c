@@ -1,9 +1,9 @@
 /***********************************************************
-    atan.c -- µÕ»°³Ñ´Ø¿ô
+    atan.c -- é€†ä¸‰è§’é–¢æ•°
 ***********************************************************/
-#define N  24  /* ËÜÊ¸»²¾È */
+#define N  24  /* æœ¬æ–‡å‚ç…§ */
 #define PI 3.14159265358979323846264
-long double latan(long double x)  /* ¥¢¡¼¥¯¥¿¥ó¥¸¥§¥ó¥È */
+long double latan(long double x)  /* ã‚¢ãƒ¼ã‚¯ã‚¿ãƒ³ã‚¸ã‚§ãƒ³ãƒˆ */
 {
     int i, sgn;
     long double a;
@@ -29,7 +29,7 @@ int main()
     int i;
     long double x, y;
 
-    printf("  x    %-*s  º¸¤Îtan\n", LDBL_DIG + 2, "¼«²ÈÀ½atan");
+    printf("  x    %-*s  å·¦ã®tan\n", LDBL_DIG + 2, "è‡ªå®¶è£½atan");
     for (i = -10; i <= 10; i++) {
         x = i / 4.0L;  y = latan(x);
         printf("%5.2Lf  %*.*Lf  % g\n",

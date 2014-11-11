@@ -1,19 +1,19 @@
 /***********************************************************
-    trig.c -- »°³Ñ´Ø¿ô
+    trig.c -- ä¸‰è§’é–¢æ•°
 ***********************************************************/
 #include <stdio.h>
 #include <math.h>
 #include <limits.h>
 #define PI 3.1415926535897932384626433832795
-#define N  19  /* ´ñ¿ô (ËÜÊ¸»²¾È) */
+#define N  19  /* å¥‡æ•° (æœ¬æ–‡å‚ç…§) */
 #define D  4.4544551033807686783083602485579e-6
 
-long double lfabs(long double x)  /* ÀäÂĞÃÍ */
+long double lfabs(long double x)  /* çµ¶å¯¾å€¤ */
 {
     if (x >= 0) return x;  else return -x;
 }
 
-static long double ur_tan(long double x, int *k)  /* tan(x)¤Î¸µ */
+static long double ur_tan(long double x, int *k)  /* tan(x)ã®å…ƒ */
 {
     int i;
     long double t, x2;
@@ -65,7 +65,7 @@ long double lcos1(long double x)  /* 1 - cos(x) */
 #include <stdlib.h>
 #define EPS 0.000001
 
-int main()  /* ¥Æ¥¹¥ÈÍÑ */
+int main()  /* ãƒ†ã‚¹ãƒˆç”¨ */
 {
     int i, err;
     long double x, s, c, c1, t;

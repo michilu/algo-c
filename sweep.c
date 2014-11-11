@@ -1,25 +1,25 @@
 /***********************************************************
-    sweep.c -- SWEEP±é»»»ÒË¡
+    sweep.c -- SWEEPæ¼”ç®—å­æ³•
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <math.h>
 
-#define SCALAR double   /* ¥á¥â¥êÉÔÂ­¤Ê¤é float ¤Ë */
-#include "statutil.c"   /* Â¿ÊÑÎÌ¥Ç¡¼¥¿ÆşÎÏ¥ë¡¼¥Á¥ó */
+#define SCALAR double   /* ãƒ¡ãƒ¢ãƒªä¸è¶³ãªã‚‰ float ã« */
+#include "statutil.c"   /* å¤šå¤‰é‡ãƒ‡ãƒ¼ã‚¿å…¥åŠ›ãƒ«ãƒ¼ãƒãƒ³ */
 
-int n, m, ndf;          /* ¥Ç¡¼¥¿¤Î·ï¿ô, ÊÑ¿ô¤Î¿ô, ¼«Í³ÅÙ */
-char *added;            /* ÀâÌÀÊÑ¿ô¤ËºÎÍÑ¤·¤¿¤« */
-matrix a;               /* ÀÑÏÂ¹ÔÎó */
+int n, m, ndf;          /* ãƒ‡ãƒ¼ã‚¿ã®ä»¶æ•°, å¤‰æ•°ã®æ•°, è‡ªç”±åº¦ */
+char *added;            /* èª¬æ˜å¤‰æ•°ã«æ¡ç”¨ã—ãŸã‹ */
+matrix a;               /* ç©å’Œè¡Œåˆ— */
 
-void sweep(int k)  /* Áİ¤­½Ğ¤·±é»» */
+void sweep(int k)  /* æƒãå‡ºã—æ¼”ç®— */
 {
     int i, j;
     double b, d;
 
     if ((d = a[k][k]) == 0) {
-        printf("ÊÑ¿ô %d: °ì¼¡½¾Â°.\n", k);  return;
+        printf("å¤‰æ•° %d: ä¸€æ¬¡å¾“å±.\n", k);  return;
     }
     for (j = 0; j <= m; j++) a[k][j] /= d;
     for (j = 0; j <= m; j++) {
@@ -33,14 +33,14 @@ void sweep(int k)  /* Áİ¤­½Ğ¤·±é»» */
     else          {  added[k] = 1;  ndf--;  }
 }
 
-void regress(int k)  /* ´ğ½àÊÑ¿ô k ¤Ë¤Ä¤¤¤Æ²óµ¢·¸¿ô¤Ê¤É¤ò½ĞÎÏ */
+void regress(int k)  /* åŸºæº–å¤‰æ•° k ã«ã¤ã„ã¦å›å¸°ä¿‚æ•°ãªã©ã‚’å‡ºåŠ› */
 {
     int j;
     double s, rms;
 
     if (added[k]) {  printf("???\n");  return;  }
     rms = (ndf > 0 && a[k][k] >= 0) ? sqrt(a[k][k] / ndf) : 0;
-    printf("ÊÑ¿ô  ²óµ¢·¸¿ô       É¸½à¸íº¹        t\n");
+    printf("å¤‰æ•°  å›å¸°ä¿‚æ•°       æ¨™æº–èª¤å·®        t\n");
     for (j = 0; j <= m; j++) {
         if (! added[j]) continue;
         s = (a[j][j] >= 0) ? sqrt(a[j][j]) * rms : 0;
@@ -48,11 +48,11 @@ void regress(int k)  /* ´ğ½àÊÑ¿ô k ¤Ë¤Ä¤¤¤Æ²óµ¢·¸¿ô¤Ê¤É¤ò½ĞÎÏ */
             if (s > 0) printf("  % #-11.3g", fabs(a[j][k] / s));
         printf("\n");
     }
-    printf("´ğ½àÊÑ¿ô: %d  »Äº¹2¾èÏÂ: %g  ¼«Í³ÅÙ: %d  "
-           "»Äº¹RMS: %g\n", k, a[k][k], ndf, rms);
+    printf("åŸºæº–å¤‰æ•°: %d  æ®‹å·®2ä¹—å’Œ: %g  è‡ªç”±åº¦: %d  "
+           "æ®‹å·®RMS: %g\n", k, a[k][k], ndf, rms);
 }
 
-void residuals(void)  /* »Äº¹¤ÎÀÑÏÂ¹ÔÎó¤ò½ĞÎÏ */
+void residuals(void)  /* æ®‹å·®ã®ç©å’Œè¡Œåˆ—ã‚’å‡ºåŠ› */
 {
     int i, j, k;
 
@@ -75,16 +75,16 @@ int main(int argc, char *argv[])
     FILE *datafile;
     vector x;
 
-    printf("********** ÂĞÏÃ·¿²óµ¢Ê¬ÀÏ **********\n\n");
-    if (argc != 2) error("»ÈÍÑË¡: reg datafile");
+    printf("********** å¯¾è©±å‹å›å¸°åˆ†æ **********\n\n");
+    if (argc != 2) error("ä½¿ç”¨æ³•: reg datafile");
     datafile = fopen(argv[1], "r");
-    if (datafile == NULL) error("¥Õ¥¡¥¤¥ë¤¬ÆÉ¤á¤Ş¤»¤ó.");
+    if (datafile == NULL) error("ãƒ•ã‚¡ã‚¤ãƒ«ãŒèª­ã‚ã¾ã›ã‚“.");
     n = ndf = getnum(datafile);  m = getnum(datafile);
-    printf("%d ·ï ¡ß %d ÊÑ¿ô\n", n, m);
-    if (n < 1 || m < 1) error("¥Ç¡¼¥¿ÉÔÎÉ");
+    printf("%d ä»¶ Ã— %d å¤‰æ•°\n", n, m);
+    if (n < 1 || m < 1) error("ãƒ‡ãƒ¼ã‚¿ä¸è‰¯");
     if ((added = malloc(m + 1)) == NULL
      || (a = newmat(m + 1, m + 1)) == NULL
-     || (x = newvec(m + 1)) == NULL) error("µ­²±ÎÎ°èÉÔÂ­");
+     || (x = newvec(m + 1)) == NULL) error("è¨˜æ†¶é ˜åŸŸä¸è¶³");
     for (j = 0; j <= m; j++) {
         added[j] = 0;
         for (k = j; k <= m; k++) a[j][k] = 0;
@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
         printf(".");  x[0] = 1;
         for (j = 1; j <= m; j++) {
             x[j] = getnum(datafile);
-            if (missing(x[j])) error("¥Ç¡¼¥¿ÉÔÎÉ");
+            if (missing(x[j])) error("ãƒ‡ãƒ¼ã‚¿ä¸è‰¯");
         }
         for (j = 0; j <= m; j++)
             for (k = j; k <= m; k++) a[j][k] += x[j] * x[k];
@@ -110,7 +110,7 @@ int main(int argc, char *argv[])
         case 'X':  sweep(j);  break;
         case 'Y':  regress(j);  break;
         case 'R':  residuals();  break;
-        case '\n': printf("Ì¿Îá(Xj/Yj/R/Q)? ");
+        case '\n': printf("å‘½ä»¤(Xj/Yj/R/Q)? ");
                    break;
         default:   printf("???\n");  break;
         }

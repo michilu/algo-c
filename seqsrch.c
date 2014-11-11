@@ -1,5 +1,5 @@
 /***********************************************************
-    seqsrch.c -- Ãà¼¡Ãµº÷
+    seqsrch.c -- é€æ¬¡æŽ¢ç´¢
 ***********************************************************/
 #define NOT_FOUND (-1)
 typedef int keytype;
@@ -14,7 +14,7 @@ int seqsrch1(keytype x, keytype a[], int m, int n)
 int seqsrch2(keytype x, keytype a[], int m, int n)
 {
     if (m > n) return NOT_FOUND;
-    a[n + 1] = x;  /* ÈÖ¿Í */
+    a[n + 1] = x;  /* ç•ªäºº */
     while (a[m] != x) m++;
     if (m <= n) return m;
     return NOT_FOUND;
@@ -25,7 +25,7 @@ int seqsrch3(keytype x, keytype a[], int m, int n)
     keytype t;
 
     if (m > n) return NOT_FOUND;
-    t = a[n];  a[n] = x;  /* ÈÖ¿Í */
+    t = a[n];  a[n] = x;  /* ç•ªäºº */
     while (a[m] != x) m++;
     a[n] = t;
     if (m < n) return m;
@@ -45,7 +45,7 @@ int main()
     int i, x;
     static int a[N + 1];
 
-    printf("***** Ãà¼¡Ãµº÷¥Ç¥â¥ó¥¹¥È¥ì¡¼¥·¥ç¥ó *****\n");
+    printf("***** é€æ¬¡æŽ¢ç´¢ãƒ‡ãƒ¢ãƒ³ã‚¹ãƒˆãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ *****\n");
     srand((unsigned int) time(NULL));
     for (i = 0; i < N; i++)
         a[i] = (int)((100.0 / (RAND_MAX + 1.0)) * rand());
@@ -56,23 +56,23 @@ int main()
     for (i = 0; i < N; i++) printf(" %2d", a[i]);
     printf("\n");
 
-    printf("\n²¿¤òÃµ¤·¤Þ¤¹¤«? ");
+    printf("\nä½•ã‚’æŽ¢ã—ã¾ã™ã‹? ");
     scanf("%d", &x);
 
     printf("seqsrch1: ");
     i = seqsrch1(x, a, 0, N - 1);
     if (i != NOT_FOUND) printf("i = %d\n", i);
-    else                printf("¸«¤Ä¤«¤ê¤Þ¤»¤ó\n");
+    else                printf("è¦‹ã¤ã‹ã‚Šã¾ã›ã‚“\n");
 
     printf("seqsrch2: ");
     i = seqsrch2(x, a, 0, N - 1);
     if (i != NOT_FOUND) printf("i = %d\n", i);
-    else                printf("¸«¤Ä¤«¤ê¤Þ¤»¤ó\n");
+    else                printf("è¦‹ã¤ã‹ã‚Šã¾ã›ã‚“\n");
 
     printf("seqsrch3: ");
     i = seqsrch3(x, a, 0, N - 1);
     if (i != NOT_FOUND) printf("i = %d\n", i);
-    else                printf("¸«¤Ä¤«¤ê¤Þ¤»¤ó\n");
+    else                printf("è¦‹ã¤ã‹ã‚Šã¾ã›ã‚“\n");
 
     return EXIT_SUCCESS;
 }

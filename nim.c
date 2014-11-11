@@ -1,5 +1,5 @@
 /***********************************************************
-    nim.c -- »°»³¤¯¤º¤·
+    nim.c -- ä¸‰å±±ããšã—
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,7 +9,7 @@ int main()
     int a[4], i, j, imax, max, n, r, x, my_turn;
 
     for (i = 1; i <= 3; i++) {
-        printf("%d ÈÖ¤Î»³¤ÎÀĞ¤Î¿ô? ", i);  scanf("%d", &a[i]);
+        printf("%d ç•ªã®å±±ã®çŸ³ã®æ•°? ", i);  scanf("%d", &a[i]);
         if (a[i] <= 0) return EXIT_FAILURE;
     }
     for (my_turn = 1; ; my_turn ^= 1) {
@@ -24,25 +24,25 @@ int main()
         }
         if (max == 0) break;
         if (my_turn) {
-            printf("»ä¤ÎÈÖ¤Ç¤¹.\n");
-            x = a[1] ^ a[2] ^ a[3];  /* ÇÓÂ¾ÅªÏÀÍıÏÂ */
+            printf("ç§ã®ç•ªã§ã™.\n");
+            x = a[1] ^ a[2] ^ a[3];  /* æ’ä»–çš„è«–ç†å’Œ */
             j = 0;
             for (i = 1; i <= 3; i++)
                 if (a[i] > (a[i] ^ x)) j = i;
             if (j != 0) a[j] ^= x;  else a[imax]--;
         } else {
             do {
-                printf("²¿ÈÖ¤Î»³¤«¤é¤È¤ê¤Ş¤¹¤«? ");
+                printf("ä½•ç•ªã®å±±ã‹ã‚‰ã¨ã‚Šã¾ã™ã‹? ");
                 r = scanf("%d", &i);  scanf("%*[^\n]");
             } while (r != 1 || i < 1 || i > 3 || a[i] == 0);
             do {
-                printf("²¿¸Ä¤È¤ê¤Ş¤¹¤«? ");
+                printf("ä½•å€‹ã¨ã‚Šã¾ã™ã‹? ");
                 r = scanf("%d", &n);  scanf("%*[^\n]");
             } while (r != 1 || n <= 0 || n > a[i]);
             a[i] -= n;
         }
     }
-    if (my_turn) printf("¤¢¤Ê¤¿¤Î¾¡¤Á¤Ç¤¹!\n");
-    else         printf("»ä¤Î¾¡¤Á¤Ç¤¹!\n");
+    if (my_turn) printf("ã‚ãªãŸã®å‹ã¡ã§ã™!\n");
+    else         printf("ç§ã®å‹ã¡ã§ã™!\n");
     return EXIT_SUCCESS;
 }

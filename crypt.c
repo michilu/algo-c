@@ -1,5 +1,5 @@
 /***********************************************************
-    crypt.c -- ∞≈πÊ
+    crypt.c -- ÊöóÂè∑
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     if (argc < 3 || argc > 4 ||
      (infile  = fopen(argv[1], "rb")) == NULL ||
      (outfile = fopen(argv[2], "wb")) == NULL) {
-        fputs("ª»Õ—À°: crypt infile outfile [key]\n", stderr);
+        fputs("‰ΩøÁî®Ê≥ï: crypt infile outfile [key]\n", stderr);
         return EXIT_FAILURE;
     }
     if (argc == 4) srand(atoi(argv[3]));

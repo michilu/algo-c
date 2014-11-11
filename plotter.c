@@ -1,29 +1,29 @@
 /***********************************************************
-    plotter.c -- ¥°¥é¥Õ¥£¥Ã¥¯¥¹
+    plotter.c -- ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹
 ***********************************************************/
-/* ¥×¥í¥Ã¥¿¤Î¥·¥ß¥å¥ì¡¼¥·¥ç¥ó */
+/* ãƒ—ãƒ­ãƒƒã‚¿ã®ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ */
 
-#include "gr98.c"  /* ¤Ş¤¿¤Ï "grega.c".  ¥é¡¼¥¸¥â¥Ç¥ë¤Ç¥³¥ó¥Ñ¥¤¥ë */
+#include "gr98.c"  /* ã¾ãŸã¯ "grega.c".  ãƒ©ãƒ¼ã‚¸ãƒ¢ãƒ‡ãƒ«ã§ã‚³ãƒ³ãƒ‘ã‚¤ãƒ« */
 #include "window.c"
-static double xpen = 0, ypen = 0;  /* ¥Ú¥ó¤Î¸½ºß°ÌÃÖ */
+static double xpen = 0, ypen = 0;  /* ãƒšãƒ³ã®ç¾åœ¨ä½ç½® */
 
-void move(double x, double y)  /* ¥Ú¥ó¥¢¥Ã¥×¤Ç°ÜÆ° */
+void move(double x, double y)  /* ãƒšãƒ³ã‚¢ãƒƒãƒ—ã§ç§»å‹• */
 {
     xpen = x;  ypen = y;
 }
 
-void move_rel(double dx, double dy)  /* Æ±¾å (ÁêÂĞºÂÉ¸) */
+void move_rel(double dx, double dy)  /* åŒä¸Š (ç›¸å¯¾åº§æ¨™) */
 {
     xpen += dx;  ypen += dy;
 }
 
-void draw(double x, double y)  /* ¥Ú¥ó¥À¥¦¥ó¤Ç°ÜÆ° */
+void draw(double x, double y)  /* ãƒšãƒ³ãƒ€ã‚¦ãƒ³ã§ç§»å‹• */
 {
     gr_wline(xpen, ypen, x, y, WHITE);
     xpen = x;  ypen = y;
 }
 
-void draw_rel(double dx, double dy)  /* Æ±¾å (ÁêÂĞºÂÉ¸) */
+void draw_rel(double dx, double dy)  /* åŒä¸Š (ç›¸å¯¾åº§æ¨™) */
 {
     gr_wline(xpen, ypen, xpen + dx, ypen + dy, WHITE);
     xpen += dx;  ypen += dy;

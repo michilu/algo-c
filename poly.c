@@ -1,69 +1,69 @@
 /***********************************************************
-    poly.c -- Â¿¹à¼°¤Î·×»»
+    poly.c -- å¤šé …å¼ã®è¨ˆç®—
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 
-#define COMPLEX  1  /* Ê£ÁÇ¿ô¤ò»È¤ï¤Ê¤¤¤Ê¤é 0 ¤Ë¤¹¤ë */
+#define COMPLEX  1  /* è¤‡ç´ æ•°ã‚’ä½¿ã‚ãªã„ãªã‚‰ 0 ã«ã™ã‚‹ */
 typedef enum {FALSE, TRUE} boolean;
-#define odd(n) ((n) & 1)  /* ´ñ¿ô¤« */
+#define odd(n) ((n) & 1)  /* å¥‡æ•°ã‹ */
 
-#define N_LETTER  4  /* ºÇÂçÊ¸»ú¿ô */
+#define N_LETTER  4  /* æœ€å¤§æ–‡å­—æ•° */
 
-typedef long int coeftype;  /* ·¸¿ô (Éä¹æ¤¢¤ê) */
-typedef unsigned short int expotype;  /* »Ø¿ô (Éä¹æ¤Ê¤·) */
-typedef struct node_ {  /* ¥Î¡¼¥É (Â¿¹à¼°¤Î°ì¤Ä¤Î¹à) */
-    expotype expo[N_LETTER];  /* »Ø¿ô */
-    coeftype real;            /* ¼ÂÉô */
+typedef long int coeftype;  /* ä¿‚æ•° (ç¬¦å·ã‚ã‚Š) */
+typedef unsigned short int expotype;  /* æŒ‡æ•° (ç¬¦å·ãªã—) */
+typedef struct node_ {  /* ãƒãƒ¼ãƒ‰ (å¤šé …å¼ã®ä¸€ã¤ã®é …) */
+    expotype expo[N_LETTER];  /* æŒ‡æ•° */
+    coeftype real;            /* å®Ÿéƒ¨ */
     #if COMPLEX
-        coeftype imag;        /* µõÉô */
+        coeftype imag;        /* è™šéƒ¨ */
     #endif
-    struct node_ *next;       /* ¼¡¤Î¹à¤Ø¤Î¥İ¥¤¥ó¥¿ */
+    struct node_ *next;       /* æ¬¡ã®é …ã¸ã®ãƒã‚¤ãƒ³ã‚¿ */
 } node;
 
-int table[26];  /* ³ÆÊ¸»ú¤Î°ÌÃÖ */
-node *avail;  /* Ì¤»ÈÍÑ¥»¥ë¤Î¥ê¥¹¥È */
-node *value[26];  /* ³ÆÊ¸»ú¤ËÂåÆş¤µ¤ì¤¿Â¿¹à¼° */
-char letter[N_LETTER];  /* Ê¸»ú¤ÎÉ½ */
-unsigned int cells;  /* »ÈÍÑÃæ¤Î¥»¥ë¿ô */
-unsigned int max_cells;  /* ºÇÂç»ÈÍÑ¥»¥ë¿ô */
-int ch;        /* readch() ¤ÎÊÖ¤¹ÃÍ */
-coeftype num;  /* readnum() ¤ÎÊÖ¤¹ÃÍ */
+int table[26];  /* å„æ–‡å­—ã®ä½ç½® */
+node *avail;  /* æœªä½¿ç”¨ã‚»ãƒ«ã®ãƒªã‚¹ãƒˆ */
+node *value[26];  /* å„æ–‡å­—ã«ä»£å…¥ã•ã‚ŒãŸå¤šé …å¼ */
+char letter[N_LETTER];  /* æ–‡å­—ã®è¡¨ */
+unsigned int cells;  /* ä½¿ç”¨ä¸­ã®ã‚»ãƒ«æ•° */
+unsigned int max_cells;  /* æœ€å¤§ä½¿ç”¨ã‚»ãƒ«æ•° */
+int ch;        /* readch() ã®è¿”ã™å€¤ */
+coeftype num;  /* readnum() ã®è¿”ã™å€¤ */
 
-void error(char *message)  /* ¥¨¥é¡¼½èÍı */
+void error(char *message)  /* ã‚¨ãƒ©ãƒ¼å‡¦ç† */
 {
-    fprintf(stderr, "\n%s\n%u ¸Ä¤Î¥»¥ë»ÈÍÑ\n",
+    fprintf(stderr, "\n%s\n%u å€‹ã®ã‚»ãƒ«ä½¿ç”¨\n",
         message, max_cells);
     exit(EXIT_FAILURE);
 }
 
-void readch(void)  /* É¸½àÆşÎÏ¤«¤éÊ¸»ú ch ¤òÆÉ¤à */
+void readch(void)  /* æ¨™æº–å…¥åŠ›ã‹ã‚‰æ–‡å­— ch ã‚’èª­ã‚€ */
 {
     boolean comment = FALSE;
 
     do {
         if ((ch = getchar()) == EOF) return;
         putchar(ch);
-        if (ch == '%') comment = TRUE;  /* % ¤«¤é¹ÔËö¤Ş¤Ç¤ÏÃí¼á */
+        if (ch == '%') comment = TRUE;  /* % ã‹ã‚‰è¡Œæœ«ã¾ã§ã¯æ³¨é‡ˆ */
         else if (ch == '\n') comment = FALSE;
-    } while (comment || isspace(ch));  /* ¶õÇò¤ÏÌµ»ë */
+    } while (comment || isspace(ch));  /* ç©ºç™½ã¯ç„¡è¦– */
 }
 
-void readnum(void)  /* ¿ô¤òÆÉ¤à */
+void readnum(void)  /* æ•°ã‚’èª­ã‚€ */
 {
     num = ch - '0';
     while (readch(), isdigit(ch))
         num = num * 10 + (ch - '0');
 }
 
-node *new_node(void)  /* ¿·¤·¤¤¥Î¡¼¥É¤òºî¤ë */
+node *new_node(void)  /* æ–°ã—ã„ãƒãƒ¼ãƒ‰ã‚’ä½œã‚‹ */
 {
     node *p;
 
     if (avail == NULL) {
         p = malloc(sizeof(node));
-        if (p == NULL) error("¥á¥â¥êÉÔÂ­");
+        if (p == NULL) error("ãƒ¡ãƒ¢ãƒªä¸è¶³");
     } else {
         p = avail;  avail = p->next;
     }
@@ -71,12 +71,12 @@ node *new_node(void)  /* ¿·¤·¤¤¥Î¡¼¥É¤òºî¤ë */
     return p;
 }
 
-void dispose_node(node *p)  /* ¥Î¡¼¥É¤ò¾Ã¤¹ */
+void dispose_node(node *p)  /* ãƒãƒ¼ãƒ‰ã‚’æ¶ˆã™ */
 {
     p->next = avail;  avail = p;  cells--;
 }
 
-void dispose(node *p)  /* Â¿¹à¼°¤ò¾Ã¤¹ */
+void dispose(node *p)  /* å¤šé …å¼ã‚’æ¶ˆã™ */
 {
     node *q;
 
@@ -87,7 +87,7 @@ void dispose(node *p)  /* Â¿¹à¼°¤ò¾Ã¤¹ */
     q->next = avail;  avail = p;
 }
 
-node *constant(  /* Äê¿ô */
+node *constant(  /* å®šæ•° */
     coeftype re
     #if COMPLEX
         , coeftype im
@@ -114,7 +114,7 @@ node *constant(  /* Äê¿ô */
     return p;
 }
 
-node *copy(node *p)  /* Â¿¹à¼°¤Î¥³¥Ô¡¼ */
+node *copy(node *p)  /* å¤šé …å¼ã®ã‚³ãƒ”ãƒ¼ */
 {
     int i;
     node *q, *r;
@@ -133,7 +133,7 @@ node *copy(node *p)  /* Â¿¹à¼°¤Î¥³¥Ô¡¼ */
     return q;
 }
 
-void change_sign(node *p)  /* Éä¹æÈ¿Å¾ */
+void change_sign(node *p)  /* ç¬¦å·åè»¢ */
 {
     while ((p = p->next) != NULL) {
         p->real = -(p->real);
@@ -143,15 +143,15 @@ void change_sign(node *p)  /* Éä¹æÈ¿Å¾ */
     }
 }
 
-void differentiate(node *p)  /* ÈùÊ¬ */
+void differentiate(node *p)  /* å¾®åˆ† */
 {
     int j;
     expotype e;
     node *p1;
 
-    if (! isalpha(ch)) error("Ê¸»ú¤¬¤¢¤ê¤Ş¤»¤ó");
+    if (! isalpha(ch)) error("æ–‡å­—ãŒã‚ã‚Šã¾ã›ã‚“");
     j = table[toupper(ch) - 'A'];
-    if (j < 0) error("ÈùÊ¬¤Ç¤­¤Ş¤»¤ó");
+    if (j < 0) error("å¾®åˆ†ã§ãã¾ã›ã‚“");
     p1 = p;  p = p->next;
     while (p != NULL) {
         if ((e = p->expo[j]) != 0) {
@@ -169,14 +169,14 @@ void differentiate(node *p)  /* ÈùÊ¬ */
 }
 
 #if COMPLEX
-void complex_conjugate(node *p)  /* Ê£ÁÇ¶¦Ìò */
+void complex_conjugate(node *p)  /* è¤‡ç´ å…±å½¹ */
 {
     while ((p = p->next) != NULL)
         p->imag = -(p->imag);
 }
 #endif
 
-void add(node *p, node *q)  /* p := p + q;  q ¤Ï¾Ã¤¹ */
+void add(node *p, node *q)  /* p := p + q;  q ã¯æ¶ˆã™ */
 {
     int i;
     expotype ep, eq;
@@ -217,7 +217,7 @@ void add(node *p, node *q)  /* p := p + q;  q ¤Ï¾Ã¤¹ */
     }
 }
 
-node *multiply(node *x, node *y) /* x, y ¤ÎÀÑ¤òÊÖ¤¹. x, y ¤ÏÉÔÊÑ */
+node *multiply(node *x, node *y) /* x, y ã®ç©ã‚’è¿”ã™. x, y ã¯ä¸å¤‰ */
 {
     int i;
     expotype ep, eq;
@@ -270,7 +270,7 @@ node *multiply(node *x, node *y) /* x, y ¤ÎÀÑ¤òÊÖ¤¹. x, y ¤ÏÉÔÊÑ */
     return r;
 }
 
-node *power(node *x, expotype n) /* x ¤Î n ¾è¤òÊÖ¤¹. x ¤Ï¼Î¤Æ¤ë */
+node *power(node *x, expotype n) /* x ã® n ä¹—ã‚’è¿”ã™. x ã¯æ¨ã¦ã‚‹ */
 {
     node *p, *q;
 
@@ -303,7 +303,7 @@ node *power(node *x, expotype n) /* x ¤Î n ¾è¤òÊÖ¤¹. x ¤Ï¼Î¤Æ¤ë */
     return p;
 }
 
-void sincos(node *x)  /* p^2 + q^2 = 1 ¤Î½èÍı */
+void sincos(node *x)  /* p^2 + q^2 = 1 ã®å‡¦ç† */
 {
     int i;
     node *p, *p1, *q, *r, *s, *t;
@@ -323,7 +323,7 @@ void sincos(node *x)  /* p^2 + q^2 = 1 ¤Î½èÍı */
                 r->expo[0] = p->expo[0] + 2;
                 r->expo[1] = p->expo[1] -= 2;
                 for (i = 2; i < N_LETTER; i++)
-                    r->expo[i] = p->expo[i];  /* i¡â0 ¤Ë¤Ê¤ë */
+                    r->expo[i] = p->expo[i];  /* iâ‰ 0 ã«ãªã‚‹ */
                 t = t->next = p;
                 p1->next = p = p->next;
             } else {
@@ -339,9 +339,9 @@ void sincos(node *x)  /* p^2 + q^2 = 1 ¤Î½èÍı */
     } while (i);
 }
 
-node *expression(void);  /* ¼° */
+node *expression(void);  /* å¼ */
 
-node *variable(void)  /* ÊÑ¿ô */
+node *variable(void)  /* å¤‰æ•° */
 {
     int i, j;
     node *p;
@@ -354,27 +354,27 @@ node *variable(void)  /* ÊÑ¿ô */
             p = constant(1);
         #endif
         readch();
-        if (ch == '^') {  /* ¤Á¤ç¤Ã¤È¤·¤¿ºÇÅ¬²½ */
+        if (ch == '^') {  /* ã¡ã‚‡ã£ã¨ã—ãŸæœ€é©åŒ– */
             readch();
-            if (! isdigit(ch)) error("¿ô¤¬¤¢¤ê¤Ş¤»¤ó");
+            if (! isdigit(ch)) error("æ•°ãŒã‚ã‚Šã¾ã›ã‚“");
             readnum();
         } else num = 1;
         (p->next)->expo[j] = (expotype) num;
     } else {
-        if (value[i] == NULL) error("Ì¤ÄêµÁ¤ÎÊ¸»ú¤Ç¤¹");
+        if (value[i] == NULL) error("æœªå®šç¾©ã®æ–‡å­—ã§ã™");
         p = copy(value[i]);
         readch();
     }
     return p;
 }
 
-node *factor(void)  /* °ø»Ò */
+node *factor(void)  /* å› å­ */
 {
     node *p;
 
     if (ch == '(') {
         readch();  p = expression();
-        if (ch != ')') error("')' ¤¬¤¢¤ê¤Ş¤»¤ó");
+        if (ch != ')') error("')' ãŒã‚ã‚Šã¾ã›ã‚“");
         readch();
     } else if (isdigit(ch)) {
         readnum();
@@ -387,12 +387,12 @@ node *factor(void)  /* °ø»Ò */
             p = constant(num);
         #endif
     } else if (isalpha(ch)) p = variable();
-    else error("°ø»Ò¤ÎÊ¸Ë¡¤¬´Ö°ã¤Ã¤Æ¤¤¤Ş¤¹");
+    else error("å› å­ã®æ–‡æ³•ãŒé–“é•ã£ã¦ã„ã¾ã™");
     for ( ; ; ) {
         switch (ch) {
         case '^':
             readch();
-            if (! isdigit(ch)) error("¿ô¤¬¤¢¤ê¤Ş¤»¤ó");
+            if (! isdigit(ch)) error("æ•°ãŒã‚ã‚Šã¾ã›ã‚“");
             readnum();  p = power(p, (expotype) num);
             break;
         case ':':
@@ -412,7 +412,7 @@ node *factor(void)  /* °ø»Ò */
     }
 }
 
-node *term(void)  /* ¹à */
+node *term(void)  /* é … */
 {
     node *p, *q, *r;
 
@@ -425,7 +425,7 @@ node *term(void)  /* ¹à */
     return p;
 }
 
-node *expression(void)  /* ¼° */
+node *expression(void)  /* å¼ */
 {
     node *p, *q;
 
@@ -448,7 +448,7 @@ node *expression(void)  /* ¼° */
     }
 }
 
-void initialize(void)  /* ½é´ü²½ */
+void initialize(void)  /* åˆæœŸåŒ– */
 {
     int i;
 
@@ -458,7 +458,7 @@ void initialize(void)  /* ½é´ü²½ */
     }
 }
 
-void declare(void)  /* Ê¸»úÀë¸À */
+void declare(void)  /* æ–‡å­—å®£è¨€ */
 {
     int i, j;
 
@@ -472,7 +472,7 @@ void declare(void)  /* Ê¸»úÀë¸À */
     while (isalpha(ch)) {
         i = toupper(ch) - 'A';
         if (table[i] < 0) {
-            if (j >= N_LETTER) error("Ê¸»ú¤¬Â¿¤¹¤®¤Ş¤¹");
+            if (j >= N_LETTER) error("æ–‡å­—ãŒå¤šã™ãã¾ã™");
             table[i] = j;  letter[j] = ch;  j++;
         }
         readch();
@@ -480,15 +480,15 @@ void declare(void)  /* Ê¸»úÀë¸À */
     }
 }
 
-void assign(void)  /* ÂåÆş */
+void assign(void)  /* ä»£å…¥ */
 {
     int i;
     node *p;
 
     i = toupper(ch) - 'A';
-    if (table[i] >= 0) error("º¸ÊÕ¤¬´Ö°ã¤Ã¤Æ¤¤¤Ş¤¹");
+    if (table[i] >= 0) error("å·¦è¾ºãŒé–“é•ã£ã¦ã„ã¾ã™");
     readch();
-    if (ch != '=') error("'=' ¤¬¤¢¤ê¤Ş¤»¤ó");
+    if (ch != '=') error("'=' ãŒã‚ã‚Šã¾ã›ã‚“");
     readch();  p = expression();
     if (value[i] != NULL) dispose(value[i]);
     value[i] = p;
@@ -496,7 +496,7 @@ void assign(void)  /* ÂåÆş */
 
 #if COMPLEX
 
-void print(void)  /* ¼°¤Î°õºş (Ê£ÁÇ¿ôÈÇ) */
+void print(void)  /* å¼ã®å°åˆ· (è¤‡ç´ æ•°ç‰ˆ) */
 {
     int i;
     boolean first, one;
@@ -548,7 +548,7 @@ void print(void)  /* ¼°¤Î°õºş (Ê£ÁÇ¿ôÈÇ) */
 
 #else
 
-void print(void)  /* ¼°¤Î°õºş (¼Â¿ôÈÇ) */
+void print(void)  /* å¼ã®å°åˆ· (å®Ÿæ•°ç‰ˆ) */
 {
     int i;
     boolean first;
@@ -586,15 +586,15 @@ void print(void)  /* ¼°¤Î°õºş (¼Â¿ôÈÇ) */
 
 int main()
 {
-    printf("***** ´ÊÃ±¤ÊÂ¿¹à¼°½èÍı·Ï *****\n");
+    printf("***** ç°¡å˜ãªå¤šé …å¼å‡¦ç†ç³» *****\n");
     initialize();
     while (readch(), ch != EOF) {
         if (ch == '@') declare();
         else if (ch == '?') print();
         else if (isalpha(ch)) assign();
         else error("illegal statement");
-        if (ch != ';') error("';' ¤¬¤¢¤ê¤Ş¤»¤ó");
-        printf("\n%u ¸Ä¤Î¥»¥ë»ÈÍÑ (%u ¸Ä»ÈÍÑÃæ)\n",
+        if (ch != ';') error("';' ãŒã‚ã‚Šã¾ã›ã‚“");
+        printf("\n%u å€‹ã®ã‚»ãƒ«ä½¿ç”¨ (%u å€‹ä½¿ç”¨ä¸­)\n",
             max_cells, cells);
         max_cells = cells;
     }

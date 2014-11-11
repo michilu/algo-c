@@ -1,12 +1,12 @@
 /***********************************************************
-    fft.c -- FFT (¹âÂ®FourierÊÑ´¹)
+    fft.c -- FFT (é«˜é€ŸFourierå¤‰æ›)
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #define PI 3.14159265358979323846
 /*
-  ´Ø¿ô{\tt fft()}¤Î²¼ÀÁ¤±¤È¤·¤Æ»°³Ñ´Ø¿ôÉ½¤òºî¤ë.
+  é–¢æ•°{\tt fft()}ã®ä¸‹è«‹ã‘ã¨ã—ã¦ä¸‰è§’é–¢æ•°è¡¨ã‚’ä½œã‚‹.
 */
 static void make_sintbl(int n, float sintbl[])
 {
@@ -29,7 +29,7 @@ static void make_sintbl(int n, float sintbl[])
         sintbl[i + n2] = - sintbl[i];
 }
 /*
-  ´Ø¿ô{\tt fft()}¤Î²¼ÀÁ¤±¤È¤·¤Æ¥Ó¥Ã¥ÈÈ¿Å¾É½¤òºî¤ë.
+  é–¢æ•°{\tt fft()}ã®ä¸‹è«‹ã‘ã¨ã—ã¦ãƒ“ãƒƒãƒˆåè»¢è¡¨ã‚’ä½œã‚‹.
 */
 static void make_bitrev(int n, int bitrev[])
 {
@@ -45,54 +45,54 @@ static void make_bitrev(int n, int bitrev[])
     }
 }
 /*
-  ¹âÂ®FourierÊÑ´¹ (Cooley--Tukey¤Î¥¢¥ë¥´¥ê¥º¥à).
-  É¸ËÜÅÀ¤Î¿ô {\tt n} ¤Ï2¤ÎÀ°¿ô¾è¤Ë¸Â¤ë.
-  {\tt x[$k$]} ¤¬¼ÂÉô, {\tt y[$k$]} ¤¬µõÉô ($k = 0$, $1$, $2$,
+  é«˜é€ŸFourierå¤‰æ› (Cooley--Tukeyã®ã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ ).
+  æ¨™æœ¬ç‚¹ã®æ•° {\tt n} ã¯2ã®æ•´æ•°ä¹—ã«é™ã‚‹.
+  {\tt x[$k$]} ãŒå®Ÿéƒ¨, {\tt y[$k$]} ãŒè™šéƒ¨ ($k = 0$, $1$, $2$,
   \ldots, $|{\tt n}| - 1$).
-  ·ë²Ì¤Ï {\tt x[]}, {\tt y[]} ¤Ë¾å½ñ¤­¤µ¤ì¤ë.
-  ${\tt n} = 0$ ¤Ê¤éÉ½¤Î¥á¥â¥ê¤ò²òÊü¤¹¤ë.
-  ${\tt n} < 0$ ¤Ê¤éµÕÊÑ´¹¤ò¹Ô¤¦.
-  Á°²ó¤È°Û¤Ê¤ë $|{\tt n}|$ ¤ÎÃÍ¤Ç¸Æ¤Ó½Ğ¤¹¤È,
-  »°³Ñ´Ø¿ô¤È¥Ó¥Ã¥ÈÈ¿Å¾¤ÎÉ½¤òºî¤ë¤¿¤á¤ËÂ¿¾¯Í¾Ê¬¤Ë»ş´Ö¤¬¤«¤«¤ë.
-  ¤³¤ÎÉ½¤Î¤¿¤á¤Îµ­²±ÎÎ°è³ÍÆÀ¤Ë¼ºÇÔ¤¹¤ë¤È1¤òÊÖ¤¹ (Àµ¾ï½ªÎ»»ş
-  ¤ÎÌá¤êÃÍ¤Ï0).
-  ¤³¤ì¤é¤ÎÉ½¤Îµ­²±ÎÎ°è¤ò²òÊü¤¹¤ë¤Ë¤Ï ${\tt n} = 0$ ¤È¤·¤Æ
-  ¸Æ¤Ó½Ğ¤¹ (¤³¤Î¤È¤­¤Ï {\tt x[]}, {\tt y[]} ¤ÎÃÍ¤ÏÊÑ¤ï¤é¤Ê¤¤).
+  çµæœã¯ {\tt x[]}, {\tt y[]} ã«ä¸Šæ›¸ãã•ã‚Œã‚‹.
+  ${\tt n} = 0$ ãªã‚‰è¡¨ã®ãƒ¡ãƒ¢ãƒªã‚’è§£æ”¾ã™ã‚‹.
+  ${\tt n} < 0$ ãªã‚‰é€†å¤‰æ›ã‚’è¡Œã†.
+  å‰å›ã¨ç•°ãªã‚‹ $|{\tt n}|$ ã®å€¤ã§å‘¼ã³å‡ºã™ã¨,
+  ä¸‰è§’é–¢æ•°ã¨ãƒ“ãƒƒãƒˆåè»¢ã®è¡¨ã‚’ä½œã‚‹ãŸã‚ã«å¤šå°‘ä½™åˆ†ã«æ™‚é–“ãŒã‹ã‹ã‚‹.
+  ã“ã®è¡¨ã®ãŸã‚ã®è¨˜æ†¶é ˜åŸŸç²å¾—ã«å¤±æ•—ã™ã‚‹ã¨1ã‚’è¿”ã™ (æ­£å¸¸çµ‚äº†æ™‚
+  ã®æˆ»ã‚Šå€¤ã¯0).
+  ã“ã‚Œã‚‰ã®è¡¨ã®è¨˜æ†¶é ˜åŸŸã‚’è§£æ”¾ã™ã‚‹ã«ã¯ ${\tt n} = 0$ ã¨ã—ã¦
+  å‘¼ã³å‡ºã™ (ã“ã®ã¨ãã¯ {\tt x[]}, {\tt y[]} ã®å€¤ã¯å¤‰ã‚ã‚‰ãªã„).
 */
 int fft(int n, float x[], float y[])
 {
-    static int    last_n = 0;    /* Á°²ó¸Æ½Ğ¤·»ş¤Î {\tt n} */
-    static int   *bitrev = NULL; /* ¥Ó¥Ã¥ÈÈ¿Å¾É½ */
-    static float *sintbl = NULL; /* »°³Ñ´Ø¿ôÉ½ */
+    static int    last_n = 0;    /* å‰å›å‘¼å‡ºã—æ™‚ã® {\tt n} */
+    static int   *bitrev = NULL; /* ãƒ“ãƒƒãƒˆåè»¢è¡¨ */
+    static float *sintbl = NULL; /* ä¸‰è§’é–¢æ•°è¡¨ */
     int i, j, k, ik, h, d, k2, n4, inverse;
     float t, s, c, dx, dy;
 
-    /* ½àÈ÷ */
+    /* æº–å‚™ */
     if (n < 0) {
-        n = -n;  inverse = 1;  /* µÕÊÑ´¹ */
+        n = -n;  inverse = 1;  /* é€†å¤‰æ› */
     } else inverse = 0;
     n4 = n / 4;
     if (n != last_n || n == 0) {
         last_n = n;
         if (sintbl != NULL) free(sintbl);
         if (bitrev != NULL) free(bitrev);
-        if (n == 0) return 0;  /* µ­²±ÎÎ°è¤ò²òÊü¤·¤¿ */
+        if (n == 0) return 0;  /* è¨˜æ†¶é ˜åŸŸã‚’è§£æ”¾ã—ãŸ */
         sintbl = malloc((n + n4) * sizeof(float));
         bitrev = malloc(n * sizeof(int));
         if (sintbl == NULL || bitrev == NULL) {
-            fprintf(stderr, "µ­²±ÎÎ°èÉÔÂ­\n");  return 1;
+            fprintf(stderr, "è¨˜æ†¶é ˜åŸŸä¸è¶³\n");  return 1;
         }
         make_sintbl(n, sintbl);
         make_bitrev(n, bitrev);
     }
-    for (i = 0; i < n; i++) {    /* ¥Ó¥Ã¥ÈÈ¿Å¾ */
+    for (i = 0; i < n; i++) {    /* ãƒ“ãƒƒãƒˆåè»¢ */
         j = bitrev[i];
         if (i < j) {
             t = x[i];  x[i] = x[j];  x[j] = t;
             t = y[i];  y[i] = y[j];  y[j] = t;
         }
     }
-    for (k = 1; k < n; k = k2) {    /* ÊÑ´¹ */
+    for (k = 1; k < n; k = k2) {    /* å¤‰æ› */
         h = 0;  k2 = k + k;  d = n / k2;
         for (j = 0; j < k; j++) {
             c = sintbl[h + n4];
@@ -108,9 +108,9 @@ int fft(int n, float x[], float y[])
             h += d;
         }
     }
-    if (! inverse)    /* µÕÊÑ´¹¤Ç¤Ê¤¤¤Ê¤én¤Ç³ä¤ë */
+    if (! inverse)    /* é€†å¤‰æ›ã§ãªã„ãªã‚‰nã§å‰²ã‚‹ */
         for (i = 0; i < n; i++) {  x[i] /= n;  y[i] /= n;  }
-    return 0;  /* Àµ¾ï½ªÎ» */
+    return 0;  /* æ­£å¸¸çµ‚äº† */
 }
 
 #define N 64
@@ -130,7 +130,7 @@ int main(void)
         x3[i] = x2[i];  y3[i] = y2[i];
     }
     if (fft(-N, x3, y3)) return EXIT_FAILURE;
-    printf("      ¸µ¤Î¥Ç¡¼¥¿    ¥Õ¡¼¥ê¥¨ÊÑ´¹  µÕÊÑ´¹\n");
+    printf("      å…ƒã®ãƒ‡ãƒ¼ã‚¿    ãƒ•ãƒ¼ãƒªã‚¨å¤‰æ›  é€†å¤‰æ›\n");
     for (i = 0; i < N; i++)
         printf("%4d | %6.3f %6.3f | %6.3f %6.3f | %6.3f %6.3f\n",
             i, x1[i], y1[i], x2[i], y2[i], x3[i], y3[i]);

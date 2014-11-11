@@ -3,7 +3,7 @@
 ***********************************************************/
 #include <limits.h>
 #define CRCPOLY1  0x1021U  /* x^{16}+x^{12}+x^5+1 */
-#define CRCPOLY2  0x8408U  /* ∫∏±¶µ’≈æ */
+#define CRCPOLY2  0x8408U  /* Â∑¶Âè≥ÈÄÜËª¢ */
 typedef unsigned char byte;
 
 unsigned int crc1(int n, byte c[])

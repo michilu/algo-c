@@ -1,7 +1,7 @@
 /***********************************************************
-    qrdecomp.c -- QRÊ¬²ò
+    qrdecomp.c -- QRåˆ†è§£
 ***********************************************************/
-#include "matutil.c"  /* \see ¹ÔÎó */
+#include "matutil.c"  /* \see è¡Œåˆ— */
 #include <math.h>
 
 void qrdecomp(int n, int m, matrix x)
@@ -17,7 +17,7 @@ void qrdecomp(int n, int m, matrix x)
         v[r] += u;  t = 1 / (v[r] * u);
         for (j = r + 1; j < m; j++) {
             w = x[j];
-            s = t * innerproduct(n - r, &v[r], &w[r]); /* ÆâÀÑ $\mbox{\tt v[r]}\times\mbox{\tt w[r]} + \cdots + \mbox{\tt v[n-1]}\times\mbox{\tt w[n-1]}$ */
+            s = t * innerproduct(n - r, &v[r], &w[r]); /* å†…ç© $\mbox{\tt v[r]}\times\mbox{\tt w[r]} + \cdots + \mbox{\tt v[n-1]}\times\mbox{\tt w[n-1]}$ */
             for (i = r; i < n; i++) w[i] -= s * v[i];
         }
         v[r] = -u;
@@ -36,12 +36,12 @@ void xtoq(int n, int m, matrix x, matrix r)
     }
 }
 
-/****************** °Ê²¼¤Ï¥Æ¥¹¥ÈÍÑ *******************/
+/****************** ä»¥ä¸‹ã¯ãƒ†ã‚¹ãƒˆç”¨ *******************/
 
 #include <limits.h>
 static unsigned long seed;
 
-double rnd(void)  /* Íğ¿ô  0 < rnd() < 1 */
+double rnd(void)  /* ä¹±æ•°  0 < rnd() < 1 */
 {
     return (seed *= 69069UL) / (ULONG_MAX + 1.0);
 }
@@ -55,7 +55,7 @@ int main()
     printf("n = ");  scanf("%d", &n);
     printf("m = ");  scanf("%d", &m);
     if (m > n) m = n;
-    printf("Íğ¿ô¤Î¼ï (Àµ¤ÎÀ°¿ô) = ");
+    printf("ä¹±æ•°ã®ç¨® (æ­£ã®æ•´æ•°) = ");
     scanf("%ul", &seed);  seed |= 1;
     x = new_matrix(m, n);
     q = new_matrix(m, n);
@@ -66,7 +66,7 @@ int main()
     printf("X^T:\n");
     matprint(x, n, 7, "%10.6f");
 
-    /* QRÊ¬²ò */
+    /* QRåˆ†è§£ */
     qrdecomp(n, m, r);  xtoq(n, m, q, r);
     printf("Q^T:\n");
     matprint(q, n, 7, "%10.6f");
@@ -83,7 +83,7 @@ int main()
             for (k = 0; k <= j; k++) s += q[k][i] * r[j][k];
             s -= x[j][i];  t += s * s;
         }
-    printf("Æó¾èÊ¿¶Ñ¸íº¹: %g\n", sqrt(t / (m * n)));
+    printf("äºŒä¹—å¹³å‡èª¤å·®: %g\n", sqrt(t / (m * n)));
 
     return EXIT_SUCCESS;
 }

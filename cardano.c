@@ -1,10 +1,10 @@
 /***********************************************************
-    cardano.c -- 3¼¡ÊıÄø¼°
+    cardano.c -- 3æ¬¡æ–¹ç¨‹å¼
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#define PI  3.14159265358979323846264  /* ±ß¼şÎ¨ */
+#define PI  3.14159265358979323846264  /* å††å‘¨ç‡ */
 #define CHECK
 
 double cuberoot(double x)  /* $\sqrt[3]{x}$ */
@@ -32,7 +32,7 @@ void cardano(double a, double b, double c, double d)
     a = q * q - p * p * p;
     if (a == 0) {
         q = cuberoot(q);  x1 = 2 * q - b;  x2 = -q - b;
-        printf("x = %g, %g (½Å²ò)\n", x1, x2);
+        printf("x = %g, %g (é‡è§£)\n", x1, x2);
 #ifdef CHECK
         printf("f(x1) = %g\n", x1 * (x1 * (x1 + 3 * b) + c) + d);
         printf("f(x2) = %g\n", x2 * (x2 * (x2 + 3 * b) + c) + d);
@@ -71,7 +71,7 @@ int main()
     printf("a b c d = ");
     scanf("%lf%lf%lf%lf", &a, &b, &c, &d);
     if (a == 0) {
-        printf("3¼¡ÊıÄø¼°¤Ç¤Ï¤¢¤ê¤Ş¤»¤ó.\n");
+        printf("3æ¬¡æ–¹ç¨‹å¼ã§ã¯ã‚ã‚Šã¾ã›ã‚“.\n");
         return EXIT_FAILURE;
     }
     cardano(a, b, c, d);

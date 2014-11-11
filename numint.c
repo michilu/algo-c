@@ -1,12 +1,12 @@
 /***********************************************************
-    numint.c -- ¿ôÃÍÀÑÊ¬
+    numint.c -- æ•°å€¤ç©åˆ†
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 
-double f(double x)  /* ÈïÀÑÊ¬´Ø¿ô $f(x)$ */
+double f(double x)  /* è¢«ç©åˆ†é–¢æ•° $f(x)$ */
 {
-    return 4 / (1 + x * x);  /* Îã $4 / (1 + x^2)$ */
+    return 4 / (1 + x * x);  /* ä¾‹ $4 / (1 + x^2)$ */
 }
 
 int main()
@@ -14,7 +14,7 @@ int main()
     int i, n, nmax = 32;
     double a = 0, b = 1, h, trapezoid, midpoint, simpson;
 
-    printf("    n  Âæ·Á           ÃæÅÀ           Simpson\n");
+    printf("    n  å°å½¢           ä¸­ç‚¹           Simpson\n");
     h = b - a;  trapezoid = h * (f(a) + f(b)) / 2;
     for (n = 1; n <= nmax; n *= 2) {
         midpoint = 0;

@@ -1,5 +1,5 @@
 /***********************************************************
-    mrnd.c -- M·ÏÎóÍð¿ô
+    mrnd.c -- Mç³»åˆ—ä¹±æ•°
 ***********************************************************/
 #define M32(x)  (((1UL << 32) - 1) & (x))
 static int jrnd;
@@ -55,9 +55,9 @@ int main()
     unsigned long i, n;
     double r, s1, s2, x, x0, xprev;
 
-    printf("Íð¿ô¤Î¼ï? ");  scanf("%lu", &i);
-    init_rnd(i);  /* Ç¤°Õ¤Î unsigned long ¤Ç½é´ü²½. ¾ÊÎ¬ÉÔ²Ä. */
-    printf("¸Ä¿ô? ");  scanf("%lu", &n);
+    printf("ä¹±æ•°ã®ç¨®? ");  scanf("%lu", &i);
+    init_rnd(i);  /* ä»»æ„ã® unsigned long ã§åˆæœŸåŒ–. çœç•¥ä¸å¯. */
+    printf("å€‹æ•°? ");  scanf("%lu", &n);
 
     s1 = x0 = xprev = rnd() - 0.5;  s2 = x0 * x0;  r = 0;
     for (i = 1; i < n; i++) {
@@ -66,9 +66,9 @@ int main()
     }
     r = (n * (r + x * x0) - s1 * s1) / (n * s2 - s1 * s1);
 
-    printf("°Ê²¼¤Ï´üÂÔÃÍ¤È¤Îº¹¤òÉ¸½à¸íº¹¤Ç³ä¤Ã¤¿¤â¤Î.\n");
-    printf("Ê¿¶Ñ¡¡¡¡: %.3f\n", s1 * sqrt(12.0 / n));
-    printf("Áê´Ø·¸¿ô: %.3f\n", (r+1.0/(n-1)) * sqrt((double)n));
+    printf("ä»¥ä¸‹ã¯æœŸå¾…å€¤ã¨ã®å·®ã‚’æ¨™æº–èª¤å·®ã§å‰²ã£ãŸã‚‚ã®.\n");
+    printf("å¹³å‡ã€€ã€€: %.3f\n", s1 * sqrt(12.0 / n));
+    printf("ç›¸é–¢ä¿‚æ•°: %.3f\n", (r+1.0/(n-1)) * sqrt((double)n));
 
     return EXIT_SUCCESS;
 }

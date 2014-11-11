@@ -1,35 +1,35 @@
 /***********************************************************
-    knight.c -- µ³»Î½äÎò¤ÎÌäÂê
+    knight.c -- é¨å£«å·¡æ­´ã®å•é¡Œ
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 
-#define N  5           /* ${\tt N} \times {\tt N}$ ¤ÎÈÖÌÌ */
+#define N  5           /* ${\tt N} \times {\tt N}$ ã®ç•ªé¢ */
 
-int board[N + 4][N + 4],                /* ÈÖÌÌ */
-    dx[8] = { 2, 1,-1,-2,-2,-1, 1, 2 }, /* ²£ÊÑ°Ì */
-    dy[8] = { 1, 2, 2, 1,-1,-2,-2,-1 }; /* ½ÄÊÑ°Ì */
+int board[N + 4][N + 4],                /* ç•ªé¢ */
+    dx[8] = { 2, 1,-1,-2,-2,-1, 1, 2 }, /* æ¨ªå¤‰ä½ */
+    dy[8] = { 1, 2, 2, 1,-1,-2,-2,-1 }; /* ç¸¦å¤‰ä½ */
 
-void printboard(void)                   /* ÈÖÌÌ¤ò½ĞÎÏ */
+void printboard(void)                   /* ç•ªé¢ã‚’å‡ºåŠ› */
 {
     int i, j;
     static solution = 0;
 
-    printf("\n²ò %d\n", ++solution);
+    printf("\nè§£ %d\n", ++solution);
     for (i = 2; i <= N + 1; i++) {
         for (j = 2; j <= N + 1; j++) printf("%4d", board[i][j]);
         printf("\n");
     }
 }
 
-void try(int x, int y)  /* ºÆµ¢Åª¤Ë»î¤ß¤ë */
+void try(int x, int y)  /* å†å¸°çš„ã«è©¦ã¿ã‚‹ */
 {
     int i;
     static int count = 0;
 
-    if (board[x][y] != 0) return;  /* ¤¹¤Ç¤ËË¬¤ì¤¿ */
+    if (board[x][y] != 0) return;  /* ã™ã§ã«è¨ªã‚ŒãŸ */
     board[x][y] = ++count;
-    if (count == N * N) printboard();  /* ´°À® */
+    if (count == N * N) printboard();  /* å®Œæˆ */
     else for (i = 0; i < 8; i++) try(x + dx[i], y + dy[i]);
     board[x][y] = 0;  count--;
 }

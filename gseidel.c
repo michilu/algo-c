@@ -1,12 +1,12 @@
 /***********************************************************
-    gseidel.c -- Gauss (¥¬¥¦¥¹)--Seidel (¥¶¥¤¥Ç¥ë) Ë¡
+    gseidel.c -- Gauss (ã‚¬ã‚¦ã‚¹)--Seidel (ã‚¶ã‚¤ãƒ‡ãƒ«) æ³•
 ***********************************************************/
 #include "matutil.c"
 #include <math.h>
 
-#define VERBOSE   1     /* ÅÓÃæ·Ğ²á¤ò½ĞÎÏ¤·¤Ê¤¤¤Ê¤é 0 ¤Ë¤¹¤ë */
-#define EPS       1E-6  /* µöÍÆ¸íº¹ */
-#define MAX_ITER  500   /* ºÇÂç·«ÊÖ¤·¿ô */
+#define VERBOSE   1     /* é€”ä¸­çµŒéã‚’å‡ºåŠ›ã—ãªã„ãªã‚‰ 0 ã«ã™ã‚‹ */
+#define EPS       1E-6  /* è¨±å®¹èª¤å·® */
+#define MAX_ITER  500   /* æœ€å¤§ç¹°è¿”ã—æ•° */
 
 int gseidel(int n, matrix a, vector x, vector b)
 {
@@ -19,18 +19,18 @@ int gseidel(int n, matrix a, vector x, vector b)
             s = b[i];
             for (j = 0    ; j < i; j++) s -= a[i][j] * x[j];
             for (j = i + 1; j < n; j++) s -= a[i][j] * x[j];
-            s /= a[i][i];  /* ¤¢¤é¤«¤¸¤áÂĞ³ÑÀ®Ê¬¤ò1¤Ë¤·¤Æ¤ª¤±¤ĞÉÔÍ× */
+            s /= a[i][i];  /* ã‚ã‚‰ã‹ã˜ã‚å¯¾è§’æˆåˆ†ã‚’1ã«ã—ã¦ãŠã‘ã°ä¸è¦ */
             if (ok && fabs(x[i] - s) > EPS * (1 + fabs(s)))
                 ok = 0;
-            x[i] = s;  /* SORË¡¤Ê¤éÎã¤¨¤Ğ x[i] += 1.2 * (s - x[i]); */
+            x[i] = s;  /* SORæ³•ãªã‚‰ä¾‹ãˆã° x[i] += 1.2 * (s - x[i]); */
         }
         #if VERBOSE
             printf("%3d:\n", iter);
             vecprint(x, n, 7, "%11.6f");
         #endif
-        if (ok) return EXIT_SUCCESS;  /* À®¸ù */
+        if (ok) return EXIT_SUCCESS;  /* æˆåŠŸ */
     }
-    return EXIT_FAILURE;  /* ¼ıÂ«¤»¤º */
+    return EXIT_FAILURE;  /* åæŸã›ãš */
 }
 
 int main()
@@ -47,8 +47,8 @@ int main()
         a[i][i] = 2;  b[i] = n + 1;  x[i] = 0;
     }
     if (gseidel(n, a, x, b) == EXIT_FAILURE)
-        printf("¼ıÂ«¤·¤Ş¤»¤ó\n");
-    printf("²ò (Àµ²ò¤Ï¤¹¤Ù¤Æ 1)\n");
+        printf("åæŸã—ã¾ã›ã‚“\n");
+    printf("è§£ (æ­£è§£ã¯ã™ã¹ã¦ 1)\n");
     vecprint(x, n, 7, "%11.6f");
     return EXIT_SUCCESS;
 }

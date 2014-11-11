@@ -1,44 +1,44 @@
 /***********************************************************
-    arith.c -- »»½Ñ°µ½Ì
+    arith.c -- ç®—è¡“åœ§ç¸®
 ***********************************************************/
-#include "bitio.c"  /* \see\ HuffmanË¡ */
+#include "bitio.c"  /* \see\ Huffmanæ³• */
 #include <limits.h>
 #ifdef max
     #undef max
 #endif
-#define max(x, y) ((x) > (y) ? (x) : (y))  /* 2¿ô¤ÎºÇÂçÃÍ */
-#define N  256      /* Ê¸»ú¤Î¼ïÎà (Ê¸»ú¥³¡¼¥É{\tt = 0..N-1}) */
+#define max(x, y) ((x) > (y) ? (x) : (y))  /* 2æ•°ã®æœ€å¤§å€¤ */
+#define N  256      /* æ–‡å­—ã®ç¨®é¡ (æ–‡å­—ã‚³ãƒ¼ãƒ‰{\tt = 0..N-1}) */
 #define USHRT_BIT (CHAR_BIT * sizeof(unsigned short))
-                    /* {\tt unsigned short} ¤Î¥Ó¥Ã¥È¿ô */
+                    /* {\tt unsigned short} ã®ãƒ“ãƒƒãƒˆæ•° */
 #define Q1 (1U << (USHRT_BIT - 2))
 #define Q2 (2U * Q1)
 #define Q3 (3U * Q1)
 
-unsigned cum[N + 1];  /* ÎßÀÑÅÙ¿ô */
-int ns;  /* ¼¡¤Î {\tt output()} ¤Ç½ĞÎÏ¤¹¤ëÊä¿ô¤Î¥«¥¦¥ó¥¿ */
+unsigned cum[N + 1];  /* ç´¯ç©åº¦æ•° */
+int ns;  /* æ¬¡ã® {\tt output()} ã§å‡ºåŠ›ã™ã‚‹è£œæ•°ã®ã‚«ã‚¦ãƒ³ã‚¿ */
 
-static void output(int bit)  /* {\tt bit} ¤ËÂ³¤¤¤Æ¤½¤ÎÊä¿ô¤ò {\tt ns} ¸Ä½ĞÎÏ */
+static void output(int bit)  /* {\tt bit} ã«ç¶šã„ã¦ãã®è£œæ•°ã‚’ {\tt ns} å€‹å‡ºåŠ› */
 {
-    putbit(bit);  /* 1¥Ó¥Ã¥È½ñ¤­½Ğ¤¹ */
-    while (ns > 0) {  putbit(! bit);  ns--;  }  /* ¤½¤ÎÊä¿ô¤ò½ñ¤­½Ğ¤¹ */
+    putbit(bit);  /* 1ãƒ“ãƒƒãƒˆæ›¸ãå‡ºã™ */
+    while (ns > 0) {  putbit(! bit);  ns--;  }  /* ãã®è£œæ•°ã‚’æ›¸ãå‡ºã™ */
 }
 
-void encode(void)  /* °µ½Ì */
+void encode(void)  /* åœ§ç¸® */
 {
     int c;
     unsigned long range, maxcount, incount, cr, d;
     unsigned short low, high;
     static unsigned long count[N];
 
-    for (c = 0; c < N; c++) count[c] = 0;  /* ÉÑÅÙ¤Î½é´ü²½ */
-    while ((c = getc(infile)) != EOF) count[c]++;  /* ³ÆÊ¸»ú¤ÎÉÑÅÙ */
-    incount = 0;  maxcount = 0;  /* ¸¶Ê¸¤ÎÂç¤­¤µ, ÉÑÅÙ¤ÎºÇÂçÃÍ */
+    for (c = 0; c < N; c++) count[c] = 0;  /* é »åº¦ã®åˆæœŸåŒ– */
+    while ((c = getc(infile)) != EOF) count[c]++;  /* å„æ–‡å­—ã®é »åº¦ */
+    incount = 0;  maxcount = 0;  /* åŸæ–‡ã®å¤§ãã•, é »åº¦ã®æœ€å¤§å€¤ */
     for (c = 0; c < N; c++) {
         incount += count[c];
         if (count[c] > maxcount) maxcount = count[c];
     }
-    if (incount == 0) return;  /* 0¥Ğ¥¤¥È¤Î¥Õ¥¡¥¤¥ë */
-    /* ÉÑÅÙ¹ç·×¤¬ {\tt Q1} Ì¤Ëş, ³ÆÉÑÅÙ¤¬1¥Ğ¥¤¥È¤Ë¼ı¤Ş¤ë¤è¤¦µ¬³Ê²½ */
+    if (incount == 0) return;  /* 0ãƒã‚¤ãƒˆã®ãƒ•ã‚¡ã‚¤ãƒ« */
+    /* é »åº¦åˆè¨ˆãŒ {\tt Q1} æœªæº€, å„é »åº¦ãŒ1ãƒã‚¤ãƒˆã«åã¾ã‚‹ã‚ˆã†è¦æ ¼åŒ– */
     d = max((maxcount + N - 2) / (N - 1),
             (incount + Q1 - 257) / (Q1 - 256));
     if (d != 1)
@@ -46,13 +46,13 @@ void encode(void)  /* °µ½Ì */
             count[c] = (count[c] + d - 1) / d;
     cum[0] = 0;
     for (c = 0; c < N; c++) {
-        fputc((int)count[c], outfile);  /* ÉÑÅÙÉ½¤Î½ĞÎÏ */
-        cum[c + 1] = cum[c] + (unsigned)count[c];  /* ÎßÀÑÉÑÅÙ */
+        fputc((int)count[c], outfile);  /* é »åº¦è¡¨ã®å‡ºåŠ› */
+        cum[c + 1] = cum[c] + (unsigned)count[c];  /* ç´¯ç©é »åº¦ */
     }
     outcount = N;
-    rewind(infile);  incount = 0;  /* ´¬¤­Ìá¤·¤ÆºÆÁöºº */
+    rewind(infile);  incount = 0;  /* å·»ãæˆ»ã—ã¦å†èµ°æŸ» */
     low = 0;  high = USHRT_MAX;  ns = 0;
-    while ((c = getc(infile)) != EOF) {  /* ³ÆÊ¸»ú¤òÉä¹æ²½ */
+    while ((c = getc(infile)) != EOF) {  /* å„æ–‡å­—ã‚’ç¬¦å·åŒ– */
         range = (unsigned long)(high - low) + 1;
         high = (unsigned short)
                (low + (range * cum[c + 1]) / cum[N] - 1);
@@ -68,15 +68,15 @@ void encode(void)  /* °µ½Ì */
         }
         if ((++incount & 1023) == 0) printf("%12lu\r", incount);
     }
-    ns += 8;  /* ºÇ¸å¤Î7¥Ó¥Ã¥È¤Ï¥Ğ¥Ã¥Õ¥¡¥Õ¥é¥Ã¥·¥å¤Î¤¿¤á */
-    if (low < Q1) output(0);  else output(1);  /* 01¤Ş¤¿¤Ï10 */
-    printf("In : %lu bytes\n", incount);  /* ¸¶Ê¸¤ÎÂç¤­¤µ */
+    ns += 8;  /* æœ€å¾Œã®7ãƒ“ãƒƒãƒˆã¯ãƒãƒƒãƒ•ã‚¡ãƒ•ãƒ©ãƒƒã‚·ãƒ¥ã®ãŸã‚ */
+    if (low < Q1) output(0);  else output(1);  /* 01ã¾ãŸã¯10 */
+    printf("In : %lu bytes\n", incount);  /* åŸæ–‡ã®å¤§ãã• */
     printf("Out: %lu bytes (table: %d)\n", outcount, N);
-    cr = (1000 * outcount + incount / 2) / incount;  /* °µ½ÌÈæ */
+    cr = (1000 * outcount + incount / 2) / incount;  /* åœ§ç¸®æ¯” */
     printf("Out/In: %lu.%03lu\n", cr / 1000, cr % 1000);
 }
 
-int binarysearch(unsigned x)  /* $\mbox{\tt cum[i]} \le x < \mbox{\tt cum[i+1]}$ ¤È¤Ê¤ë {\tt i} ¤òÆóÊ¬Ãµº÷¤Çµá¤á¤ë */
+int binarysearch(unsigned x)  /* $\mbox{\tt cum[i]} \le x < \mbox{\tt cum[i+1]}$ ã¨ãªã‚‹ {\tt i} ã‚’äºŒåˆ†æ¢ç´¢ã§æ±‚ã‚ã‚‹ */
 {
     int i, j, k;
 
@@ -88,24 +88,24 @@ int binarysearch(unsigned x)  /* $\mbox{\tt cum[i]} \le x < \mbox{\tt cum[i+1]}$
     return i - 1;
 }
 
-void decode(unsigned long size)  /* Éü¸µ */
+void decode(unsigned long size)  /* å¾©å…ƒ */
 {
     int c;
     unsigned char count[N];
     unsigned short low, high, value;
     unsigned long i, range;
 
-    if (size == 0) return;  /* 0¥Ğ¥¤¥È¤Î¥Õ¥¡¥¤¥ë */
+    if (size == 0) return;  /* 0ãƒã‚¤ãƒˆã®ãƒ•ã‚¡ã‚¤ãƒ« */
     cum[0] = 0;
     for (c = 0; c < N; c++) {
-        count[c] = fgetc(infile);  /* ÉÑÅÙÊ¬ÉÛ¤òÆÉ¤à */
-        cum[c + 1] = cum[c] + count[c];  /* ÎßÀÑÉÑÅÙ¤òµá¤á¤ë */
+        count[c] = fgetc(infile);  /* é »åº¦åˆ†å¸ƒã‚’èª­ã‚€ */
+        cum[c + 1] = cum[c] + count[c];  /* ç´¯ç©é »åº¦ã‚’æ±‚ã‚ã‚‹ */
     }
     value = 0;
     for (c = 0; c < USHRT_BIT; c++)
-        value = 2 * value + getbit();  /* ¥Ğ¥Ã¥Õ¥¡¤òËş¤¿¤¹ */
+        value = 2 * value + getbit();  /* ãƒãƒƒãƒ•ã‚¡ã‚’æº€ãŸã™ */
     low = 0;  high = USHRT_MAX;
-    for (i = 0; i < size; i++) {  /* ³ÆÊ¸»ú¤òÉü¸µ¤¹¤ë */
+    for (i = 0; i < size; i++) {  /* å„æ–‡å­—ã‚’å¾©å…ƒã™ã‚‹ */
         range = (unsigned long)(high - low) + 1;
         c = binarysearch((unsigned)((((unsigned long)
             (value - low) + 1) * cum[N] - 1) / range));
@@ -114,41 +114,41 @@ void decode(unsigned long size)  /* Éü¸µ */
         low  = (unsigned short)
                (low + (range * cum[c    ]) / cum[N]);
         for ( ; ; ) {
-            if      (high < Q2) { /* ²¿¤â¤·¤Ê¤¤ */ }
-            else if (low >= Q2) { /* ²¿¤â¤·¤Ê¤¤ */ }
+            if      (high < Q2) { /* ä½•ã‚‚ã—ãªã„ */ }
+            else if (low >= Q2) { /* ä½•ã‚‚ã—ãªã„ */ }
             else if (low >= Q1 && high < Q3) {
                 value -= Q1;  low -= Q1;  high -= Q1;
             } else break;
             low <<= 1;  high = (high << 1) + 1;
-            value = (value << 1) + getbit();  /* 1¥Ó¥Ã¥ÈÆÉ¤à */
+            value = (value << 1) + getbit();  /* 1ãƒ“ãƒƒãƒˆèª­ã‚€ */
         }
-        putc(c, outfile);  /* Éü¸µ¤·¤¿Ê¸»ú¤ò½ñ¤­½Ğ¤¹ */
+        putc(c, outfile);  /* å¾©å…ƒã—ãŸæ–‡å­—ã‚’æ›¸ãå‡ºã™ */
         if ((i & 1023) == 0) printf("%12lu\r", i);
     }
-    printf("%12lu\n", size);  /* ¸¶Ê¸¤Î¥Ğ¥¤¥È¿ô */
+    printf("%12lu\n", size);  /* åŸæ–‡ã®ãƒã‚¤ãƒˆæ•° */
 }
 
 int main(int argc, char *argv[])
 {
     int c;
-    unsigned long size;  /* ¸µ¤Î¥Ğ¥¤¥È¿ô */
+    unsigned long size;  /* å…ƒã®ãƒã‚¤ãƒˆæ•° */
 
     if (argc != 4 || ((c = *argv[1]) != 'E' && c != 'e'
                                 && c != 'D' && c != 'd'))
-        error("»ÈÍÑË¡¤ÏËÜÊ¸¤ò»²¾È¤·¤Æ¤¯¤À¤µ¤¤");
+        error("ä½¿ç”¨æ³•ã¯æœ¬æ–‡ã‚’å‚ç…§ã—ã¦ãã ã•ã„");
     if ((infile  = fopen(argv[2], "rb")) == NULL)
-        error("ÆşÎÏ¥Õ¥¡¥¤¥ë¤¬³«¤­¤Ş¤»¤ó");
+        error("å…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«ãŒé–‹ãã¾ã›ã‚“");
     if ((outfile = fopen(argv[3], "wb")) == NULL)
-        error("½ĞÎÏ¥Õ¥¡¥¤¥ë¤¬³«¤­¤Ş¤»¤ó");
+        error("å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«ãŒé–‹ãã¾ã›ã‚“");
     if (c == 'E' || c == 'e') {
-        fseek(infile, 0L, SEEK_END);  /* infile ¤ÎËöÈø¤òÃµ¤¹ */
-        size = ftell(infile);         /* infile ¤Î¥Ğ¥¤¥È¿ô */
+        fseek(infile, 0L, SEEK_END);  /* infile ã®æœ«å°¾ã‚’æ¢ã™ */
+        size = ftell(infile);         /* infile ã®ãƒã‚¤ãƒˆæ•° */
         fwrite(&size, sizeof size, 1, outfile);
         rewind(infile);
-        encode();       /* °µ½Ì */
+        encode();       /* åœ§ç¸® */
     } else {
-        fread(&size, sizeof size, 1, infile);  /* ¸µ¤Î¥Ğ¥¤¥È¿ô */
-        decode(size);   /* Éü¸µ */
+        fread(&size, sizeof size, 1, infile);  /* å…ƒã®ãƒã‚¤ãƒˆæ•° */
+        decode(size);   /* å¾©å…ƒ */
     }
     fclose(infile);  fclose(outfile);
     return EXIT_SUCCESS;

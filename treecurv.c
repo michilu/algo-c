@@ -1,7 +1,7 @@
 /***********************************************************
-    treecurv.c -- ¼ùÌÚ¶ÊÀş
+    treecurv.c -- æ¨¹æœ¨æ›²ç·š
 ***********************************************************/
-#include "plotter.c"  /* ¥é¡¼¥¸¥â¥Ç¥ë¤Ç¥³¥ó¥Ñ¥¤¥ë */
+#include "plotter.c"  /* ãƒ©ãƒ¼ã‚¸ãƒ¢ãƒ‡ãƒ«ã§ã‚³ãƒ³ãƒ‘ã‚¤ãƒ« */
 #include <math.h>  /* sin(), cos() */
 #define FACTOR  0.7
 #define TURN    0.5
@@ -23,7 +23,7 @@ int main()
 {
     int order;
 
-    printf("°Ì¿ô = ");  scanf("%d", &order);
+    printf("ä½æ•° = ");  scanf("%d", &order);
     gr_on();  gr_window(0, 0, 6, 4, 1, GREEN);
     move(3, 0);  tree(order, 1, 0);
     hitanykey();

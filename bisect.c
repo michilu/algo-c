@@ -1,9 +1,9 @@
 /**************************************************************
-    bisect.c -- 2Ê¬Ë¡
+    bisect.c -- 2åˆ†æ³•
 **************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
-#define samesign(x, y) (((x) > 0) == ((y) > 0))  /* Æ±Éä¹æ¤Ê¤é¿¿ */
+#define samesign(x, y) (((x) > 0) == ((y) > 0))  /* åŒç¬¦å·ãªã‚‰çœŸ */
 double bisect(double a, double b, double tolerance,
         double (*f)(double), char **error)
 {
@@ -15,7 +15,7 @@ double bisect(double a, double b, double tolerance,
     fa = f(a);  if (fa == 0) return a;
     fb = f(b);  if (fb == 0) return b;
     if (samesign(fa, fb)) {
-        *error = "¶è´Ö¤ÎÎ¾Ã¼¤Ç´Ø¿ôÃÍ¤¬Æ±Éä¹æ¤Ç¤¹.";  return 0;
+        *error = "åŒºé–“ã®ä¸¡ç«¯ã§é–¢æ•°å€¤ãŒåŒç¬¦å·ã§ã™.";  return 0;
     }
     for ( ; ; ) {
         c = (a + b) / 2;
@@ -27,15 +27,15 @@ double bisect(double a, double b, double tolerance,
     return c;
 }
 
-double func(double x)  /* ¥¼¥íÅÀ¤òµá¤á¤ë´Ø¿ô¤ÎÎã */
+double func(double x)  /* ã‚¼ãƒ­ç‚¹ã‚’æ±‚ã‚ã‚‹é–¢æ•°ã®ä¾‹ */
 {  return x * x - 2;  }
 
-int main()  /* ¥Æ¥¹¥È */
+int main()  /* ãƒ†ã‚¹ãƒˆ */
 {
     char *error;
     double x;
 
-    x = bisect(1, 2, 0, func, &error);  /* $1 \le x \le 2$ ¤Î´Ö¤Ç²ò¤òµá¤á¤ë */
+    x = bisect(1, 2, 0, func, &error);  /* $1 \le x \le 2$ ã®é–“ã§è§£ã‚’æ±‚ã‚ã‚‹ */
     if (error) printf("%s\n", error);
     else printf("x = % -24.16g\n", x);
     return EXIT_SUCCESS;

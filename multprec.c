@@ -1,17 +1,17 @@
 /***********************************************************
-    multprec.c -- Â¿ÇÜÄ¹±é»»
+    multprec.c -- å¤šå€é•·æ¼”ç®—
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 
-#define RADIXBITS 15                    /* ´ğ¿ô¤Î¥Ó¥Ã¥È¿ô */
-#define RADIX (1U << RADIXBITS)                   /* ´ğ¿ô */
-#define N  225    /* RADIX¿ÊË¡¤Ç¾®¿ôÂèN°Ì¤Ş¤Ç */
-#define M  250    /* 10¿Ê¤Ç¾®¿ôÂè 4¡ßM °Ì¤Ş¤Ç */
+#define RADIXBITS 15                    /* åŸºæ•°ã®ãƒ“ãƒƒãƒˆæ•° */
+#define RADIX (1U << RADIXBITS)                   /* åŸºæ•° */
+#define N  225    /* RADIXé€²æ³•ã§å°æ•°ç¬¬Nä½ã¾ã§ */
+#define M  250    /* 10é€²ã§å°æ•°ç¬¬ 4Ã—M ä½ã¾ã§ */
 
-typedef unsigned int   uint;    /* 16¥Ó¥Ã¥È°Ê¾å */
-typedef unsigned short ushort;  /* 16¥Ó¥Ã¥È°Ê¾å */
-typedef unsigned long  ulong;   /* 32¥Ó¥Ã¥È°Ê¾å */
+typedef unsigned int   uint;    /* 16ãƒ“ãƒƒãƒˆä»¥ä¸Š */
+typedef unsigned short ushort;  /* 16ãƒ“ãƒƒãƒˆä»¥ä¸Š */
+typedef unsigned long  ulong;   /* 32ãƒ“ãƒƒãƒˆä»¥ä¸Š */
 
 void error(char message[])
 {
@@ -68,9 +68,9 @@ int divs(int m, ushort a[], uint x, ushort b[])
         t = (t << RADIXBITS) + a[i];
         b[i] = t / x;  t %= x;
     }
-    if (2 * t >= x)  /* »Í¼Î¸ŞÆş */
+    if (2 * t >= x)  /* å››æ¨äº”å…¥ */
         for (i = N; ++b[i] & RADIX; i--) b[i] &= RADIX - 1;
-    return (b[m] != 0) ? m : (m + 1);  /* 0¤Ç¤Ê¤¤ºÇº¸°ÌÃÖ */
+    return (b[m] != 0) ? m : (m + 1);  /* 0ã§ãªã„æœ€å·¦ä½ç½® */
 }
 
 void print(ushort a[])
@@ -85,9 +85,9 @@ void print(ushort a[])
     printf("\n");
 }
 
-ushort a[N+1], t[N+1], u[N+1];  /* e() ¤À¤±¤Ê¤é u[] ¤ÏÉÔÍ×. */
+ushort a[N+1], t[N+1], u[N+1];  /* e() ã ã‘ãªã‚‰ u[] ã¯ä¸è¦. */
 
-void e(void)  /* ¼«Á³ÂĞ¿ô¤ÎÄì */
+void e(void)  /* è‡ªç„¶å¯¾æ•°ã®åº• */
 {
     int m;
     uint k;
@@ -97,12 +97,12 @@ void e(void)  /* ¼«Á³ÂĞ¿ô¤ÎÄì */
     k = 3;  m = 1;
     while ((m = divs(m, t, k, t)) <= N) {      /* t := t/k */
         add(a, t, a);                          /* a := a + t */
-        if (++k == RADIX) error("·å¿ô¤¬Â¿¤¹¤®¤Ş¤¹");
+        if (++k == RADIX) error("æ¡æ•°ãŒå¤šã™ãã¾ã™");
     }
     print(a);
 }
 
-void pi(void)  /* ±ß¼şÎ¨ (Machin¤Î¸ø¼°) */
+void pi(void)  /* å††å‘¨ç‡ (Machinã®å…¬å¼) */
 {
     int i, m;
     uint k;
@@ -113,7 +113,7 @@ void pi(void)  /* ±ß¼şÎ¨ (Machin¤Î¸ø¼°) */
     i = m = 0;  k = 1;
     for ( ; ; ) {
         if ((m = divs(m, t, 25, t)) > N) break;      /* t := t/25 */
-        if ((k += 2) >= RADIX) error("·å¿ô¤¬Â¿¤¹¤®¤Ş¤¹");
+        if ((k += 2) >= RADIX) error("æ¡æ•°ãŒå¤šã™ãã¾ã™");
         while (i < m) u[i++] = 0;
         if (divs(m, t, k, u) > N) break;             /* u := t/k */
         if (k & 2) sub(a, u, a);  else add(a, u, a); /* a := a -+ u */
@@ -125,7 +125,7 @@ void pi(void)  /* ±ß¼şÎ¨ (Machin¤Î¸ø¼°) */
     for ( ; ; ) {
         if ((m = divs(m, t, 239, t)) > N) break;     /* t := t/239 */
         if ((m = divs(m, t, 239, t)) > N) break;     /* t := t/239 */
-        if ((k += 2) >= RADIX) error("·å¿ô¤¬Â¿¤¹¤®¤Ş¤¹");
+        if ((k += 2) >= RADIX) error("æ¡æ•°ãŒå¤šã™ãã¾ã™");
         while (i < m) u[i++] = 0;
         if (divs(m, t, k, u) > N) break;             /* u := t/k */
         if (k & 2) add(a, u, a);  else sub(a, u, a); /* a := a +- u */

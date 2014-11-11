@@ -1,5 +1,5 @@
 /***********************************************************
-    permsign.c -- ÃÖ´¹¤ÎÉä¹æ
+    permsign.c -- ç½®æ›ã®ç¬¦å·
 ***********************************************************/
 #define N 4
 
@@ -26,9 +26,9 @@ int nextperm(int a[])
     int i, j, t;
 
     i = N - 1;
-    a[0] = 0;  /* ÈÖ¿Í */
+    a[0] = 0;  /* ç•ªäºº */
     while (a[i] >= a[i + 1]) i--;
-    if (i == 0) return 0;  /* ´°Î» */
+    if (i == 0) return 0;  /* å®Œäº† */
     j = N;
     while (a[i] >= a[j]) j--;
     t = a[i];  a[i] = a[j];  a[j] = t;
@@ -36,20 +36,20 @@ int nextperm(int a[])
     while (i < j) {
         t = a[i];  a[i] = a[j];  a[j] = t;  i++;  j--;
     }
-    return 1;  /* Ì¤Î» */
+    return 1;  /* æœªäº† */
 }
 
 void test1(void)
 {
     int i, count, a[N + 1], v[N + 1];
 
-    printf("¼­½ñ¼°½ç½ø:\n");
+    printf("è¾žæ›¸å¼é †åº:\n");
     count = 0;
     for (i = 1; i <= N; i++) a[i] = i;
     do {
         printf("%5d: ", ++count);
         for (i = 1; i <= N; i++) printf("%4d", v[i] = a[i]);
-        printf("  %sÃÖ´¹\n", (sign(v) == 1) ? "¶ö" : "´ñ");
+        printf("  %sç½®æ›\n", (sign(v) == 1) ? "å¶" : "å¥‡");
     } while (nextperm(a));
 }
 
@@ -57,16 +57,16 @@ void test2(void)
 {
     int i, k, t, p[N + 1], c[N + 2], v[N + 1], count;
 
-    printf("¸ß´¹¤Ë¤è¤ë½çÎóÀ¸À®:\n");
+    printf("äº’æ›ã«ã‚ˆã‚‹é †åˆ—ç”Ÿæˆ:\n");
     count = 0;
     for (i = 1; i <= N; i++) c[i] = p[i] = i;
-    c[N + 1] = 0;  /* ÈÖ¿Í */
+    c[N + 1] = 0;  /* ç•ªäºº */
     for (k = 2; k <= N; c[k]--) {
         if (k & 1) i = 1;  else i = c[k];
         t = p[k];  p[k] = p[i];  p[i] = t;
         printf("%5d: ", ++count);
         for (i = 1; i <= N; i++) printf("%4d", v[i] = p[i]);
-        printf("  %sÃÖ´¹\n", (sign(v) == 1) ? "¶ö" : "´ñ");
+        printf("  %sç½®æ›\n", (sign(v) == 1) ? "å¶" : "å¥‡");
         for (k = 2; c[k] == 1; k++) c[k] = k;
     }
 }

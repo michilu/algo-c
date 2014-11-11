@@ -1,7 +1,7 @@
 /***********************************************************
-    matutil.c -- ¹ÔÎó
+    matutil.c -- è¡Œåˆ—
 ***********************************************************/
-/* ¹ÔÎóÁàºî¤Î¾®Æ»¶ñ½¸ */
+/* è¡Œåˆ—æ“ä½œã®å°é“å…·é›† */
 
 #ifndef MATUTIL
 #define MATUTIL
@@ -29,15 +29,15 @@ matrix newmat(int nrow, int ncol)
     matrix a;
 
     a = malloc((nrow + 1) * sizeof(void *));
-    if (a == NULL) return NULL;  /* µ­²±ÎÎ°èÉÔÂ­ */
+    if (a == NULL) return NULL;  /* è¨˜æ†¶é ˜åŸŸä¸è¶³ */
     for (i = 0; i < nrow; i++) {
         a[i] = malloc(sizeof(SCALAR) * ncol);
         if (a[i] == NULL) {
             while (--i >= 0) free(a[i]);
-            free(a);  return NULL;  /* µ­²±ÎÎ°èÉÔÂ­ */
+            free(a);  return NULL;  /* è¨˜æ†¶é ˜åŸŸä¸è¶³ */
         }
     }
-    a[nrow] = NULL;  /* ¹Ô¤Î¿ô¤ò¼«Æ°È½ÃÇ¤¹¤ë¤¿¤á¤Î¹©É× */
+    a[nrow] = NULL;  /* è¡Œã®æ•°ã‚’è‡ªå‹•åˆ¤æ–­ã™ã‚‹ãŸã‚ã®å·¥å¤« */
     return a;
 }
 
@@ -46,7 +46,7 @@ vector new_vector(int n)
     vector v;
 
     v = newvec(n);
-    if (v == NULL) error("µ­²±ÎÎ°èÉÔÂ­.");
+    if (v == NULL) error("è¨˜æ†¶é ˜åŸŸä¸è¶³.");
     return v;
 }
 
@@ -55,7 +55,7 @@ matrix new_matrix(int nrow, int ncol)
     matrix a;
 
     a = newmat(nrow, ncol);
-    if (a == NULL) error("µ­²±ÎÎ°èÉÔÂ­.");
+    if (a == NULL) error("è¨˜æ†¶é ˜åŸŸä¸è¶³.");
     return a;
 }
 
@@ -108,23 +108,23 @@ void matprint(matrix a, int ncol, int perline, char *format)
     }
 }
 
-#if 0    /******** °Ê²¼¤Ï´ÊÃ±¤Ê»ÈÍÑÎã ********/
+#if 0    /******** ä»¥ä¸‹ã¯ç°¡å˜ãªä½¿ç”¨ä¾‹ ********/
 #include <time.h>
 int main()
 {
     int i, j, nrow, ncol;
     matrix a;
 
-    srand((unsigned int) time(NULL));  /* Íğ¿ô¤Î¼ï¤òÀßÄê */
-    nrow = rand() % 10 + 1;            /* ¹Ô¤Î¿ô */
-    ncol = rand() % 10 + 1;            /* Îó¤Î¿ô */
-    a = new_matrix(nrow, ncol);        /* ¹ÔÎó¤òºî¤ë */
-    for (i = 0; i < nrow; i++)         /* Íğ¿ô¤òÂåÆş */
+    srand((unsigned int) time(NULL));  /* ä¹±æ•°ã®ç¨®ã‚’è¨­å®š */
+    nrow = rand() % 10 + 1;            /* è¡Œã®æ•° */
+    ncol = rand() % 10 + 1;            /* åˆ—ã®æ•° */
+    a = new_matrix(nrow, ncol);        /* è¡Œåˆ—ã‚’ä½œã‚‹ */
+    for (i = 0; i < nrow; i++)         /* ä¹±æ•°ã‚’ä»£å…¥ */
         for (j = 0; j < ncol; j++)
             a[i][j] = 10.0 * rand() / RAND_MAX;
-    printf("%d ¡ß %d ¹ÔÎó:\n", nrow, ncol);
-    matprint(a, ncol, 4, "  % -14g");    /* ½ĞÎÏ */
+    printf("%d Ã— %d è¡Œåˆ—:\n", nrow, ncol);
+    matprint(a, ncol, 4, "  % -14g");    /* å‡ºåŠ› */
     return EXIT_SUCCESS;
 }
 #endif
-#endif  /* ºÇ½é¤Î #ifndef ... ¤ËÂĞ±ş¤¹¤ë */
+#endif  /* æœ€åˆã® #ifndef ... ã«å¯¾å¿œã™ã‚‹ */

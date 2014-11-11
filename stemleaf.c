@@ -1,5 +1,5 @@
 /***********************************************************
-    stemleaf.c -- ¥¥Õ’…Ωº®
+    stemleaf.c -- ÂππËëâË°®Á§∫
 ***********************************************************/
 #include "statutil.c"
 #define MAXLINES  60
@@ -23,7 +23,7 @@ void stem_and_leaf(int n, vector x)
         if (kmax - kmin + 1 <= MAXLINES) break;
         factor /= 10;
     }
-    printf("10 * ¥¥ + Õ’ = %.1g * •«°º•ø\n", factor);
+    printf("10 * Âππ + Ëëâ = %.1g * „Éá„Éº„Çø\n", factor);
     for (k = 0; k < 10 * MAXLINES; k++) histo[k] = 0;
     for (i = 0; i < n; i++)
         histo[(int)(factor * x[i]) - (x[i] < 0) - 10 * kmin]++;
@@ -56,7 +56,7 @@ int main()
     n = 0;
     while (! readerror(t = getnum(stdin)))
         if (missing(t)) continue;
-        else if (n >= NMAX) error("¬ø§π§Æ§ﬁ§π");
+        else if (n >= NMAX) error("Â§ö„Åô„Åé„Åæ„Åô");
         else x[n++] = t;
     stem_and_leaf(n, x);
     return EXIT_SUCCESS;

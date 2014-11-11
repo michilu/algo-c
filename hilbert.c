@@ -1,10 +1,10 @@
 /***********************************************************
-    hilbert.c -- Hilbert (¥Ò¥ë¥Ù¥ë¥È) ¶ÊÀş
+    hilbert.c -- Hilbert (ãƒ’ãƒ«ãƒ™ãƒ«ãƒˆ) æ›²ç·š
 ***********************************************************/
-#include "plotter.c"  /* ¥é¡¼¥¸¥â¥Ç¥ë¤Ç¥³¥ó¥Ñ¥¤¥ë */
-double h;  /* ¹ï¤ßÉı */
+#include "plotter.c"  /* ãƒ©ãƒ¼ã‚¸ãƒ¢ãƒ‡ãƒ«ã§ã‚³ãƒ³ãƒ‘ã‚¤ãƒ« */
+double h;  /* åˆ»ã¿å¹… */
 
-void rul(int i), dlu(int i), ldr(int i), urd(int i);  /* ¸å½Ğ */
+void rul(int i), dlu(int i), ldr(int i), urd(int i);  /* å¾Œå‡º */
 
 void rul(int i)  /* right-up-left */
 {
@@ -46,7 +46,7 @@ int main()
 {
     int i, order;
 
-    printf("°Ì¿ô = ");  scanf("%d", &order);
+    printf("ä½æ•° = ");  scanf("%d", &order);
     gr_on();  gr_window(0, 0, 1, 1, 1, 0);
     h = 1;
     for (i = 2; i <= order; i++) h = h / (2 + h);

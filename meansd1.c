@@ -1,5 +1,5 @@
 /***********************************************************
-    meansd1.c -- 士堆猛ˇ筛洁市汗
+    meansd1.c -- 骞冲潎鍊ゃ兓妯欐簴鍋忓樊
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,11 +18,11 @@ int main()
         if (n >= NMAX) return EXIT_FAILURE;
         a[n++] = x;  s1 += x;
     }
-    s1 /= n; /* 士堆 */
+    s1 /= n; /* 骞冲潎 */
     for (i = 0; i < n; i++) {
         x = a[i] - s1;  s2 += x * x;
     }
-    s2 = sqrt(s2 / (n - 1));  /* 筛洁市汗 */
-    printf("改眶: %d  士堆: %g  筛洁市汗: %g\n", n, s1, s2);
+    s2 = sqrt(s2 / (n - 1));  /* 妯欐簴鍋忓樊 */
+    printf("鍊嬫暟: %d  骞冲潎: %g  妯欐簴鍋忓樊: %g\n", n, s1, s2);
     return EXIT_SUCCESS;
 }

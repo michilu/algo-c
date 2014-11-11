@@ -1,10 +1,10 @@
 /***********************************************************
-    gr98.c -- ����ե��å���
+    gr98.c -- グラフィックス
 ************************************************************
-    ����ե��å������ܥ롼���� (PC-9801)
-    �顼����ǥ�, ����ѥ��ȥ�ǥ�, �ҥ塼����ǥ�ʤ�,
-    �ǡ����ѥݥ��󥿤�����32�ӥåȤΥ⡼�ɤǥ���ѥ���
-    ���Ƥ�������.
+    グラフィックス基本ルーチン (PC-9801)
+    ラージモデル, コンパクトモデル, ヒュージモデルなど,
+    データ用ポインタの幅が32ビットのモードでコンパイル
+    してください.
 ***********************************************************/
 #ifndef GR98_C
 #define GR98_C
@@ -14,24 +14,24 @@
 #include <string.h>  /* memset */
 #include <dos.h>     /* union REGS, int86 */
 
-#define XMAX  640U  /* ���ɥåȿ� */
-#define YMAX  400U  /* �ĥɥåȿ� */
-enum {BLACK, BLUE, RED, MAGENTA, GREEN, CYAN, YELLOW, WHITE};  /* �������� */
+#define XMAX  640U  /* 横ドット数 */
+#define YMAX  400U  /* 縦ドット数 */
+enum {BLACK, BLUE, RED, MAGENTA, GREEN, CYAN, YELLOW, WHITE};  /* 色コード */
 
-#define PLANE1 ((unsigned char *)0xa8000000L) /* �ĥץ졼�� */
-#define PLANE2 ((unsigned char *)0xb0000000L) /* �֥ץ졼�� */
-#define PLANE3 ((unsigned char *)0xb8000000L) /* �Хץ졼�� */
+#define PLANE1 ((unsigned char *)0xa8000000L) /* 青プレーン */
+#define PLANE2 ((unsigned char *)0xb0000000L) /* 赤プレーン */
+#define PLANE3 ((unsigned char *)0xb8000000L) /* 緑プレーン */
 
-static union REGS regs;  /* 8086�쥸���� */
+static union REGS regs;  /* 8086レジスタ */
 
-static int dgetc(void)  /* ctrl-C �ǻߤޤ�ʤ�1ʸ������ */
-{                       /* ������������Ƥ��ʤ����0���֤� */
+static int dgetc(void)  /* ctrl-C で止まらない1文字入力 */
+{                       /* キーが押されていなければ0を返す */
     regs.h.ah = 6;  regs.h.dl = 0xff;
     int86(0x21, &regs, &regs);  /* DOS call */
     return regs.h.al;
 }
 
-void hitanykey(void)  /* �����򲡤��ޤ��Ԥ� */
+void hitanykey(void)  /* キーを押すまで待つ */
 {
     fputc('\a', stderr);    /* beep */
     while (dgetc() != 0) ;  /* flush key buffer */
@@ -39,7 +39,7 @@ void hitanykey(void)  /* �����򲡤��ޤ��Ԥ� */
 }
 
 void gr_dot(unsigned int x, unsigned int y,
-            unsigned int color)  /* ����ɽ�� */
+            unsigned int color)  /* 点を表示 */
 {
     unsigned int i;
     unsigned char m1, m2;
@@ -60,33 +60,33 @@ void gr_dot(unsigned int x, unsigned int y,
     if (color & 4) PLANE3[i] |= m1;  else PLANE3[i] &= m2;
 }
 
-void gr_off(void)  /* ����ե��å�����ɽ����� */
+void gr_off(void)  /* グラフィック画面表示停止 */
 {
     regs.h.ah = 0x41;
     int86(0x18, &regs, &regs);  /* PC-9801 BIOS */
-    fputs("\x1b[>5l", stderr);  /* ��������ɽ�� */
+    fputs("\x1b[>5l", stderr);  /* カーソル表示 */
 }
 
-void gr_on(void)  /* ����ե��å����̽������ɽ������ */
+void gr_on(void)  /* グラフィック画面初期化・表示開始 */
 {
     static int first = 1;
 
     if (first) {  atexit(gr_off);  first = 0;  }
-    memset(PLANE1, 0, 32000);  /* ����ե��å����̥��ꥢ */
+    memset(PLANE1, 0, 32000);  /* グラフィック画面クリア */
     memset(PLANE2, 0, 32000);
     memset(PLANE3, 0, 32000);
-    /* ���̥��ꥢ, ����������ɽ��, �ǲ��ԥ桼������ */
+    /* 画面クリア, カーソル非表示, 最下行ユーザ使用 */
     fputs("\x1b[2J\x1b[>5h\x1b[>1h", stderr);
-    regs.h.ah = 0x42;  /* �����꡼��⡼������ */
-    regs.h.ch = 0xc0;  /* 640��400 ���顼�⡼�� */
+    regs.h.ah = 0x42;  /* スクリーンモード設定 */
+    regs.h.ch = 0xc0;  /* 640×400 カラーモード */
     int86(0x18, &regs, &regs);  /* PC-9801 BIOS */
-    regs.h.ah = 0x40;  /* ����ե��å�����ɽ������ */
+    regs.h.ah = 0x40;  /* グラフィック画面表示開始 */
     int86(0x18, &regs, &regs);  /* PC-9801 BIOS */
 }
 
 #endif  /* GR98_C */
 
-#if 0  /* �ƥ��� */
+#if 0  /* テスト */
 int main()
 {
     int i, j, k, c;
@@ -105,4 +105,4 @@ int main()
     hitanykey();
     return EXIT_SUCCESS;
 }
-#endif /* �ƥ��� */
+#endif /* テスト */

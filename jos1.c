@@ -1,5 +1,5 @@
 /***********************************************************
-    jos1.c -- Josephus (¥è¥»¥Õ¥¹) ¤ÎÌäÂê
+    jos1.c -- Josephus (ãƒ¨ã‚»ãƒ•ã‚¹) ã®å•é¡Œ
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,13 +7,13 @@ int main()
 {
     int j, k, n, p;
 
-    printf("¿Í¿ô? ");  scanf("%d", &n);
-    printf("²¿¿Í¤´¤È? ");  scanf("%d", &p);
+    printf("äººæ•°? ");  scanf("%d", &n);
+    printf("ä½•äººã”ã¨? ");  scanf("%d", &p);
     k = 1;
     for (j = 2; j <= n; j++) {
         k = (k + p) % j;
         if (k == 0) k = j;
     }
-    printf("%d ÈÖ¤Î¿Í¤¬»Ä¤ê¤Ş¤¹\n", k);
+    printf("%d ç•ªã®äººãŒæ®‹ã‚Šã¾ã™\n", k);
     return EXIT_SUCCESS;
 }

@@ -1,7 +1,7 @@
 /***********************************************************
-    window.c -- ¥°¥é¥Õ¥£¥Ã¥¯¥¹
+    window.c -- ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹
 ***********************************************************/
-/* ºÂÉ¸ÊÑ´¹ */
+/* åº§æ¨™å¤‰æ› */
 
 #include <math.h>
 #include "line.c"
@@ -12,8 +12,8 @@ static double
 #define gr_yscr(y) (int)(gr_yfac * (y) + gr_yconst)
 
 void gr_wdot(double x, double y, int color)
-    /* gr_window() ¤ÇÄê¤á¤¿ºÂÉ¸¤ÇÅÀ (x, y) ¤Ë
-       ¿§ color (= 0..maxcolor) ¤ò¤Ä¤±¤ë */
+    /* gr_window() ã§å®šã‚ãŸåº§æ¨™ã§ç‚¹ (x, y) ã«
+       è‰² color (= 0..maxcolor) ã‚’ã¤ã‘ã‚‹ */
 {
     gr_dot((unsigned int)(gr_xscr(x)),
            (unsigned int)(gr_yscr(y)), color);
@@ -21,8 +21,8 @@ void gr_wdot(double x, double y, int color)
 
 void gr_wline(double x1, double y1,
               double x2, double y2, int color)
-    /* gr_window() ¤ÇÄê¤á¤¿ºÂÉ¸¤ÇÅÀ (x1, y1), (x2, y2)
-       ¤ò·ë¤ÖÀşÊ¬¤ò¿§ color (= 0..maxcolor) ¤ÇÉÁ¤¯ */
+    /* gr_window() ã§å®šã‚ãŸåº§æ¨™ã§ç‚¹ (x1, y1), (x2, y2)
+       ã‚’çµã¶ç·šåˆ†ã‚’è‰² color (= 0..maxcolor) ã§æã */
 {
     gr_line(gr_xscr(x1), gr_yscr(y1),
             gr_xscr(x2), gr_yscr(y2), color);
@@ -31,9 +31,9 @@ void gr_wline(double x1, double y1,
 void gr_window(double left,  double bottom,
                double right, double top,
                int samescale, int bordercolor)
-    /* Áë¤Îº¸¡¦²¼¡¦±¦¡¦¾åÃ¼¤ÎºÂÉ¸¤ò»ØÄê¤¹¤ë.
-       samescale ¡â 0 ¤Ê¤é¾å²¼¤Èº¸±¦¤Î¼ÜÅÙ¤òÆ±¤¸¤Ë¤¹¤ë.
-       bordercolor ¡â 0 ¤Ê¤é¤½¤Î¿§¤ÇÏÈ¤òÉÁ¤¯ */
+    /* çª“ã®å·¦ãƒ»ä¸‹ãƒ»å³ãƒ»ä¸Šç«¯ã®åº§æ¨™ã‚’æŒ‡å®šã™ã‚‹.
+       samescale â‰  0 ãªã‚‰ä¸Šä¸‹ã¨å·¦å³ã®å°ºåº¦ã‚’åŒã˜ã«ã™ã‚‹.
+       bordercolor â‰  0 ãªã‚‰ãã®è‰²ã§æ ã‚’æã */
 {
     gr_xfac = (XMAX - 1) / (right - left);
     gr_yfac = (YMAX - 1) / (bottom - top);

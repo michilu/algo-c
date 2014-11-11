@@ -1,49 +1,49 @@
 /***********************************************************
-    tbintree.c -- ¤Ò¤âÉÕ¤­2Ê¬ÌÚ
+    tbintree.c -- ã²ã‚‚ä»˜ã2åˆ†æœ¨
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-typedef char keytype[21];  /* Ãµº÷¤Î¥­¡¼¤Î·¿ */
-typedef struct node {      /* struct node ¤ÏÌÚ¤Î¥Î¡¼¥É */
-    struct node *left, *right;  /* º¸±¦¤Î»Ò¤Ø¤Î¥İ¥¤¥ó¥¿ */
-    unsigned int count;    /* »²¾È²ó¿ô¥«¥¦¥ó¥¿ */
-    keytype key;           /* Ãµº÷¤Î¥­¡¼(ÅĞÏ¿Ê¸»úÎó) */
-    char flags;            /* ËÜÊ¸»²¾È */
-} *nodeptr;  /* {\tt nodeptr} ¤Ï¥Î¡¼¥É¤Ø¤Î¥İ¥¤¥ó¥¿ */
+typedef char keytype[21];  /* æ¢ç´¢ã®ã‚­ãƒ¼ã®å‹ */
+typedef struct node {      /* struct node ã¯æœ¨ã®ãƒãƒ¼ãƒ‰ */
+    struct node *left, *right;  /* å·¦å³ã®å­ã¸ã®ãƒã‚¤ãƒ³ã‚¿ */
+    unsigned int count;    /* å‚ç…§å›æ•°ã‚«ã‚¦ãƒ³ã‚¿ */
+    keytype key;           /* æ¢ç´¢ã®ã‚­ãƒ¼(ç™»éŒ²æ–‡å­—åˆ—) */
+    char flags;            /* æœ¬æ–‡å‚ç…§ */
+} *nodeptr;  /* {\tt nodeptr} ã¯ãƒãƒ¼ãƒ‰ã¸ã®ãƒã‚¤ãƒ³ã‚¿ */
 
-#define LBIT 1  /* ¾å¤Î {\tt flags} ¤ÎÀâÌÀ»²¾È */
+#define LBIT 1  /* ä¸Šã® {\tt flags} ã®èª¬æ˜å‚ç…§ */
 #define RBIT 2
 
-struct node root = {&root, &root, 0, "", 0};  /* ÌÚ¤Îº¬ */
+struct node root = {&root, &root, 0, "", 0};  /* æœ¨ã®æ ¹ */
 
-nodeptr newnode(keytype key)  /* ¿·¤·¤¤¥Î¡¼¥É¤òÀ¸À® */
+nodeptr newnode(keytype key)  /* æ–°ã—ã„ãƒãƒ¼ãƒ‰ã‚’ç”Ÿæˆ */
 {
     nodeptr p;
 
     if ((p = malloc(sizeof *p)) == NULL) {
-        printf("¥á¥â¥êÉÔÂ­.\n");  exit(EXIT_FAILURE);
+        printf("ãƒ¡ãƒ¢ãƒªä¸è¶³.\n");  exit(EXIT_FAILURE);
     }
-    strcpy(p->key, key);  /* ¥­¡¼¤ò¥³¥Ô¡¼¤¹¤ë */
-    p->count = 1;         /* »²¾È²ó¿ô¤ò1¤Ë¤¹¤ë */
+    strcpy(p->key, key);  /* ã‚­ãƒ¼ã‚’ã‚³ãƒ”ãƒ¼ã™ã‚‹ */
+    p->count = 1;         /* å‚ç…§å›æ•°ã‚’1ã«ã™ã‚‹ */
     return p;
 }
 
-void insertright(nodeptr p, keytype key)  /* ¥Î¡¼¥É p ¤Î±¦¤ËÁŞÆş */
+void insertright(nodeptr p, keytype key)  /* ãƒãƒ¼ãƒ‰ p ã®å³ã«æŒ¿å…¥ */
 {
     nodeptr q;
 
-    q = newnode(key);     /* ¿·¤·¤¤¥Î¡¼¥É¤òÀ¸À® */
-    q->right = p->right;  /* ±¦¤Î»Ò¤Ï¿Æ¤Î±¦¤Î»Ò¤ò¼õ¤±·Ñ¤° */
-    q->left = p;          /* º¸¤Î»Ò¤Ï¤¸¤Ä¤Ï¿Æ¤ò»Ø¤¹¤Ò¤â */
-    q->flags = p->flags & RBIT;  /* ±¦¥Õ¥é¥°¤Ï¿Æ¤Î±¦¥Õ¥é¥°¤ò¼õ¤±·Ñ¤° */
-    p->flags |= RBIT;     /* {\tt q} ¤Ï¤Ò¤â¤Ç¤Ê¤¤¤Î¤Ç¿Æ¤Î±¦¥Õ¥é¥°¤òÎ©¤Æ¤ë */
-    p->right = q;         /* {\tt q} ¤ò¿Æ {\tt p} ¤Î±¦¤Î»Ò¤Ë¤¹¤ë */
+    q = newnode(key);     /* æ–°ã—ã„ãƒãƒ¼ãƒ‰ã‚’ç”Ÿæˆ */
+    q->right = p->right;  /* å³ã®å­ã¯è¦ªã®å³ã®å­ã‚’å—ã‘ç¶™ã */
+    q->left = p;          /* å·¦ã®å­ã¯ã˜ã¤ã¯è¦ªã‚’æŒ‡ã™ã²ã‚‚ */
+    q->flags = p->flags & RBIT;  /* å³ãƒ•ãƒ©ã‚°ã¯è¦ªã®å³ãƒ•ãƒ©ã‚°ã‚’å—ã‘ç¶™ã */
+    p->flags |= RBIT;     /* {\tt q} ã¯ã²ã‚‚ã§ãªã„ã®ã§è¦ªã®å³ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹ */
+    p->right = q;         /* {\tt q} ã‚’è¦ª {\tt p} ã®å³ã®å­ã«ã™ã‚‹ */
 }
 
-void insertleft(nodeptr p, keytype key)  /* ¥Î¡¼¥É p ¤Îº¸¤ËÁŞÆş */
-{                                        /* ÀâÌÀ¤Ï¾å¤ÈÆ±ÍÍ¤Ê¤Î¤Ç¾Ê¤¯ */
+void insertleft(nodeptr p, keytype key)  /* ãƒãƒ¼ãƒ‰ p ã®å·¦ã«æŒ¿å…¥ */
+{                                        /* èª¬æ˜ã¯ä¸Šã¨åŒæ§˜ãªã®ã§çœã */
     nodeptr q;
 
     q = newnode(key);
@@ -52,26 +52,26 @@ void insertleft(nodeptr p, keytype key)  /* ¥Î¡¼¥É p ¤Îº¸¤ËÁŞÆş */
     p->flags |= LBIT;  p->left = q;
 }
 
-void insert(keytype key)  /* ÁŞÆş(ÅĞÏ¿) */
+void insert(keytype key)  /* æŒ¿å…¥(ç™»éŒ²) */
 {
-    int cmp;    /* Èæ³Ó·ë²Ì */
+    int cmp;    /* æ¯”è¼ƒçµæœ */
     nodeptr p;
 
-    p = &root;  cmp = 1;  /* ºÇ½é¤Î»Ò¤Ï¿Æ¤Î±¦¤Ë */
+    p = &root;  cmp = 1;  /* æœ€åˆã®å­ã¯è¦ªã®å³ã« */
     do {
-        if (cmp < 0) {    /* ¾®¤µ¤±¤ì¤Ğº¸¤ËÅĞÏ¿ */
+        if (cmp < 0) {    /* å°ã•ã‘ã‚Œã°å·¦ã«ç™»éŒ² */
             if (p->flags & LBIT) p = p->left;
             else {  insertleft(p, key);  return;  }
-        } else {          /* Âç¤­¤±¤ì¤Ğ±¦¤ËÅĞÏ¿ */
+        } else {          /* å¤§ãã‘ã‚Œã°å³ã«ç™»éŒ² */
             if (p->flags & RBIT) p = p->right;
             else {  insertright(p, key);  return;  }
         }
     } while ((cmp = strcmp(key, p->key)) != 0);
-    p->count++;           /* Åù¤·¤±¤ì¤Ğ»²¾È²ó¿ô¤òÁı¤¹¤À¤± */
+    p->count++;           /* ç­‰ã—ã‘ã‚Œã°å‚ç…§å›æ•°ã‚’å¢—ã™ã ã‘ */
 }
 
-nodeptr successor(nodeptr p)  /* ¾º½ç¤Ç {\tt p} ¤ÎÄ¾¸å¤Î¥Î¡¼¥É */
-{  /* ${\tt right} \leftrightarrow {\tt left}$, ${\tt RBIT} \leftrightarrow {\tt LBIT}$ ¤È¤¹¤ì¤ĞÄ¾Á°¤Î¥Î¡¼¥É¤Ë¤Ê¤ë */
+nodeptr successor(nodeptr p)  /* æ˜‡é †ã§ {\tt p} ã®ç›´å¾Œã®ãƒãƒ¼ãƒ‰ */
+{  /* ${\tt right} \leftrightarrow {\tt left}$, ${\tt RBIT} \leftrightarrow {\tt LBIT}$ ã¨ã™ã‚Œã°ç›´å‰ã®ãƒãƒ¼ãƒ‰ã«ãªã‚‹ */
     nodeptr q;
 
     q = p->right;
@@ -80,7 +80,7 @@ nodeptr successor(nodeptr p)  /* ¾º½ç¤Ç {\tt p} ¤ÎÄ¾¸å¤Î¥Î¡¼¥É */
     return q;
 }
 
-void printinorder(void)  /* ¾º½ç¤ÇÁ´¥­¡¼¤ò½ĞÎÏ */
+void printinorder(void)  /* æ˜‡é †ã§å…¨ã‚­ãƒ¼ã‚’å‡ºåŠ› */
 {
     nodeptr p;
 
@@ -94,7 +94,7 @@ int main()
     char word[21];
 
     while (scanf("%20s%*[^ \n\t]", word) == 1)
-        insert(word);  /* É¸½àÆşÎÏ¤«¤éÃ±¸ì¤òÆÉ¤ßÅĞÏ¿ */
-    printinorder();    /* ³ÆÃ±¸ì¤È½Ğ¸½²ó¿ô¤ò¾º½ç¤Ë½ĞÎÏ */
+        insert(word);  /* æ¨™æº–å…¥åŠ›ã‹ã‚‰å˜èªã‚’èª­ã¿ç™»éŒ² */
+    printinorder();    /* å„å˜èªã¨å‡ºç¾å›æ•°ã‚’æ˜‡é †ã«å‡ºåŠ› */
     return EXIT_SUCCESS;
 }

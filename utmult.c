@@ -1,5 +1,5 @@
 /***********************************************************
-    utmult.c -- ¹ÔÎó¤ÎÀÑ
+    utmult.c -- è¡Œåˆ—ã®ç©
 ***********************************************************/
 #include <stdio.h>
 
@@ -16,7 +16,7 @@ void matprint(int nrow, int ncol, float *a)
 #define N 4
 typedef float matrix[N][N];
 
-void utmult(matrix a, matrix b)  /* ¾å»°³Ñ¹ÔÎó¤ÎÀÑ */
+void utmult(matrix a, matrix b)  /* ä¸Šä¸‰è§’è¡Œåˆ—ã®ç© */
 {
     int i, j, k;
     float s;

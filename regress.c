@@ -1,16 +1,16 @@
 /***********************************************************
-    regress.c -- ²óµ¢Ê¬ÀÏ
+    regress.c -- å›å¸°åˆ†æ
 ***********************************************************/
 #include "statutil.c"
 
-#define PIVOTING 0    /* ¥Ô¥Ü¥Ã¥ÈÁªÂò¤ò¹Ô¤¦¤« */
-#define VERBOSE  0    /* ÅÓÃæ·Ğ²á¤ò½ĞÎÏ¤¹¤ë¤« */
-#define EPS   1e-6    /* µöÍÆ¸íº¹ */
+#define PIVOTING 0    /* ãƒ”ãƒœãƒƒãƒˆé¸æŠã‚’è¡Œã†ã‹ */
+#define VERBOSE  0    /* é€”ä¸­çµŒéã‚’å‡ºåŠ›ã™ã‚‹ã‹ */
+#define EPS   1e-6    /* è¨±å®¹èª¤å·® */
 
-#if ! PIVOTING  /* ¥Ô¥Ü¥Ã¥ÈÁªÂò¤ò¹Ô¤ï¤Ê¤¤¾ì¹ç */
+#if ! PIVOTING  /* ãƒ”ãƒœãƒƒãƒˆé¸æŠã‚’è¡Œã‚ãªã„å ´åˆ */
 
 int lsq(int n, int m, matrix x, vector b,
-        int *col, vector normsq)  /* ºÇ¾®2¾èË¡ */
+        int *col, vector normsq)  /* æœ€å°2ä¹—æ³• */
 {
     int i, j, k, r;
     double s, t, u;
@@ -23,7 +23,7 @@ int lsq(int n, int m, matrix x, vector b,
         if (normsq[k] == 0) continue;
         v = x[k];  u = innerproduct(n - r, &v[r], &v[r]);
         #if VERBOSE
-            printf("\n%4d: 2¾èÏÂ¡à½é´ü2¾èÏÂ = %-14g",
+            printf("\n%4d: 2ä¹—å’ŒÃ·åˆæœŸ2ä¹—å’Œ = %-14g",
                 k + 1, u / normsq[k]);
         #endif
         if (u / normsq[k] < EPS * EPS) continue;
@@ -37,7 +37,7 @@ int lsq(int n, int m, matrix x, vector b,
         }
         v[r] = -u;
         #if VERBOSE
-            printf("  »Äº¹2¾èÏÂ = %g",
+            printf("  æ®‹å·®2ä¹—å’Œ = %g",
               innerproduct(n-r-1, &x[m][r+1], &x[m][r+1]));
         #endif
         r++;
@@ -53,7 +53,7 @@ int lsq(int n, int m, matrix x, vector b,
     return r;  /* rank */
 }
 
-#else /* ¥Ô¥Ü¥Ã¥ÈÁªÂò¤ò¹Ô¤¦¾ì¹ç */
+#else /* ãƒ”ãƒœãƒƒãƒˆé¸æŠã‚’è¡Œã†å ´åˆ */
 
 #define swap(a, i, j, t)  t = a[i];  a[i] = a[j];  a[j] = t
 
@@ -103,7 +103,7 @@ int lsq(int n, int m, matrix x, vector b,
 
 #endif /* PIVOTING */
 
-void invr(int r, matrix x)  /* ¾å»°³Ñ¹ÔÎó¤ÎµÕ¹ÔÎó */
+void invr(int r, matrix x)  /* ä¸Šä¸‰è§’è¡Œåˆ—ã®é€†è¡Œåˆ— */
 {
     int i, j, k;
     double s;
@@ -121,44 +121,44 @@ void invr(int r, matrix x)  /* ¾å»°³Ñ¹ÔÎó¤ÎµÕ¹ÔÎó */
 
 int main(int argc, char *argv[])
 {
-    int i, j, n, m, p, r, con, *col;  /* {\tt col} ¤ÏÎóÈÖ¹æ¤ÎÉ½ */
+    int i, j, n, m, p, r, con, *col;  /* {\tt col} ã¯åˆ—ç•ªå·ã®è¡¨ */
     double s, t, rss;
     matrix x;
-    vector b, normsq;  /* ²óµ¢·¸¿ô, ¥Î¥ë¥à2¾è */
+    vector b, normsq;  /* å›å¸°ä¿‚æ•°, ãƒãƒ«ãƒ 2ä¹— */
     FILE *datafile;
 #if PIVOTING
-    vector initnormsq;  /* ½é´ü¥Î¥ë¥à2¾è */
+    vector initnormsq;  /* åˆæœŸãƒãƒ«ãƒ 2ä¹— */
 #endif /* PIVOTING */
 
-    if (argc != 2) error("»ÈÍÑË¡: regress filename");
+    if (argc != 2) error("ä½¿ç”¨æ³•: regress filename");
     datafile = open_data(argv[1], &n, &m);
-    if (datafile == NULL) error("¥Ç¡¼¥¿ÉÔÎÉ");
-    printf("Äê¿ô¹à¤ò´Ş¤á¤Ş¤¹¤«(y/n)? ");
+    if (datafile == NULL) error("ãƒ‡ãƒ¼ã‚¿ä¸è‰¯");
+    printf("å®šæ•°é …ã‚’å«ã‚ã¾ã™ã‹(y/n)? ");
     con = (i = getchar()) == 'y' || i == 'Y';  p = m + con - 1;
     col = malloc(p * sizeof(int));
-    x = new_matrix(p + 1, n);                       /* µ­²±ÎÎ°è¤ò³ÍÆÀ */
+    x = new_matrix(p + 1, n);                       /* è¨˜æ†¶é ˜åŸŸã‚’ç²å¾— */
     b = new_vector(p);  normsq = new_vector(p);
 #if PIVOTING
-    initnormsq = new_vector(p);                     /* ºÇ½é¤Î¥Î¥ë¥à2¾è */
+    initnormsq = new_vector(p);                     /* æœ€åˆã®ãƒãƒ«ãƒ 2ä¹— */
 #endif /* PIVOTING */
-    if (read_data(datafile, n, m, &x[con])) error("¥Ç¡¼¥¿ÉÔÎÉ");
-    if (con) for (i = 0; i < n; i++) x[0][i] = 1;   /* Äê¿ô¹à */
+    if (read_data(datafile, n, m, &x[con])) error("ãƒ‡ãƒ¼ã‚¿ä¸è‰¯");
+    if (con) for (i = 0; i < n; i++) x[0][i] = 1;   /* å®šæ•°é … */
 #if ! PIVOTING
-    r = lsq(n, p, x, b, col, normsq);   /* ºÇ¾®2¾èË¡ (¥Ô¥Ü¥Ã¥È¸ò´¹¤Ê¤·) */
+    r = lsq(n, p, x, b, col, normsq);   /* æœ€å°2ä¹—æ³• (ãƒ”ãƒœãƒƒãƒˆäº¤æ›ãªã—) */
 #else /* PIVOTING */
-    r = lsq(n, p, x, b, col, initnormsq, normsq); /* (¥Ô¥Ü¥Ã¥È¸ò´¹¤¢¤ê) */
+    r = lsq(n, p, x, b, col, initnormsq, normsq); /* (ãƒ”ãƒœãƒƒãƒˆäº¤æ›ã‚ã‚Š) */
 #endif /* PIVOTING */
-    rss = innerproduct(n - r, &x[p][r], &x[p][r]);  /* »Äº¹2¾èÏÂ */
-    invr(r, x);                                     /* {\tt r} ¤òµÕ¹ÔÎó¤Ë */
-    printf("ÊÑ¿ô  ²óµ¢·¸¿ô       É¸½à¸íº¹        t\n");
+    rss = innerproduct(n - r, &x[p][r], &x[p][r]);  /* æ®‹å·®2ä¹—å’Œ */
+    invr(r, x);                                     /* {\tt r} ã‚’é€†è¡Œåˆ—ã« */
+    printf("å¤‰æ•°  å›å¸°ä¿‚æ•°       æ¨™æº–èª¤å·®        t\n");
     for (j = 0; j < r; j++) {
-        t = innerproduct(r - j, &x[j][j], &x[j][j]);  /* ÆâÀÑ */
+        t = innerproduct(r - j, &x[j][j], &x[j][j]);  /* å†…ç© */
         s = sqrt(t * rss / (n - r));
         printf("%4d  % #-14g % #-14g", col[j] + 1 - con, b[j], s);
         if (s > 0) printf("  % #-11.3g", fabs(b[j] / s));
         printf("\n");
     }
-    printf("»Äº¹2¾èÏÂ / ¼«Í³ÅÙ = %g / %d = %g\n",
+    printf("æ®‹å·®2ä¹—å’Œ / è‡ªç”±åº¦ = %g / %d = %g\n",
         rss, n - r, rss / (n - r));
     return EXIT_SUCCESS;
 }

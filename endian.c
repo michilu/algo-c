@@ -1,5 +1,5 @@
 /***********************************************************
-    endian.c -- •®•Û•«•£•¢•Û•Õ•π
+    endian.c -- „Ç®„É≥„Éá„Ç£„Ç¢„É≥„Éç„Çπ
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,6 +11,6 @@ int main()
     else if (*((char *)&i + (sizeof(int) - 1)))
         printf("big-endian\n");
     else
-        printf("…‘Ã¿\n");
+        printf("‰∏çÊòé\n");
     return EXIT_SUCCESS;
 }

@@ -1,13 +1,13 @@
 /***********************************************************
-    gamma.c -- ¥¬¥ó¥Ş´Ø¿ô
-            -- ¥Ù¡¼¥¿´Ø¿ô
+    gamma.c -- ã‚¬ãƒ³ãƒé–¢æ•°
+            -- ãƒ™ãƒ¼ã‚¿é–¢æ•°
 ***********************************************************/
 #include <math.h>
 #define PI      3.14159265358979324  /* $\pi$ */
 #define LOG_2PI 1.83787706640934548  /* $\log 2\pi$ */
 #define N       8
 
-#define B0  1                 /* °Ê²¼¤ÏBernoulli¿ô */
+#define B0  1                 /* ä»¥ä¸‹ã¯Bernoulliæ•° */
 #define B1  (-1.0 / 2.0)
 #define B2  ( 1.0 / 6.0)
 #define B4  (-1.0 / 30.0)
@@ -18,7 +18,7 @@
 #define B14 ( 7.0 / 6.0)
 #define B16 (-3617.0 / 510.0)
 
-double loggamma(double x)  /* ¥¬¥ó¥Ş´Ø¿ô¤ÎÂĞ¿ô */
+double loggamma(double x)  /* ã‚¬ãƒ³ãƒé–¢æ•°ã®å¯¾æ•° */
 {
     double v, w;
 
@@ -32,14 +32,14 @@ double loggamma(double x)  /* ¥¬¥ó¥Ş´Ø¿ô¤ÎÂĞ¿ô */
                 + 0.5 * LOG_2PI - log(v) - x + (x - 0.5) * log(x);
 }
 
-double gamma(double x)  /* ¥¬¥ó¥Ş´Ø¿ô */
+double gamma(double x)  /* ã‚¬ãƒ³ãƒé–¢æ•° */
 {
     if (x < 0)
         return PI / (sin(PI * x) * exp(loggamma(1 - x)));
     return exp(loggamma(x));
 }
 
-double beta(double x, double y)  /* ¥Ù¡¼¥¿´Ø¿ô */
+double beta(double x, double y)  /* ãƒ™ãƒ¼ã‚¿é–¢æ•° */
 {
     return exp(loggamma(x) + loggamma(y) - loggamma(x + y));
 }

@@ -1,10 +1,10 @@
 /***********************************************************
-    sierpin.c -- Sierpi\'{n}ski (¥·¥§¥ë¥Ô¥ó¥¹¥­¡¼) ¶ÊÀş
+    sierpin.c -- Sierpi\'{n}ski (ã‚·ã‚§ãƒ«ãƒ”ãƒ³ã‚¹ã‚­ãƒ¼) æ›²ç·š
 ***********************************************************/
-#include "plotter.c"  /* ¥é¡¼¥¸¥â¥Ç¥ë¤Ç¥³¥ó¥Ñ¥¤¥ë */
-double h;  /* ¹ï¤ßÉı */
+#include "plotter.c"  /* ãƒ©ãƒ¼ã‚¸ãƒ¢ãƒ‡ãƒ«ã§ã‚³ãƒ³ãƒ‘ã‚¤ãƒ« */
+double h;  /* åˆ»ã¿å¹… */
 
-void urd(int i), lur(int i), dlu(int i), rdl(int i);  /* ¸å½Ğ */
+void urd(int i), lur(int i), dlu(int i), rdl(int i);  /* å¾Œå‡º */
 
 void urd(int i)  /* up-right-down */
 {
@@ -46,7 +46,7 @@ int main()
 {
     int i, order;
 
-    printf("°Ì¿ô = ");  scanf("%d", &order);
+    printf("ä½æ•° = ");  scanf("%d", &order);
     gr_on();  gr_window(0, 0, 6, 6, 1, 0);
     h = 1;
     for (i = 2; i <= order; i++) h = 3 * h / (6 + h);

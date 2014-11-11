@@ -1,5 +1,5 @@
 /***********************************************************
-    list2.c -- •Í•π•»
+    list2.c -- „É™„Çπ„Éà
 ***********************************************************/
 #include <stdio.h>              /********* Pascal *********/
 #include <stdlib.h>             /* type infotype = int;   */
@@ -16,7 +16,7 @@ pointer add_list(infotype x, pointer p)
                                        /***** Pascal ******/
     q = malloc(sizeof *q);             /*  new(q);        */
     if (q == NULL) {
-        printf("•·•‚•Í…‘¬≠.\n");  exit(EXIT_FAILURE);
+        printf("„É°„É¢„É™‰∏çË∂≥.\n");  exit(EXIT_FAILURE);
     }
     q->info = x;  q->next = p;         /*  q^.info := x;  */
     return q;                          /*  q^.next := p;  */
@@ -46,7 +46,7 @@ int main()
     infotype x;
     pointer head;
 
-    head = NULL;  /* ∂ı§Œ•Í•π•» */
+    head = NULL;  /* Á©∫„ÅÆ„É™„Çπ„Éà */
     for (x = 1; x <= 9; x++)
         head = add_list(x, head);
     show_list(head);

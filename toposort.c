@@ -1,17 +1,17 @@
 /***********************************************************
-    toposort.c -- ¥È¥İ¥í¥¸¥«¥ë¡¦¥½¡¼¥Æ¥£¥ó¥°
-    »ÈÍÑÎã: toposort <toposort.dat
+    toposort.c -- ãƒˆãƒãƒ­ã‚¸ã‚«ãƒ«ãƒ»ã‚½ãƒ¼ãƒ†ã‚£ãƒ³ã‚°
+    ä½¿ç”¨ä¾‹: toposort <toposort.dat
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 
-#define NMAX 100                                /* ÅÀ¤Î¿ô¤Î¾å¸Â */
-char adjacent[NMAX + 1][NMAX + 1];              /* ÎÙÀÜ¹ÔÎó */
-char visited[NMAX + 1];                         /* Ë¬¤ì¤¿¤« */
+#define NMAX 100                                /* ç‚¹ã®æ•°ã®ä¸Šé™ */
+char adjacent[NMAX + 1][NMAX + 1];              /* éš£æ¥è¡Œåˆ— */
+char visited[NMAX + 1];                         /* è¨ªã‚ŒãŸã‹ */
 
-int n;                                          /* ÅÀ¤Î¿ô */
+int n;                                          /* ç‚¹ã®æ•° */
 
-void readgraph(void)                            /* ¥Ç¡¼¥¿ÆşÎÏ */
+void readgraph(void)                            /* ãƒ‡ãƒ¼ã‚¿å…¥åŠ› */
 {
     int i, j;
 
@@ -22,7 +22,7 @@ void readgraph(void)                            /* ¥Ç¡¼¥¿ÆşÎÏ */
         for (j = 1; j <= n; j++) adjacent[i][j] = 0;
     while (scanf("%d%d%*[^\n]", &i, &j) == 2)
         adjacent[i][j] = 1;
-    printf("ÎÙÀÜ¹ÔÎó:\n");
+    printf("éš£æ¥è¡Œåˆ—:\n");
     for (i = 1; i <= n; i++) {
         for (j = 1; j <= n; j++) printf(" %d", adjacent[i][j]);
         printf("\n");
@@ -40,7 +40,7 @@ void visit(int i)
         if (! adjacent[j][i]) continue;
         if (visited[j] == NEVER) visit(j);
         else if (visited[j] == JUST) {
-            printf("\n¥µ¥¤¥¯¥ë¤¢¤ê!n");  exit(EXIT_FAILURE);
+            printf("\nã‚µã‚¤ã‚¯ãƒ«ã‚ã‚Š!n");  exit(EXIT_FAILURE);
         }
     }
     visited[i] = ONCE;  printf(" %d", i);
@@ -50,9 +50,9 @@ int main()
 {
     int i;
 
-    readgraph();  /* ¥Ç¡¼¥¿ {\tt n}, {\tt adjacent[1..n][1..n]} ¤òÆÉ¤à */
+    readgraph();  /* ãƒ‡ãƒ¼ã‚¿ {\tt n}, {\tt adjacent[1..n][1..n]} ã‚’èª­ã‚€ */
     for (i = 1; i <= n; i++) visited[i] = NEVER;
-    printf("¥È¥İ¥í¥¸¥«¥ë¡¦¥½¡¼¥Æ¥£¥ó¥°¤Î·ë²Ì:\n");
+    printf("ãƒˆãƒãƒ­ã‚¸ã‚«ãƒ«ãƒ»ã‚½ãƒ¼ãƒ†ã‚£ãƒ³ã‚°ã®çµæœ:\n");
     for (i = 1; i <= n; i++)
         if (visited[i] == NEVER) visit(i);
     printf("\n");

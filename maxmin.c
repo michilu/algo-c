@@ -1,5 +1,5 @@
 /***********************************************************
-    maxmin.c -- ºÇÂçÃÍ¡¦ºÇ¾®ÃÍ
+    maxmin.c -- æœ€å¤§å€¤ãƒ»æœ€å°å€¤
 ***********************************************************/
 #define MAX2(x, y) ((x) > (y) ? (x) : (y))
 #define MIN2(x, y) ((x) < (y) ? (x) : (y))
@@ -45,20 +45,20 @@ void findmaxmin(int n, int a[], int *pmax, int *pmin)
 }
 
 #include <limits.h>
-#include <stdarg.h>           /* ÉÔÄê¸Ä¤Î°ú¿ô¤ò»È¤¦ */
+#include <stdarg.h>           /* ä¸å®šå€‹ã®å¼•æ•°ã‚’ä½¿ã† */
 
-int maxn(int n, ...)          /* n ¸Ä¤Î int ¤ÎºÇÂçÃÍ */
+int maxn(int n, ...)          /* n å€‹ã® int ã®æœ€å¤§å€¤ */
 {
-    va_list ap;               /* ÉÔÄê¸Ä¤Î°ú¿ô¤Ø¤Î¥İ¥¤¥ó¥¿ */
+    va_list ap;               /* ä¸å®šå€‹ã®å¼•æ•°ã¸ã®ãƒã‚¤ãƒ³ã‚¿ */
     int max, x;
 
-    va_start(ap, n);          /* ap ¤Î½é´ü²½ */
+    va_start(ap, n);          /* ap ã®åˆæœŸåŒ– */
     max = INT_MIN;
     while (--n >= 0) {
-        x = va_arg(ap, int);  /* ap ¤«¤é int ¤ò¼è¤ê½Ğ¤¹ */
+        x = va_arg(ap, int);  /* ap ã‹ã‚‰ int ã‚’å–ã‚Šå‡ºã™ */
         if (x > max) max = x;
     }
-    va_end(ap);               /* ap ¤Î¸å»ÏËö */
+    va_end(ap);               /* ap ã®å¾Œå§‹æœ« */
     return max;
 }
 

@@ -1,42 +1,42 @@
 /***********************************************************
-    matinv.c -- µÕ¹ÔÎó
+    matinv.c -- é€†è¡Œåˆ—
 ***********************************************************/
-#include "matutil.c"  /* ¹ÔÎóÁàºîÍÑ¾®Æ»¶ñ½¸ */
+#include "matutil.c"  /* è¡Œåˆ—æ“ä½œç”¨å°é“å…·é›† */
 #include <math.h>
 
-double lu(int n, matrix a, int *ip)  /* LUÊ¬²ò */
+double lu(int n, matrix a, int *ip)  /* LUåˆ†è§£ */
 {
     int i, j, k, ii, ik;
     double t, u, det;
     vector weight;
 
-    weight = new_vector(n);    /* weight[0..n-1] ¤Îµ­²±ÎÎ°è³ÎÊİ */
-    det = 0;                   /* ¹ÔÎó¼° */
-    for (k = 0; k < n; k++) {  /* ³Æ¹Ô¤Ë¤Ä¤¤¤Æ */
-        ip[k] = k;             /* ¹Ô¸ò´¹¾ğÊó¤Î½é´üÃÍ */
-        u = 0;                 /* ¤½¤Î¹Ô¤ÎÀäÂĞÃÍºÇÂç¤ÎÍ×ÁÇ¤òµá¤á¤ë */
+    weight = new_vector(n);    /* weight[0..n-1] ã®è¨˜æ†¶é ˜åŸŸç¢ºä¿ */
+    det = 0;                   /* è¡Œåˆ—å¼ */
+    for (k = 0; k < n; k++) {  /* å„è¡Œã«ã¤ã„ã¦ */
+        ip[k] = k;             /* è¡Œäº¤æ›æƒ…å ±ã®åˆæœŸå€¤ */
+        u = 0;                 /* ãã®è¡Œã®çµ¶å¯¾å€¤æœ€å¤§ã®è¦ç´ ã‚’æ±‚ã‚ã‚‹ */
         for (j = 0; j < n; j++) {
             t = fabs(a[k][j]);  if (t > u) u = t;
         }
-        if (u == 0) goto EXIT; /* 0 ¤Ê¤é¹ÔÎó¤ÏLUÊ¬²ò¤Ç¤­¤Ê¤¤ */
-        weight[k] = 1 / u;     /* ºÇÂçÀäÂĞÃÍ¤ÎµÕ¿ô */
+        if (u == 0) goto EXIT; /* 0 ãªã‚‰è¡Œåˆ—ã¯LUåˆ†è§£ã§ããªã„ */
+        weight[k] = 1 / u;     /* æœ€å¤§çµ¶å¯¾å€¤ã®é€†æ•° */
     }
-    det = 1;                   /* ¹ÔÎó¼°¤Î½é´üÃÍ */
-    for (k = 0; k < n; k++) {  /* ³Æ¹Ô¤Ë¤Ä¤¤¤Æ */
+    det = 1;                   /* è¡Œåˆ—å¼ã®åˆæœŸå€¤ */
+    for (k = 0; k < n; k++) {  /* å„è¡Œã«ã¤ã„ã¦ */
         u = -1;
-        for (i = k; i < n; i++) {  /* ¤è¤ê²¼¤Î³Æ¹Ô¤Ë¤Ä¤¤¤Æ */
-            ii = ip[i];            /* ½Å¤ß¡ßÀäÂĞÃÍ ¤¬ºÇÂç¤Î¹Ô¤ò¸«¤Ä¤±¤ë */
+        for (i = k; i < n; i++) {  /* ã‚ˆã‚Šä¸‹ã®å„è¡Œã«ã¤ã„ã¦ */
+            ii = ip[i];            /* é‡ã¿Ã—çµ¶å¯¾å€¤ ãŒæœ€å¤§ã®è¡Œã‚’è¦‹ã¤ã‘ã‚‹ */
             t = fabs(a[ii][k]) * weight[ii];
             if (t > u) {  u = t;  j = i;  }
         }
         ik = ip[j];
         if (j != k) {
-            ip[j] = ip[k];  ip[k] = ik;  /* ¹ÔÈÖ¹æ¤ò¸ò´¹ */
-            det = -det;  /* ¹Ô¤ò¸ò´¹¤¹¤ì¤Ğ¹ÔÎó¼°¤ÎÉä¹æ¤¬ÊÑ¤ï¤ë */
+            ip[j] = ip[k];  ip[k] = ik;  /* è¡Œç•ªå·ã‚’äº¤æ› */
+            det = -det;  /* è¡Œã‚’äº¤æ›ã™ã‚Œã°è¡Œåˆ—å¼ã®ç¬¦å·ãŒå¤‰ã‚ã‚‹ */
         }
-        u = a[ik][k];  det *= u;  /* ÂĞ³ÑÀ®Ê¬ */
-        if (u == 0) goto EXIT;    /* 0 ¤Ê¤é¹ÔÎó¤ÏLUÊ¬²ò¤Ç¤­¤Ê¤¤ */
-        for (i = k + 1; i < n; i++) {  /* Gauss¾ÃµîË¡ */
+        u = a[ik][k];  det *= u;  /* å¯¾è§’æˆåˆ† */
+        if (u == 0) goto EXIT;    /* 0 ãªã‚‰è¡Œåˆ—ã¯LUåˆ†è§£ã§ããªã„ */
+        for (i = k + 1; i < n; i++) {  /* Gaussæ¶ˆå»æ³• */
             ii = ip[i];
             t = (a[ii][k] /= u);
             for (j = k + 1; j < n; j++)
@@ -44,18 +44,18 @@ double lu(int n, matrix a, int *ip)  /* LUÊ¬²ò */
         }
     }
 EXIT:
-    free_vector(weight);  /* µ­²±ÎÎ°è¤ò²òÊü */
-    return det;           /* Ìá¤êÃÍ¤Ï¹ÔÎó¼° */
+    free_vector(weight);  /* è¨˜æ†¶é ˜åŸŸã‚’è§£æ”¾ */
+    return det;           /* æˆ»ã‚Šå€¤ã¯è¡Œåˆ—å¼ */
 }
 
 double matinv(int n, matrix a, matrix a_inv)
 {
     int i, j, k, ii;
     double t, det;
-    int *ip;   /* ¹Ô¸ò´¹¤Î¾ğÊó */
+    int *ip;   /* è¡Œäº¤æ›ã®æƒ…å ± */
 
     ip = malloc(sizeof(int) * n);
-    if (ip == NULL) error("µ­²±ÎÎ°èÉÔÂ­");
+    if (ip == NULL) error("è¨˜æ†¶é ˜åŸŸä¸è¶³");
     det = lu(n, a, ip);
     if (det != 0)
         for (k = 0; k < n; k++) {
@@ -76,13 +76,13 @@ double matinv(int n, matrix a, matrix a_inv)
     return det;
 }
 
-/************* °Ê²¼¤Ï¥Æ¥¹¥ÈÍÑ ****************/
+/************* ä»¥ä¸‹ã¯ãƒ†ã‚¹ãƒˆç”¨ ****************/
 
 #include <limits.h>
 
-double rnd(void)  /* Íğ¿ô  0 < rnd() < 1 */
+double rnd(void)  /* ä¹±æ•°  0 < rnd() < 1 */
 {
-    static unsigned long seed = 123456789UL;  /* ´ñ¿ô */
+    static unsigned long seed = 123456789UL;  /* å¥‡æ•° */
 
     return (seed *= 69069UL) / (ULONG_MAX + 1.0);
 }
@@ -102,7 +102,7 @@ int main()
     printf("A\n");
     matprint(a, n, 7, "%10.6f");
     s = matinv(n, a, a_inv);
-    printf("¹ÔÎó¼° = %g\n", s);
+    printf("è¡Œåˆ—å¼ = %g\n", s);
     printf("A^{-1}\n");
     matprint(a_inv, n, 7, "%10.6f");
     t = 0;
@@ -113,7 +113,7 @@ int main()
                 s -= asave[i][k] * a_inv[k][j];
             t += s * s;
         }
-    printf("A A^{-1} ¤ÎÀ®Ê¬¤ÎÆó¾èÊ¿¶Ñ¸íº¹ %g\n",
+    printf("A A^{-1} ã®æˆåˆ†ã®äºŒä¹—å¹³å‡èª¤å·® %g\n",
         sqrt(t / (n * n)));
     t = 0;
     for (i = 0; i < n; i++)
@@ -123,7 +123,7 @@ int main()
                 s -= a_inv[i][k] * asave[k][j];
             t += s * s;
         }
-    printf("A^{-1} A ¤ÎÀ®Ê¬¤ÎÆó¾èÊ¿¶Ñ¸íº¹ %g\n",
+    printf("A^{-1} A ã®æˆåˆ†ã®äºŒä¹—å¹³å‡èª¤å·® %g\n",
         sqrt(t / (n * n)));
     return EXIT_SUCCESS;
 }

@@ -1,16 +1,16 @@
 /***********************************************************
-    igamma.c -- ÉÔ´°Á´¥¬¥ó¥Ş´Ø¿ô
+    igamma.c -- ä¸å®Œå…¨ã‚¬ãƒ³ãƒé–¢æ•°
 ***********************************************************/
 #include <stdio.h>
 #include <math.h>
 
-/************ loggamma(x) -- gamma.c ¤è¤êºÆ·Ç *************/
+/************ loggamma(x) -- gamma.c ã‚ˆã‚Šå†æ² *************/
 
 #define PI      3.14159265358979324  /* $\pi$ */
 #define LOG_2PI 1.83787706640934548  /* $\log 2\pi$ */
 #define N       8
 
-#define B0  1                 /* °Ê²¼¤ÏBernoulli¿ô */
+#define B0  1                 /* ä»¥ä¸‹ã¯Bernoulliæ•° */
 #define B1  (-1.0 / 2.0)
 #define B2  ( 1.0 / 6.0)
 #define B4  (-1.0 / 30.0)
@@ -21,7 +21,7 @@
 #define B14 ( 7.0 / 6.0)
 #define B16 (-3617.0 / 510.0)
 
-double loggamma(double x)  /* ¥¬¥ó¥Ş´Ø¿ô¤ÎÂĞ¿ô */
+double loggamma(double x)  /* ã‚¬ãƒ³ãƒé–¢æ•°ã®å¯¾æ•° */
 {
     double v, w;
 
@@ -38,9 +38,9 @@ double loggamma(double x)  /* ¥¬¥ó¥Ş´Ø¿ô¤ÎÂĞ¿ô */
 /**********************************************************/
 
 double q_gamma(double a, double x, double loggamma_a);
-    /* Àë¸À¤À¤±. ¼Âºİ¤ÎÄêµÁ¤Ï¸å. */
+    /* å®£è¨€ã ã‘. å®Ÿéš›ã®å®šç¾©ã¯å¾Œ. */
 
-double p_gamma(double a, double x, double loggamma_a)  /* ËÜÊ¸»²¾È */
+double p_gamma(double a, double x, double loggamma_a)  /* æœ¬æ–‡å‚ç…§ */
 {
     int k;
     double result, term, previous;
@@ -53,15 +53,15 @@ double p_gamma(double a, double x, double loggamma_a)  /* ËÜÊ¸»²¾È */
         previous = result;  result += term;
         if (result == previous) return result;
     }
-    printf("p_gamma(): ¼ıÂ«¤·¤Ş¤»¤ó.\n");
+    printf("p_gamma(): åæŸã—ã¾ã›ã‚“.\n");
     return result;
 }
 
-double q_gamma(double a, double x, double loggamma_a)  /* ËÜÊ¸»²¾È */
+double q_gamma(double a, double x, double loggamma_a)  /* æœ¬æ–‡å‚ç…§ */
 {
     int k;
     double result, w, temp, previous;
-    double la = 1, lb = 1 + x - a;  /* Laguerre¤ÎÂ¿¹à¼° */
+    double la = 1, lb = 1 + x - a;  /* Laguerreã®å¤šé …å¼ */
 
     if (x < 1 + a) return 1 - p_gamma(a, x, loggamma_a);
     w = exp(a * log(x) - x - loggamma_a);
@@ -74,23 +74,23 @@ double q_gamma(double a, double x, double loggamma_a)  /* ËÜÊ¸»²¾È */
         previous = result;  result += temp;
         if (result == previous) return result;
     }
-    printf("q_gamma(): ¼ıÂ«¤·¤Ş¤»¤ó.\n");
+    printf("q_gamma(): åæŸã—ã¾ã›ã‚“.\n");
     return result;
 }
 
-double p_chisq(double chisq, int df)  /* ¥«¥¤2¾èÊ¬ÉÛ¤Î²¼Â¦³ÎÎ¨ */
+double p_chisq(double chisq, int df)  /* ã‚«ã‚¤2ä¹—åˆ†å¸ƒã®ä¸‹å´ç¢ºç‡ */
 {
     return p_gamma(0.5 * df, 0.5 * chisq, loggamma(0.5 * df));
 }
 
-double q_chisq(double chisq, int df)  /* ¥«¥¤2¾èÊ¬ÉÛ¤Î¾åÂ¦³ÎÎ¨ */
+double q_chisq(double chisq, int df)  /* ã‚«ã‚¤2ä¹—åˆ†å¸ƒã®ä¸Šå´ç¢ºç‡ */
 {
     return q_gamma(0.5 * df, 0.5 * chisq, loggamma(0.5 * df));
 }
 
 #define LOG_PI 1.14472988584940017  /* $\log_e \pi$ */
 
-double erf(double x)  /* Gauss¤Î¸íº¹´Ø¿ô ${\rm erf}(x)$ */
+double erf(double x)  /* Gaussã®èª¤å·®é–¢æ•° ${\rm erf}(x)$ */
 {
     if (x >= 0) return   p_gamma(0.5, x * x, LOG_PI / 2);
     else        return - p_gamma(0.5, x * x, LOG_PI / 2);
@@ -102,7 +102,7 @@ double erfc(double x)  /* $1 - {\rm erf}(x)$ */
     else        return  1 + p_gamma(0.5, x * x, LOG_PI / 2);
 }
 
-double p_normal(double x)  /* É¸½àÀµµ¬Ê¬ÉÛ¤Î²¼Â¦³ÎÎ¨ */
+double p_normal(double x)  /* æ¨™æº–æ­£è¦åˆ†å¸ƒã®ä¸‹å´ç¢ºç‡ */
 {
     if (x >= 0) return
         0.5 * (1 + p_gamma(0.5, 0.5 * x * x, LOG_PI / 2));
@@ -110,7 +110,7 @@ double p_normal(double x)  /* É¸½àÀµµ¬Ê¬ÉÛ¤Î²¼Â¦³ÎÎ¨ */
         0.5 * q_gamma(0.5, 0.5 * x * x, LOG_PI / 2);
 }
 
-double q_normal(double x)  /* É¸½àÀµµ¬Ê¬ÉÛ¤Î¾åÂ¦³ÎÎ¨ */
+double q_normal(double x)  /* æ¨™æº–æ­£è¦åˆ†å¸ƒã®ä¸Šå´ç¢ºç‡ */
 {
     if (x >= 0) return
         0.5 * q_gamma(0.5, 0.5 * x * x, LOG_PI / 2);
@@ -120,12 +120,12 @@ double q_normal(double x)  /* É¸½àÀµµ¬Ê¬ÉÛ¤Î¾åÂ¦³ÎÎ¨ */
 
 #include <stdlib.h>
 
-int main()  /* ¥Æ¥¹¥È¤Î¤´¤¯°ìÉô */
+int main()  /* ãƒ†ã‚¹ãƒˆã®ã”ãä¸€éƒ¨ */
 {
     int i;
     double x;
 
-    printf("Àµµ¬Ê¬ÉÛ¤Î¾åÂ¦³ÎÎ¨¤Î¥Æ¥¹¥È\n");
+    printf("æ­£è¦åˆ†å¸ƒã®ä¸Šå´ç¢ºç‡ã®ãƒ†ã‚¹ãƒˆ\n");
     for (i = 0; i <= 25; i++) {
         x = 0.2 * i;
         printf("%5.1f  %-25.17g\n", x, 1 - p_normal(x));

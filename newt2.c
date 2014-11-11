@@ -1,16 +1,16 @@
 /***********************************************************
-    newt2.c -- Newton (¥Ë¥å¡¼¥È¥ó) Ë¡
+    newt2.c -- Newton (ãƒ‹ãƒ¥ãƒ¼ãƒˆãƒ³) æ³•
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 
-double f(double x)  /* $f(x) = 0$ ¤ò²ò¤¯´Ø¿ô $f(x)$ */
+double f(double x)  /* $f(x) = 0$ ã‚’è§£ãé–¢æ•° $f(x)$ */
 {
     return atan(x - 1);
 }
 
-double newton(double x)  /* ½é´üÃÍ $x$ ¤«¤é $f(x) = 0$ ¤Î²ò¤òµá¤á¤ë */
+double newton(double x)  /* åˆæœŸå€¤ $x$ ã‹ã‚‰ $f(x) = 0$ ã®è§£ã‚’æ±‚ã‚ã‚‹ */
 {
     int i;
     double h, fx, df, x_prev, fx_prev;
@@ -33,9 +33,9 @@ int main()
 {
     double x;
 
-    printf("atan(x - 1) = 0 ¤ò²ò¤­¤Ş¤¹.\n");
-    printf("½é´üÃÍ = ");  scanf("%lf", &x);
+    printf("atan(x - 1) = 0 ã‚’è§£ãã¾ã™.\n");
+    printf("åˆæœŸå€¤ = ");  scanf("%lf", &x);
     x = newton(x);
-    printf("²ò¤Ï %g ¤Ç¤¹.\n", x);
+    printf("è§£ã¯ %g ã§ã™.\n", x);
     return EXIT_SUCCESS;
 }

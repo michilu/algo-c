@@ -1,5 +1,5 @@
 /***********************************************************
-    postfix.c -- ∏Â√÷µ≠À°
+    postfix.c -- ÂæåÁΩÆË®òÊ≥ï
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,16 +7,16 @@
 
 int ch;
 
-void readch(void)  /* £± ∏ª˙§Ú∆…§‡. ∂ı«Ú§œ∆…§ﬂ»Ù§–§π. */
+void readch(void)  /* ÔºëÊñáÂ≠ó„ÇíË™≠„ÇÄ. Á©∫ÁôΩ„ÅØË™≠„ÅøÈ£õ„Å∞„Åô. */
 {
     do {
         if ((ch = getchar()) == EOF) return;
     } while (ch == ' ' || ch == '\t');
 }
 
-void expression(void);  /* º∞ */
+void expression(void);  /* Âºè */
 
-void factor(void)  /* ∞¯ª“ */
+void factor(void)  /* Âõ†Â≠ê */
 {
     if (ch == '(') {
         readch();  expression();
@@ -26,7 +26,7 @@ void factor(void)  /* ∞¯ª“ */
     } else putchar('?');
 }
 
-void term(void) /* π‡ */
+void term(void) /* È†Ö */
 {
     factor();
     for ( ; ; )
@@ -37,7 +37,7 @@ void term(void) /* π‡ */
         } else break;
 }
 
-void expression(void)  /* º∞ */
+void expression(void)  /* Âºè */
 {
     term();
     for ( ; ; )

@@ -1,9 +1,9 @@
 /***********************************************************
-    gray1.c -- Gray (¥°¥ì¥¤) Éä¹æ
+    gray1.c -- Gray (ã‚°ãƒ¬ã‚¤) ç¬¦å·
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
-#define N  6  /* ·å¿ô */
+#define N  6  /* æ¡æ•° */
 
 int main()
 {
@@ -11,10 +11,10 @@ int main()
     char binary[N + 1], Gray[N];
 
     for (i = 0; i < N; i++) binary[i] = Gray[i] = 0;
-    binary[N] = 0;  /* ÈÖ¿Í */
+    binary[N] = 0;  /* ç•ªäºº */
     printf("%*s  %*s\n", N, "binary", N, "Gray");
     for ( ; ; ) {
-        /* ½ĞÎÏ. */
+        /* å‡ºåŠ›. */
         for (i = N - 1; i >= 0; i--) printf("%d", binary[i]);
         printf("  ");
         for (i = N - 1; i >= 0; i--) printf("%d", Gray[i]);
@@ -22,7 +22,7 @@ int main()
         for (i = 0; binary[i] == 1; i++) binary[i] = 0;
         if (i == N) break;
         binary[i] = 1;
-        Gray[i] ^= 1;  /* 1¸ÄÊÑ¤¨¤ë¤À¤±¤Ç¼¡¤ÎGrayÉä¹æ¤¬ÆÀ¤é¤ì¤ë. */
+        Gray[i] ^= 1;  /* 1å€‹å¤‰ãˆã‚‹ã ã‘ã§æ¬¡ã®Grayç¬¦å·ãŒå¾—ã‚‰ã‚Œã‚‹. */
     }
     return EXIT_SUCCESS;
 }

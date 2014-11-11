@@ -1,37 +1,37 @@
 /***********************************************************
-    btree.c -- BÌÚ
+    btree.c -- Bæœ¨
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 
-#define M  2  /* 1¥Ú¡¼¥¸¤Î¥Ç¡¼¥¿¿ô¤Î¾å¸Â¤ÎÈ¾Ê¬ */
+#define M  2  /* 1ãƒšãƒ¼ã‚¸ã®ãƒ‡ãƒ¼ã‚¿æ•°ã®ä¸Šé™ã®åŠåˆ† */
 
-typedef int keytype;                 /* Ãµº÷¤Î¥­¡¼¤Î·¿ */
+typedef int keytype;                 /* æ¢ç´¢ã®ã‚­ãƒ¼ã®å‹ */
 typedef enum {FALSE, TRUE} boolean;  /* ${\tt FALSE} = 0$, ${\tt TRUE} = 1$ */
 
-typedef struct page {                /* ¥Ú¡¼¥¸¤ÎÄêµÁ */
-    int n;                           /* ¥Ç¡¼¥¿¿ô */
-    keytype key[2 * M];              /* ¥­¡¼ */
-    struct page *branch[2 * M + 1];  /* Â¾¥Ú¡¼¥¸¤Ø¤Î¥İ¥¤¥ó¥¿ */
-} *pageptr;        /* {\tt pageptr} ¤Ï¥Ú¡¼¥¸¤Ø¤Î¥İ¥¤¥ó¥¿¤Î·¿ */
+typedef struct page {                /* ãƒšãƒ¼ã‚¸ã®å®šç¾© */
+    int n;                           /* ãƒ‡ãƒ¼ã‚¿æ•° */
+    keytype key[2 * M];              /* ã‚­ãƒ¼ */
+    struct page *branch[2 * M + 1];  /* ä»–ãƒšãƒ¼ã‚¸ã¸ã®ãƒã‚¤ãƒ³ã‚¿ */
+} *pageptr;        /* {\tt pageptr} ã¯ãƒšãƒ¼ã‚¸ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã®å‹ */
 
-pageptr root = NULL;                 /* BÌÚ¤Îº¬ */
-keytype key;                         /* ¥­¡¼ */
-boolean done, deleted, undersize;    /* ÏÀÍı·¿¤ÎÊÑ¿ô */
-pageptr newp;       /* {\tt insert()} ¤ÎÀ¸À®¤·¤¿¿·¤·¤¤¥Ú¡¼¥¸ */
-char *message;                       /* ´Ø¿ô¤ÎÊÖ¤¹¥á¥Ã¥»¡¼¥¸ */
+pageptr root = NULL;                 /* Bæœ¨ã®æ ¹ */
+keytype key;                         /* ã‚­ãƒ¼ */
+boolean done, deleted, undersize;    /* è«–ç†å‹ã®å¤‰æ•° */
+pageptr newp;       /* {\tt insert()} ã®ç”Ÿæˆã—ãŸæ–°ã—ã„ãƒšãƒ¼ã‚¸ */
+char *message;                       /* é–¢æ•°ã®è¿”ã™ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ */
 
-pageptr newpage(void)  /* ¿·¤·¤¤¥Ú¡¼¥¸¤ÎÀ¸À® */
+pageptr newpage(void)  /* æ–°ã—ã„ãƒšãƒ¼ã‚¸ã®ç”Ÿæˆ */
 {
     pageptr p;
 
     if ((p = malloc(sizeof *p)) == NULL) {
-        printf("¥á¥â¥êÉÔÂ­.\n");  exit(EXIT_FAILURE);
+        printf("ãƒ¡ãƒ¢ãƒªä¸è¶³.\n");  exit(EXIT_FAILURE);
     }
     return p;
 }
 
-void search(void)  /* ¥­¡¼ {\tt key} ¤òBÌÚ¤«¤éÃµ¤¹ */
+void search(void)  /* ã‚­ãƒ¼ {\tt key} ã‚’Bæœ¨ã‹ã‚‰æ¢ã™ */
 {
     pageptr p;
     int k;
@@ -41,14 +41,14 @@ void search(void)  /* ¥­¡¼ {\tt key} ¤òBÌÚ¤«¤éÃµ¤¹ */
         k = 0;
         while (k < p->n && p->key[k] < key) k++;
         if (k < p->n && p->key[k] == key) {
-            message = "¸«¤Ä¤«¤ê¤Ş¤·¤¿";  return;
+            message = "è¦‹ã¤ã‹ã‚Šã¾ã—ãŸ";  return;
         }
         p = p->branch[k];
     }
-    message = "¸«¤Ä¤«¤ê¤Ş¤»¤ó";
+    message = "è¦‹ã¤ã‹ã‚Šã¾ã›ã‚“";
 }
 
-void insertitem(pageptr p, int k)  /* {\tt key} ¤ò {\tt p->key[k]} ¤ËÁŞÆş */
+void insertitem(pageptr p, int k)  /* {\tt key} ã‚’ {\tt p->key[k]} ã«æŒ¿å…¥ */
 {
     int i;
 
@@ -59,7 +59,7 @@ void insertitem(pageptr p, int k)  /* {\tt key} ¤ò {\tt p->key[k]} ¤ËÁŞÆş */
     p->key[k] = key;  p->branch[k + 1] = newp;  p->n++;
 }
 
-void split(pageptr p, int k)  /* {\tt key} ¤ò {\tt p->key[k]} ¤ËÁŞÆş¤·, ¥Ú¡¼¥¸ {\tt p} ¤ò³ä¤ë */
+void split(pageptr p, int k)  /* {\tt key} ã‚’ {\tt p->key[k]} ã«æŒ¿å…¥ã—, ãƒšãƒ¼ã‚¸ {\tt p} ã‚’å‰²ã‚‹ */
 {
     int j, m;
     pageptr q;
@@ -75,10 +75,10 @@ void split(pageptr p, int k)  /* {\tt key} ¤ò {\tt p->key[k]} ¤ËÁŞÆş¤·, ¥Ú¡¼¥¸ {
     else        insertitem(q, k - m);
     key = p->key[p->n - 1];
     q->branch[0] = p->branch[p->n];  p->n--;
-    newp = q;  /* ¿·¤·¤¤¥Ú¡¼¥¸¤ò {\tt newp} ¤ËÆş¤ì¤ÆÌá¤ë */
+    newp = q;  /* æ–°ã—ã„ãƒšãƒ¼ã‚¸ã‚’ {\tt newp} ã«å…¥ã‚Œã¦æˆ»ã‚‹ */
 }
 
-void insertsub(pageptr p)  /* {\tt p} ¤«¤éÌÚ¤òºÆµ¢Åª¤Ë¤¿¤É¤Ã¤ÆÁŞÆş */
+void insertsub(pageptr p)  /* {\tt p} ã‹ã‚‰æœ¨ã‚’å†å¸°çš„ã«ãŸã©ã£ã¦æŒ¿å…¥ */
 {
     int k;
 
@@ -88,31 +88,31 @@ void insertsub(pageptr p)  /* {\tt p} ¤«¤éÌÚ¤òºÆµ¢Åª¤Ë¤¿¤É¤Ã¤ÆÁŞÆş */
     k = 0;
     while (k < p->n && p->key[k] < key) k++;
     if (k < p->n && p->key[k] == key) {
-        message = "¤â¤¦ÅĞÏ¿¤µ¤ì¤Æ¤¤¤Ş¤¹";  done = TRUE;
+        message = "ã‚‚ã†ç™»éŒ²ã•ã‚Œã¦ã„ã¾ã™";  done = TRUE;
         return;
     }
     insertsub(p->branch[k]);
     if (done) return;
-    if (p->n < 2 * M) {   /* ¥Ú¡¼¥¸¤¬³ä¤ì¤Ê¤¤¾ì¹ç */
+    if (p->n < 2 * M) {   /* ãƒšãƒ¼ã‚¸ãŒå‰²ã‚Œãªã„å ´åˆ */
         insertitem(p, k);  done = TRUE;
-    } else {              /* ¥Ú¡¼¥¸¤¬³ä¤ì¤ë¾ì¹ç */
+    } else {              /* ãƒšãƒ¼ã‚¸ãŒå‰²ã‚Œã‚‹å ´åˆ */
         split(p, k);  done = FALSE;
     }
 }
 
-void insert(void)  /* ¥­¡¼ {\tt key} ¤òBÌÚ¤ËÁŞÆş */
+void insert(void)  /* ã‚­ãƒ¼ {\tt key} ã‚’Bæœ¨ã«æŒ¿å…¥ */
 {
     pageptr p;
 
-    message = "ÅĞÏ¿¤·¤Ş¤·¤¿";
+    message = "ç™»éŒ²ã—ã¾ã—ãŸ";
     insertsub(root);  if (done) return;
     p = newpage();  p->n = 1;  p->key[0] = key;
     p->branch[0] = root;  p->branch[1] = newp;  root = p;
 }
 
 void removeitem(pageptr p, int k)
-    /* {\tt p->key[k]}, {\tt p->branch[k+1]} ¤ò³°¤¹. */
-    /* ¥Ú¡¼¥¸¤¬¾®¤µ¤¯¤Ê¤ê¤¹¤®¤¿¤é {\tt undersize} ¥Õ¥é¥°¤òÎ©¤Æ¤ë. */
+    /* {\tt p->key[k]}, {\tt p->branch[k+1]} ã‚’å¤–ã™. */
+    /* ãƒšãƒ¼ã‚¸ãŒå°ã•ããªã‚Šã™ããŸã‚‰ {\tt undersize} ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹. */
 {
     while (++k < p->n) {
         p->key[k - 1] = p->key[k];
@@ -122,8 +122,8 @@ void removeitem(pageptr p, int k)
 }
 
 void moveright(pageptr p, int k)
-    /* {\tt p->branch[k - 1]} ¤ÎºÇ±¦Í×ÁÇ¤ò */
-    /* {\tt p->key[k - 1]} ·ĞÍ³¤Ç {\tt p->branch[k]} ¤ËÆ°¤«¤¹ */
+    /* {\tt p->branch[k - 1]} ã®æœ€å³è¦ç´ ã‚’ */
+    /* {\tt p->key[k - 1]} çµŒç”±ã§ {\tt p->branch[k]} ã«å‹•ã‹ã™ */
 {
     int j;
     pageptr left, right;
@@ -142,8 +142,8 @@ void moveright(pageptr p, int k)
 }
 
 void moveleft(pageptr p, int k)
-    /* {\tt p->branch[k]} ¤ÎºÇº¸Í×ÁÇ¤ò */
-    /* {\tt p->key[k - 1]} ·ĞÍ³¤Ç {\tt p->branch[k - 1]} ¤ËÆ°¤«¤¹ */
+    /* {\tt p->branch[k]} ã®æœ€å·¦è¦ç´ ã‚’ */
+    /* {\tt p->key[k - 1]} çµŒç”±ã§ {\tt p->branch[k - 1]} ã«å‹•ã‹ã™ */
 {
     int j;
     pageptr left, right;
@@ -161,7 +161,7 @@ void moveleft(pageptr p, int k)
     }
 }
 
-void combine(pageptr p, int k)  /* {\tt p->branch[k - 1]}, {\tt p->branch[k]} ¤ò·ë¹ç¤¹¤ë */
+void combine(pageptr p, int k)  /* {\tt p->branch[k - 1]}, {\tt p->branch[k]} ã‚’çµåˆã™ã‚‹ */
 {
     int j;
     pageptr left, right;
@@ -180,7 +180,7 @@ void combine(pageptr p, int k)  /* {\tt p->branch[k - 1]}, {\tt p->branch[k]} ¤ò
     free(right);
 }
 
-void restore(pageptr p, int k)  /* ¾®¤µ¤¯¤Ê¤ê¤¹¤®¤¿¥Ú¡¼¥¸ {\tt p->branch[k]} ¤ò½¤Éü¤¹¤ë */
+void restore(pageptr p, int k)  /* å°ã•ããªã‚Šã™ããŸãƒšãƒ¼ã‚¸ {\tt p->branch[k]} ã‚’ä¿®å¾©ã™ã‚‹ */
 {
     undersize = FALSE;
     if (k > 0) {
@@ -192,15 +192,15 @@ void restore(pageptr p, int k)  /* ¾®¤µ¤¯¤Ê¤ê¤¹¤®¤¿¥Ú¡¼¥¸ {\tt p->branch[k]} ¤ò½
     }
 }
 
-void deletesub(pageptr p)  /* ¥Ú¡¼¥¸ {\tt p} ¤«¤éºÆµ¢Åª¤ËÌÚ¤ò¤¿¤É¤êºï½ü */
+void deletesub(pageptr p)  /* ãƒšãƒ¼ã‚¸ {\tt p} ã‹ã‚‰å†å¸°çš„ã«æœ¨ã‚’ãŸã©ã‚Šå‰Šé™¤ */
 {
     int k;
     pageptr q;
 
-    if (p == NULL) return;  /* ¸«¤Ä¤«¤é¤Ê¤«¤Ã¤¿ */
+    if (p == NULL) return;  /* è¦‹ã¤ã‹ã‚‰ãªã‹ã£ãŸ */
     k = 0;
     while (k < p->n && p->key[k] < key) k++;
-    if (k < p->n && p->key[k] == key) {  /* ¸«¤Ä¤«¤Ã¤¿ */
+    if (k < p->n && p->key[k] == key) {  /* è¦‹ã¤ã‹ã£ãŸ */
         deleted = TRUE;
         if ((q = p->branch[k + 1]) != NULL) {
             while (q->branch[0] != NULL) q = q->branch[0];
@@ -214,21 +214,21 @@ void deletesub(pageptr p)  /* ¥Ú¡¼¥¸ {\tt p} ¤«¤éºÆµ¢Åª¤ËÌÚ¤ò¤¿¤É¤êºï½ü */
     }
 }
 
-void delete(void)  /* ¥­¡¼ {\tt key} ¤òBÌÚ¤«¤é³°¤¹ */
+void delete(void)  /* ã‚­ãƒ¼ {\tt key} ã‚’Bæœ¨ã‹ã‚‰å¤–ã™ */
 {
     pageptr p;
 
     deleted = undersize = FALSE;
-    deletesub(root);  /* º¬¤«¤éºÆµ¢Åª¤ËÌÚ¤ò¤¿¤É¤êºï½ü¤¹¤ë */
+    deletesub(root);  /* æ ¹ã‹ã‚‰å†å¸°çš„ã«æœ¨ã‚’ãŸã©ã‚Šå‰Šé™¤ã™ã‚‹ */
     if (deleted) {
-        if (root->n == 0) {  /* º¬¤¬¶õ¤Ë¤Ê¤Ã¤¿¾ì¹ç */
+        if (root->n == 0) {  /* æ ¹ãŒç©ºã«ãªã£ãŸå ´åˆ */
             p = root;  root = root->branch[0];  free(p);
         }
-        message = "ºï½ü¤·¤Ş¤·¤¿";
-    } else message = "¸«¤Ä¤«¤ê¤Ş¤»¤ó";
+        message = "å‰Šé™¤ã—ã¾ã—ãŸ";
+    } else message = "è¦‹ã¤ã‹ã‚Šã¾ã›ã‚“";
 }
 
-void printtree(pageptr p)  /* ¥Ç¥âÍÑ¤ËBÌÚ¤òÉ½¼¨ */
+void printtree(pageptr p)  /* ãƒ‡ãƒ¢ç”¨ã«Bæœ¨ã‚’è¡¨ç¤º */
 {
     static int depth = 0;
     int k;
@@ -236,10 +236,10 @@ void printtree(pageptr p)  /* ¥Ç¥âÍÑ¤ËBÌÚ¤òÉ½¼¨ */
     if (p == NULL) {  printf(".");  return;  }
     printf("(");  depth++;
     for (k = 0; k < p->n; k++) {
-        printtree(p->branch[k]);  /* ºÆµ¢¸Æ½Ğ¤· */
+        printtree(p->branch[k]);  /* å†å¸°å‘¼å‡ºã— */
         printf("%d", p->key[k]);
     }
-    printtree(p->branch[p->n]);  /* ºÆµ¢¸Æ½Ğ¤· */
+    printtree(p->branch[p->n]);  /* å†å¸°å‘¼å‡ºã— */
     printf(")");  depth--;
 }
 
@@ -250,7 +250,7 @@ int main()
     char s[2];
 
     for ( ; ; ) {
-        printf("ÁŞÆş In, ¸¡º÷ Sn, ºï½ü Dn (n:À°¿ô) ? ");
+        printf("æŒ¿å…¥ In, æ¤œç´¢ Sn, å‰Šé™¤ Dn (n:æ•´æ•°) ? ");
         if (scanf("%1s%d", s, &key) != 2) break;
         switch (s[0]) {
         case 'I':  case 'i':  insert();  break;

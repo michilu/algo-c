@@ -1,5 +1,5 @@
 /***********************************************************
-    orddif.c -- ¾ïÈùÊ¬ÊıÄø¼°
+    orddif.c -- å¸¸å¾®åˆ†æ–¹ç¨‹å¼
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,7 +25,7 @@ double Fxx(double x, double y)  /* $F_{xx}(x, y)$ */
     return -2 * (sqr(F(x, y)) + y * Fx(x, y));
 }
 
-double euler(int n, int nprint, double x0, double y0, double xn)  /* EulerË¡ */
+double euler(int n, int nprint, double x0, double y0, double xn)  /* Euleræ³• */
 {
     int i;
     double x, y, h;
@@ -39,7 +39,7 @@ double euler(int n, int nprint, double x0, double y0, double xn)  /* EulerË¡ */
     return y;
 }
 
-double tayl3(int n, int nprint, double x0, double y0, double xn)  /* 3¼¡Taylorµé¿ô */
+double tayl3(int n, int nprint, double x0, double y0, double xn)  /* 3æ¬¡Taylorç´šæ•° */
 {
     int i;
     double x, y, h;
@@ -54,7 +54,7 @@ double tayl3(int n, int nprint, double x0, double y0, double xn)  /* 3¼¡Taylorµé
     return y;
 }
 
-double runge4(int n, int nprint, double x0, double y0, double xn)  /* 4¼¡Runge-KuttaË¡ */
+double runge4(int n, int nprint, double x0, double y0, double xn)  /* 4æ¬¡Runge-Kuttaæ³• */
 {
     int i;
     double x, y, h, h2, f1, f2, f3, f4;
@@ -77,14 +77,14 @@ int main(void)
     int i, n;
 
     for (n = 4; n <= 128; n *= 2) {
-        printf("\nEulerË¡:          n = %d\n", n);
+        printf("\nEuleræ³•:          n = %d\n", n);
         (void) euler(n, n / 4, 0, 0, 1);
-        printf("\n3¼¡EulerË¡:       n = %d\n", n);
+        printf("\n3æ¬¡Euleræ³•:       n = %d\n", n);
         (void) tayl3(n, n / 4, 0, 0, 1);
-        printf("\n4¼¡Runge-KuttaË¡: n = %d\n", n);
+        printf("\n4æ¬¡Runge-Kuttaæ³•: n = %d\n", n);
         (void) runge4(n, n / 4, 0, 0, 1);
     }
-    printf("\nÀµ²ò\n");
+    printf("\næ­£è§£\n");
     for (i = 1; i <= 4; i++)
         printf("% -14g % -14g\n", i / 4.0, tanh(i / 4.0));
     return EXIT_SUCCESS;

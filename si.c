@@ -1,5 +1,5 @@
 /***********************************************************
-    si.c -- Àµ¸¹ÀÑÊ¬
+    si.c -- æ­£å¼¦ç©åˆ†
 ************************************************************
     ${\rm Si}(x) = \int_{0}^{x} \frac{\sin t}{t} \, dt$
      x      Si(x)
@@ -19,7 +19,7 @@
 #include <math.h>
 #define PI 3.14159265358979323846264338328
 
-static double Si_series(double x)  /* µé¿ôÅ¸³« */
+static double Si_series(double x)  /* ç´šæ•°å±•é–‹ */
 {
     int k;
     double s, t, u;
@@ -30,11 +30,11 @@ static double Si_series(double x)  /* µé¿ôÅ¸³« */
         u = s;  s += t / k;
         if (s == u) return s;
     }
-    printf("Si_series(): ¼ıÂ«¤·¤Ş¤»¤ó.\n");
+    printf("Si_series(): åæŸã—ã¾ã›ã‚“.\n");
     return s;
 }
 
-double Si_asympt(double x)  /* Á²¶áÅ¸³« */
+double Si_asympt(double x)  /* æ¼¸è¿‘å±•é–‹ */
 {
     int k, flag;
     double t, f, g, fmax, fmin, gmax, gmin;

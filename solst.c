@@ -1,14 +1,14 @@
 /***********************************************************
-    solst.c -- ¼«¸ÊÁÈ¿¥²½Ãµº÷
+    solst.c -- è‡ªå·±çµ„ç¹”åŒ–æ¢ç´¢
 ***********************************************************/
-/* ÀèÆ¬°ÜÆ°Ë¡ */
+/* å…ˆé ­ç§»å‹•æ³• */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#define KEYSIZE     15  /* Ì¾Á°Íó¤ÎÂç¤­¤µ */
-#define INFOSIZE   127  /* ½»½êÍó¤ÎÂç¤­¤µ */
+#define KEYSIZE     15  /* åå‰æ¬„ã®å¤§ãã• */
+#define INFOSIZE   127  /* ä½æ‰€æ¬„ã®å¤§ãã• */
 typedef char keytype[KEYSIZE + 1], infotype[INFOSIZE + 1];
 typedef struct item {
     struct item *next;
@@ -16,14 +16,14 @@ typedef struct item {
     infotype info;
 } *pointer;
 
-static struct item head = { &head, "", "" };  /* ¥ê¥¹¥È¤ÎÆ¬ */
+static struct item head = { &head, "", "" };  /* ãƒªã‚¹ãƒˆã®é ­ */
 
 void insert(keytype key, infotype info)
 {
     pointer p;
 
     if ((p = malloc(sizeof *p)) == NULL) {
-        printf("¥á¥â¥êÉÔÂ­.\n");  exit(EXIT_FAILURE);
+        printf("ãƒ¡ãƒ¢ãƒªä¸è¶³.\n");  exit(EXIT_FAILURE);
     }
     strcpy(p->key, key);  strcpy(p->info, info);
     p->next = head.next;  head.next = p;
@@ -33,7 +33,7 @@ pointer search(keytype x)
 {
     pointer p, q;
 
-    strcpy(head.key, x);  p = &head;  /* ÈÖ¿Í */
+    strcpy(head.key, x);  p = &head;  /* ç•ªäºº */
     do {
         q = p;  p = p->next;
     } while (strcmp(p->key, x) != 0);
@@ -51,12 +51,12 @@ int main()
     pointer p;
 
     for ( ; ; ) {
-        printf("Ì¾Á°? ");
+        printf("åå‰? ");
         if (! ReadString(KEYSIZE, key)) break;
         if ((p = search(key)) != NULL)
-            printf("½»½ê: %s\n", p->info);
+            printf("ä½æ‰€: %s\n", p->info);
         else {
-            printf("½»½ê? ");
+            printf("ä½æ‰€? ");
             if (ReadString(INFOSIZE, info)) insert(key, info);
         }
     }

@@ -1,30 +1,30 @@
 /***********************************************************
-    euler.c -- ∞Ï…ÆΩÒ§≠
+    euler.c -- ‰∏ÄÁ≠ÜÊõ∏„Åç
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 
-#define NMAX    100                     /* ≈¿§ŒøÙ§ŒæÂ∏¬ */
-#define EDGEMAX 100                     /* ¿˛§ŒøÙ§ŒæÂ∏¬ */
-int adjacent[NMAX + 1][NMAX + 1];       /* ŒŸ¿‹π‘ŒÛ */
+#define NMAX    100                     /* ÁÇπ„ÅÆÊï∞„ÅÆ‰∏äÈôê */
+#define EDGEMAX 100                     /* Á∑ö„ÅÆÊï∞„ÅÆ‰∏äÈôê */
+int adjacent[NMAX + 1][NMAX + 1];       /* Èö£Êé•Ë°åÂàó */
 int position[EDGEMAX + 1];
-int n, n_edge, edge, solution;          /* ≈¿, ¿˛§ŒøÙ; ¿˛, ≤Ú§Œ»÷πÊ */
+int n, n_edge, edge, solution;          /* ÁÇπ, Á∑ö„ÅÆÊï∞; Á∑ö, Ëß£„ÅÆÁï™Âè∑ */
 
-void readgraph(void)                    /* •«°º•ø∆˛Œœ */
+void readgraph(void)                    /* „Éá„Éº„ÇøÂÖ•Âäõ */
 {
     int i, j;
 
-    if (scanf("%d%*[^\n]", &n) != 1 || n > NMAX) {  /* ≈¿§ŒøÙ */
+    if (scanf("%d%*[^\n]", &n) != 1 || n > NMAX) {  /* ÁÇπ„ÅÆÊï∞ */
         n = 0;  return;
     }
     for (i = 1; i <= n; i++)
         for (j = 1; j <= n; j++) adjacent[i][j] = 0;
     while (scanf("%d%d%*[^\n]", &i, &j) == 2) {
-        n_edge++;                       /* ¿˛§ŒøÙ */
+        n_edge++;                       /* Á∑ö„ÅÆÊï∞ */
         adjacent[i][j]++;
-        adjacent[j][i]++;               /* Õ≠∏˛•∞•È•’§ §È§≥§Œπ‘§œ∫ÔΩ¸ */
+        adjacent[j][i]++;               /* ÊúâÂêë„Ç∞„É©„Éï„Å™„Çâ„Åì„ÅÆË°å„ÅØÂâäÈô§ */
     }
-    printf("ŒŸ¿‹π‘ŒÛ:\n");
+    printf("Èö£Êé•Ë°åÂàó:\n");
     for (i = 1; i <= n; i++) {
         for (j = 1; j <= n; j++) printf(" %d", adjacent[i][j]);
         printf("\n");
@@ -37,24 +37,24 @@ void visit(int i)
 
     position[edge] = i;
     if (edge == n_edge) {
-        printf("≤Ú %d: ", ++solution);
+        printf("Ëß£ %d: ", ++solution);
         for (i = 0; i <= n_edge; i++) printf(" %d", position[i]);
         printf("\n");
     } else {
         for (j = 1; j <= n; j++) if (adjacent[i][j]) {
             adjacent[i][j]--;
-            adjacent[j][i]--;  /* Õ≠∏˛•∞•È•’§ §È§≥§Œπ‘§œ∫ÔΩ¸ */
+            adjacent[j][i]--;  /* ÊúâÂêë„Ç∞„É©„Éï„Å™„Çâ„Åì„ÅÆË°å„ÅØÂâäÈô§ */
             edge++;  visit(j);  edge--;
             adjacent[i][j]++;
-            adjacent[j][i]++;  /* Õ≠∏˛•∞•È•’§ §È§≥§Œπ‘§œ∫ÔΩ¸ */
+            adjacent[j][i]++;  /* ÊúâÂêë„Ç∞„É©„Éï„Å™„Çâ„Åì„ÅÆË°å„ÅØÂâäÈô§ */
         }
     }
 }
 
 int main()
 {
-    readgraph();                     /* •«°º•ø§Ú∆…§‡ */
-    solution = edge = 0;  visit(1);  /* ≈¿1§´§ÈΩ–»Ø */
-    if (solution == 0) printf("≤Ú§ §∑\n");
+    readgraph();                     /* „Éá„Éº„Çø„ÇíË™≠„ÇÄ */
+    solution = edge = 0;  visit(1);  /* ÁÇπ1„Åã„ÇâÂá∫Áô∫ */
+    if (solution == 0) printf("Ëß£„Å™„Åó\n");
     return EXIT_SUCCESS;
 }

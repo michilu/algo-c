@@ -1,17 +1,17 @@
 /***********************************************************
-    princo.c -- ¼çÀ®Ê¬Ê¬ÀÏ
+    princo.c -- ä¸»æˆåˆ†åˆ†æ
 ***********************************************************/
-#include "statutil.c"     /* Â¿ÊÑÎÌ¥Ç¡¼¥¿ÆşÎÏ¥ë¡¼¥Á¥ó */
+#include "statutil.c"     /* å¤šå¤‰é‡ãƒ‡ãƒ¼ã‚¿å…¥åŠ›ãƒ«ãƒ¼ãƒãƒ³ */
 
-#define EPS         1E-6  /* ÈóÂĞ³ÑÀ®Ê¬¤ÎµöÍÆ¸íº¹ */
-#define MAX_ITER    100   /* ºÇÂç¤Î·«ÊÖ¤·¿ô */
+#define EPS         1E-6  /* éå¯¾è§’æˆåˆ†ã®è¨±å®¹èª¤å·® */
+#define MAX_ITER    100   /* æœ€å¤§ã®ç¹°è¿”ã—æ•° */
 
-double house(int n, vector x)  /* HouseholderÊÑ´¹ */
+double house(int n, vector x)  /* Householderå¤‰æ› */
 {
     int i;
     double s, t;
 
-    s = sqrt(innerproduct(n, x, x));  /* ÆâÀÑ¤ÎÊ¿Êıº¬, ¤¹¤Ê¤ï¤ÁÂç¤­¤µ */
+    s = sqrt(innerproduct(n, x, x));  /* å†…ç©ã®å¹³æ–¹æ ¹, ã™ãªã‚ã¡å¤§ãã• */
     if (s != 0) {
         if (x[0] < 0) s = -s;
         x[0] += s;  t = 1 / sqrt(x[0] * s);
@@ -20,7 +20,7 @@ double house(int n, vector x)  /* HouseholderÊÑ´¹ */
     return -s;
 }
 
-void tridiagonalize(int n, matrix a, vector d, vector e) /* 3½ÅÂĞ³Ñ²½ */
+void tridiagonalize(int n, matrix a, vector d, vector e) /* 3é‡å¯¾è§’åŒ– */
 {
     int i, j, k;
     double s, t, p, q;
@@ -67,12 +67,12 @@ int eigen(int n, matrix a, vector d, vector e)
     double c, s, t, w, x, y;
     vector v;
 
-    tridiagonalize(n, a, d, &e[1]);  /* 3½ÅÂĞ³Ñ²½ */
-    e[0] = 0;  /* ÈÖ¿Í */
-    for (h = n - 1; h > 0; h--) {  /* ¹ÔÎó¤Î¥µ¥¤¥º¤ò¾®¤µ¤¯¤·¤Æ¤¤¤¯ */
+    tridiagonalize(n, a, d, &e[1]);  /* 3é‡å¯¾è§’åŒ– */
+    e[0] = 0;  /* ç•ªäºº */
+    for (h = n - 1; h > 0; h--) {  /* è¡Œåˆ—ã®ã‚µã‚¤ã‚ºã‚’å°ã•ãã—ã¦ã„ã */
         j = h;
         while (fabs(e[j]) > EPS * (fabs(d[j - 1]) + fabs(d[j])))
-            j--;  /* $e[j] \ne 0$ ¤Î¥Ö¥í¥Ã¥¯¤Î»ÏÅÀ¤ò¸«¤Ä¤±¤ë */
+            j--;  /* $e[j] \ne 0$ ã®ãƒ–ãƒ­ãƒƒã‚¯ã®å§‹ç‚¹ã‚’è¦‹ã¤ã‘ã‚‹ */
         if (j == h) continue;
         iter = 0;
         do {
@@ -94,11 +94,11 @@ int eigen(int n, matrix a, vector d, vector e)
                 d[k] -= t;  d[k + 1] += t;
                 if (k > j) e[k] = c * e[k] - s * y;
                 e[k + 1] += s * (c * w - 2 * s * e[k + 1]);
-                for (i = 0; i < n; i++) {           /* ¸ÇÍ­¥Ù */
-                    x = a[k][i];  y = a[k + 1][i];  /* ¥¯¥È¥ë */
-                    a[k    ][i] = c * x - s * y;    /* ¤òµá¤á */
-                    a[k + 1][i] = s * x + c * y;    /* ¤Ê¤¤¤Ê */
-                }                                   /* ¤éÉÔÍ× */
+                for (i = 0; i < n; i++) {           /* å›ºæœ‰ãƒ™ */
+                    x = a[k][i];  y = a[k + 1][i];  /* ã‚¯ãƒˆãƒ« */
+                    a[k    ][i] = c * x - s * y;    /* ã‚’æ±‚ã‚ */
+                    a[k + 1][i] = s * x + c * y;    /* ãªã„ãª */
+                }                                   /* ã‚‰ä¸è¦ */
                 if (k < h - 1) {
                     x = e[k + 1];  y = -s * e[k + 2];
                     e[k + 2] *= c;
@@ -123,9 +123,9 @@ void princo(int n, int m, matrix x, matrix q, vector lambda,
     int i, j, k, ndf;
     double s, t, percent;
 
-    ndf = n - (method != 0);                      /* ¼«Í³ÅÙ */
-    printf("ÊÑ¿ô  Ê¿¶ÑÃÍ        %s\n",
-        (method == 0) ? "£Ò£Í£Ó" : "É¸½àÊĞº¹");
+    ndf = n - (method != 0);                      /* è‡ªç”±åº¦ */
+    printf("å¤‰æ•°  å¹³å‡å€¤        %s\n",
+        (method == 0) ? "ï¼²ï¼­ï¼³" : "æ¨™æº–åå·®");
     for (j = 0; j < m; j++) {
         t = 0;
         for (i = 0; i < n; i++) t += x[j][i];
@@ -141,25 +141,25 @@ void princo(int n, int m, matrix x, matrix q, vector lambda,
     }
     for (j = 0; j < m; j++) for (k = 0; k < j; k++)
         q[j][k] = q[k][j] = innerproduct(n, x[j], x[k]) / ndf;
-    if (eigen(m, q, lambda, work)) error("¼ıÂ«¤·¤Ş¤»¤ó");
+    if (eigen(m, q, lambda, work)) error("åæŸã—ã¾ã›ã‚“");
     t = 0;  /* trace */
     for (k = 0; k < m; k++) t += lambda[k];
-    printf("¼çÀ®Ê¬  ¸ÇÍ­ÃÍ       ¡ó   ÎßÀÑ¡ó\n");
+    printf("ä¸»æˆåˆ†  å›ºæœ‰å€¤       ï¼…   ç´¯ç©ï¼…\n");
     s = 0;
     for (k = 0; k < m; k++) {
         percent = 100 * lambda[k] / t;  s += percent;
         printf("%4d  % -12.5g  %5.1f  %5.1f\n",
             k + 1, lambda[k], percent, s);
     }
-    printf("¹ç·×  % -12.5g  %5.1f\n\n", t, s);
-    printf("ÊÑ¿ô  ½Å¤ß\n");
+    printf("åˆè¨ˆ  % -12.5g  %5.1f\n\n", t, s);
+    printf("å¤‰æ•°  é‡ã¿\n");
     for (j = 0; j < m; j++) {
         printf("%4d", j + 1);
         for (k = 0; k < m && k < 5; k++)
             printf("%11.6f   ", q[k][j]);
         printf("\n");
     }
-    printf("¸ÄÂÎ  ¼çÀ®Ê¬\n");
+    printf("å€‹ä½“  ä¸»æˆåˆ†\n");
     for (i = 0; i < n; i++) {
         printf("%4d  ", i + 1);
         for (k = 0; k < m && k < 5; k++) {
@@ -174,19 +174,19 @@ void princo(int n, int m, matrix x, matrix q, vector lambda,
 int main(int argc, char *argv[])
 {
     int n, m, method;
-    vector lambda, work;  /* ¸ÇÍ­ÃÍ, ºî¶ÈÍÑ */
-    matrix x, q;          /* ¥Ç¡¼¥¿, Ä¾¸ò¹ÔÎó */
+    vector lambda, work;  /* å›ºæœ‰å€¤, ä½œæ¥­ç”¨ */
+    matrix x, q;          /* ãƒ‡ãƒ¼ã‚¿, ç›´äº¤è¡Œåˆ— */
     FILE *datafile;
 
-    if (argc != 2) error("»ÈÍÑË¡: princo filename");
-    printf("0:¸µ¤Î¤Ş¤Ş 1:Ê¿¶Ñ¤ò°ú¤¯ 2:¤µ¤é¤ËÉ¸½àÊĞº¹¤Ç³ä¤ë ?");
+    if (argc != 2) error("ä½¿ç”¨æ³•: princo filename");
+    printf("0:å…ƒã®ã¾ã¾ 1:å¹³å‡ã‚’å¼•ã 2:ã•ã‚‰ã«æ¨™æº–åå·®ã§å‰²ã‚‹ ?");
     scanf("%d", &method);
-    if (method < 0 || method > 2) error("¸íÆşÎÏ");
+    if (method < 0 || method > 2) error("èª¤å…¥åŠ›");
     datafile = open_data(argv[1], &n, &m);
-    if (datafile == NULL) error("¥Ç¡¼¥¿ÉÔÎÉ");
+    if (datafile == NULL) error("ãƒ‡ãƒ¼ã‚¿ä¸è‰¯");
     x = new_matrix(m, n);  q = new_matrix(m, m);
     lambda = new_vector(m);  work = new_vector(m);
-    if (read_data(datafile, n, m, x)) error("¥Ç¡¼¥¿ÉÔÎÉ");
-    princo(n, m, x, q, lambda, work, method);  /* ¼çÀ®Ê¬Ê¬ÀÏ */
+    if (read_data(datafile, n, m, x)) error("ãƒ‡ãƒ¼ã‚¿ä¸è‰¯");
+    princo(n, m, x, q, lambda, work, method);  /* ä¸»æˆåˆ†åˆ†æ */
     return EXIT_SUCCESS;
 }

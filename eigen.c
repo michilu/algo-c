@@ -1,18 +1,18 @@
 /***********************************************************
-    eigen.c -- QRË¡
+    eigen.c -- QRæ³•
 ***********************************************************/
-#include "matutil.c"      /* ¹ÔÎóÍÑ¾®Æ»¶ñ½¸ */
+#include "matutil.c"      /* è¡Œåˆ—ç”¨å°é“å…·é›† */
 #include <math.h>
 
-#define EPS         1E-6  /* ÈóÂĞ³ÑÀ®Ê¬¤ÎµöÍÆ¸íº¹ */
-#define MAX_ITER    100   /* ºÇÂç¤Î·«ÊÖ¤·¿ô */
+#define EPS         1E-6  /* éå¯¾è§’æˆåˆ†ã®è¨±å®¹èª¤å·® */
+#define MAX_ITER    100   /* æœ€å¤§ã®ç¹°è¿”ã—æ•° */
 
-double house(int n, vector x)  /* HouseholderÊÑ´¹ */
+double house(int n, vector x)  /* Householderå¤‰æ› */
 {
     int i;
     double s, t;
 
-    s = sqrt(innerproduct(n, x, x));  /* ÆâÀÑ¤ÎÊ¿Êıº¬, ¤¹¤Ê¤ï¤ÁÂç¤­¤µ */
+    s = sqrt(innerproduct(n, x, x));  /* å†…ç©ã®å¹³æ–¹æ ¹, ã™ãªã‚ã¡å¤§ãã• */
     if (s != 0) {
         if (x[0] < 0) s = -s;
         x[0] += s;  t = 1 / sqrt(x[0] * s);
@@ -21,7 +21,7 @@ double house(int n, vector x)  /* HouseholderÊÑ´¹ */
     return -s;
 }
 
-void tridiagonalize(int n, matrix a, vector d, vector e) /* 3½ÅÂĞ³Ñ²½ */
+void tridiagonalize(int n, matrix a, vector d, vector e) /* 3é‡å¯¾è§’åŒ– */
 {
     int i, j, k;
     double s, t, p, q;
@@ -68,12 +68,12 @@ int eigen(int n, matrix a, vector d, vector e)
     double c, s, t, w, x, y;
     vector v;
 
-    tridiagonalize(n, a, d, &e[1]);  /* 3½ÅÂĞ³Ñ²½ */
-    e[0] = 0;  /* ÈÖ¿Í */
-    for (h = n - 1; h > 0; h--) {  /* ¹ÔÎó¤Î¥µ¥¤¥º¤ò¾®¤µ¤¯¤·¤Æ¤¤¤¯ */
+    tridiagonalize(n, a, d, &e[1]);  /* 3é‡å¯¾è§’åŒ– */
+    e[0] = 0;  /* ç•ªäºº */
+    for (h = n - 1; h > 0; h--) {  /* è¡Œåˆ—ã®ã‚µã‚¤ã‚ºã‚’å°ã•ãã—ã¦ã„ã */
         j = h;
         while (fabs(e[j]) > EPS * (fabs(d[j - 1]) + fabs(d[j])))
-            j--;  /* $\mbox{\tt e[$j$]} \ne 0$ ¤Î¥Ö¥í¥Ã¥¯¤Î»ÏÅÀ¤ò¸«¤Ä¤±¤ë */
+            j--;  /* $\mbox{\tt e[$j$]} \ne 0$ ã®ãƒ–ãƒ­ãƒƒã‚¯ã®å§‹ç‚¹ã‚’è¦‹ã¤ã‘ã‚‹ */
         if (j == h) continue;
         iter = 0;
         do {
@@ -95,7 +95,7 @@ int eigen(int n, matrix a, vector d, vector e)
                 d[k] -= t;  d[k + 1] += t;
                 if (k > j) e[k] = c * e[k] - s * y;
                 e[k + 1] += s * (c * w - 2 * s * e[k + 1]);
-                /* ¼¡¤Î5¹Ô¤Ï¸ÇÍ­¥Ù¥¯¥È¥ë¤òµá¤á¤Ê¤¤¤Ê¤éÉÔÍ× */
+                /* æ¬¡ã®5è¡Œã¯å›ºæœ‰ãƒ™ã‚¯ãƒˆãƒ«ã‚’æ±‚ã‚ãªã„ãªã‚‰ä¸è¦ */
                 for (i = 0; i < n; i++) {
                     x = a[k][i];  y = a[k + 1][i];
                     a[k    ][i] = c * x - s * y;
@@ -110,10 +110,10 @@ int eigen(int n, matrix a, vector d, vector e)
                 EPS * (fabs(d[h - 1]) + fabs(d[h])));
     }
 /*
-  °Ê²¼¤Ï¸ÇÍ­ÃÍ¤Î¹ß½ç¤ËÀ°Îó¤·¤Æ¤¤¤ë¤À¤±. É¬Í×¤Ê¤±¤ì¤Ğ¾Ê¤¯.
-  ¸ÇÍ­¥Ù¥¯¥È¥ë¤òµá¤á¤Ê¤¤¤Ê¤é¸ÇÍ­¥Ù¥¯¥È¥ë¤ÎÀ°Îó¤Ï¤â¤Á¤í¤óÉÔÍ×.
-  ¤Ê¤ª, {\tt matutil.c} Ãæ¤Ç¹ÔÎó¤Î³Æ¹Ô¤ò¥Ù¥¯¥È¥ë¤Ø¤Î¥İ¥¤¥ó¥¿
-  ¤È¤·¤ÆÄêµÁ¤·¤Æ¤¤¤ë¤Î¤Ç, ¹Ô¸ò´¹¤Ï¥İ¥¤¥ó¥¿¤Î¤¹¤²ÂØ¤¨¤À¤±¤ÇºÑ¤à.
+  ä»¥ä¸‹ã¯å›ºæœ‰å€¤ã®é™é †ã«æ•´åˆ—ã—ã¦ã„ã‚‹ã ã‘. å¿…è¦ãªã‘ã‚Œã°çœã.
+  å›ºæœ‰ãƒ™ã‚¯ãƒˆãƒ«ã‚’æ±‚ã‚ãªã„ãªã‚‰å›ºæœ‰ãƒ™ã‚¯ãƒˆãƒ«ã®æ•´åˆ—ã¯ã‚‚ã¡ã‚ã‚“ä¸è¦.
+  ãªãŠ, {\tt matutil.c} ä¸­ã§è¡Œåˆ—ã®å„è¡Œã‚’ãƒ™ã‚¯ãƒˆãƒ«ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+  ã¨ã—ã¦å®šç¾©ã—ã¦ã„ã‚‹ã®ã§, è¡Œäº¤æ›ã¯ãƒã‚¤ãƒ³ã‚¿ã®ã™ã’æ›¿ãˆã ã‘ã§æ¸ˆã‚€.
 */
     for (k = 0; k < n - 1; k++) {
         h = k;  t = d[h];
@@ -125,12 +125,12 @@ int eigen(int n, matrix a, vector d, vector e)
     return EXIT_SUCCESS;
 }
 
-/************* °Ê²¼¤Ï¥Æ¥¹¥ÈÍÑ *****************/
+/************* ä»¥ä¸‹ã¯ãƒ†ã‚¹ãƒˆç”¨ *****************/
 
 #include <limits.h>
 static unsigned long seed;
 
-double rnd(void)  /* Íğ¿ô  0 < rnd() < 1 */
+double rnd(void)  /* ä¹±æ•°  0 < rnd() < 1 */
 {
     return (seed *= 69069UL) / (ULONG_MAX + 1.0);
 }
@@ -143,7 +143,7 @@ int main()
     double s, t;
 
     printf("n = ");  scanf("%d", &n);
-    printf("Íğ¿ô¤Î¼ï (Àµ¤ÎÀ°¿ô) = ");
+    printf("ä¹±æ•°ã®ç¨® (æ­£ã®æ•´æ•°) = ");
     scanf("%ul", &seed);  seed |= 1;
     a = new_matrix(n, n);  u = new_matrix(n, n);
     d = new_vector(n);  work = new_vector(n);
@@ -153,8 +153,8 @@ int main()
     printf("A:\n");
     matprint(a, n, 7, "%10.6f");
     if (eigen(n, u, d, work) == EXIT_FAILURE)
-        printf("¼ıÂ«¤·¤Ş¤»¤ó.\n");
-    printf("¸ÇÍ­ÃÍ:\n");
+        printf("åæŸã—ã¾ã›ã‚“.\n");
+    printf("å›ºæœ‰å€¤:\n");
     vecprint(d, n, 5, "% -14g");
     s = 0;
     for (i = 0; i < n; i++) {
@@ -165,6 +165,6 @@ int main()
             s += (a[i][j] - t) * (a[i][j] - t);
         }
     }
-    printf("Æó¾èÊ¿¶Ñ¸íº¹: %g\n", sqrt(s) / n);
+    printf("äºŒä¹—å¹³å‡èª¤å·®: %g\n", sqrt(s) / n);
     return EXIT_SUCCESS;
 }

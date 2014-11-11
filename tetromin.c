@@ -1,14 +1,14 @@
 /***********************************************************
-    tetromin.c -- ¥Æ¥È¥í¥ß¥Î¤ÎÈ¢µÍ¤á¥Ñ¥º¥ë
+    tetromin.c -- ãƒ†ãƒˆãƒ­ãƒŸãƒã®ç®±è©°ã‚ãƒ‘ã‚ºãƒ«
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 
-#define Pieces      5  /* ¶ğ¤Î¿ô */
-#define Col         5  /* È×¤ÎÃ»ÊÕ¤ÎÄ¹¤µ */
-#define Row         8  /* È×¤ÎÄ¹ÊÕ¤ÎÄ¹¤µ */
-#define PieceSize   4  /* ¶ğ¤ÎÂç¤­¤µ */
-#define MaxSymmetry 8  /* ¶ğ¤ÎÃÖ¤­Êı¤ÎºÇÂç¿ô */
+#define Pieces      5  /* é§’ã®æ•° */
+#define Col         5  /* ç›¤ã®çŸ­è¾ºã®é•·ã• */
+#define Row         8  /* ç›¤ã®é•·è¾ºã®é•·ã• */
+#define PieceSize   4  /* é§’ã®å¤§ãã• */
+#define MaxSymmetry 8  /* é§’ã®ç½®ãæ–¹ã®æœ€å¤§æ•° */
 #define MaxSite     ((Col + 1) * Row - 1)
 #define LimSite     ((Col + 1) * (Row + 1))
 
@@ -27,7 +27,7 @@ void initialize(void)
                                 else board[site] = '\0';
     for (site = MaxSite; site < LimSite - 1; site++)
         board[site] = '*';
-    board[LimSite - 1] = '\0';  /* ÈÖ¿Í */
+    board[LimSite - 1] = '\0';  /* ç•ªäºº */
     for (piece = 0; piece < Pieces; piece++) {
         rest[piece] = 2;
         scanf(" %c%c%d", &name[1][piece],
@@ -38,12 +38,12 @@ void initialize(void)
     }
 }
 
-void found(void)  /* ²ò¤ÎÉ½¼¨ */
+void found(void)  /* è§£ã®è¡¨ç¤º */
 {
     static int count = 0;
     int i, j;
 
-    printf("\n²ò %d\n\n", ++count);
+    printf("\nè§£ %d\n\n", ++count);
     for (i = 0; i < Col; i++) {
         for (j = i; j < MaxSite; j += Col + 1)
             printf("%c", board[j]);
@@ -51,7 +51,7 @@ void found(void)  /* ²ò¤ÎÉ½¼¨ */
     }
 }
 
-void try(int site)  /* ºÆµ¢Åª¤Ë»î¤ß¤ë */
+void try(int site)  /* å†å¸°çš„ã«è©¦ã¿ã‚‹ */
 {
     static int temp;
     int piece, state, s0, s1, s2;

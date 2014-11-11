@@ -1,7 +1,7 @@
 /***********************************************************
-    lu.c -- LUÊ¬²ò
+    lu.c -- LUåˆ†è§£
 ***********************************************************/
-#include "matutil.c"  /* ¹ÔÎóÁàºî¤Î¾®Æ»¶ñ½¸ */
+#include "matutil.c"  /* è¡Œåˆ—æ“ä½œã®å°é“å…·é›† */
 #include <math.h>
 
 double lu(int n, matrix a, int *ip)
@@ -10,33 +10,33 @@ double lu(int n, matrix a, int *ip)
     double t, u, det;
     vector weight;
 
-    weight = new_vector(n);    /* weight[0..n-1] ¤Îµ­²±ÎÎ°è³ÎÊİ */
-    det = 0;                   /* ¹ÔÎó¼° */
-    for (k = 0; k < n; k++) {  /* ³Æ¹Ô¤Ë¤Ä¤¤¤Æ */
-        ip[k] = k;             /* ¹Ô¸ò´¹¾ğÊó¤Î½é´üÃÍ */
-        u = 0;                 /* ¤½¤Î¹Ô¤ÎÀäÂĞÃÍºÇÂç¤ÎÍ×ÁÇ¤òµá¤á¤ë */
+    weight = new_vector(n);    /* weight[0..n-1] ã®è¨˜æ†¶é ˜åŸŸç¢ºä¿ */
+    det = 0;                   /* è¡Œåˆ—å¼ */
+    for (k = 0; k < n; k++) {  /* å„è¡Œã«ã¤ã„ã¦ */
+        ip[k] = k;             /* è¡Œäº¤æ›æƒ…å ±ã®åˆæœŸå€¤ */
+        u = 0;                 /* ãã®è¡Œã®çµ¶å¯¾å€¤æœ€å¤§ã®è¦ç´ ã‚’æ±‚ã‚ã‚‹ */
         for (j = 0; j < n; j++) {
             t = fabs(a[k][j]);  if (t > u) u = t;
         }
-        if (u == 0) goto EXIT; /* 0 ¤Ê¤é¹ÔÎó¤ÏLUÊ¬²ò¤Ç¤­¤Ê¤¤ */
-        weight[k] = 1 / u;     /* ºÇÂçÀäÂĞÃÍ¤ÎµÕ¿ô */
+        if (u == 0) goto EXIT; /* 0 ãªã‚‰è¡Œåˆ—ã¯LUåˆ†è§£ã§ããªã„ */
+        weight[k] = 1 / u;     /* æœ€å¤§çµ¶å¯¾å€¤ã®é€†æ•° */
     }
-    det = 1;                   /* ¹ÔÎó¼°¤Î½é´üÃÍ */
-    for (k = 0; k < n; k++) {  /* ³Æ¹Ô¤Ë¤Ä¤¤¤Æ */
+    det = 1;                   /* è¡Œåˆ—å¼ã®åˆæœŸå€¤ */
+    for (k = 0; k < n; k++) {  /* å„è¡Œã«ã¤ã„ã¦ */
         u = -1;
-        for (i = k; i < n; i++) {  /* ¤è¤ê²¼¤Î³Æ¹Ô¤Ë¤Ä¤¤¤Æ */
-            ii = ip[i];            /* ½Å¤ß¡ßÀäÂĞÃÍ ¤¬ºÇÂç¤Î¹Ô¤ò¸«¤Ä¤±¤ë */
+        for (i = k; i < n; i++) {  /* ã‚ˆã‚Šä¸‹ã®å„è¡Œã«ã¤ã„ã¦ */
+            ii = ip[i];            /* é‡ã¿Ã—çµ¶å¯¾å€¤ ãŒæœ€å¤§ã®è¡Œã‚’è¦‹ã¤ã‘ã‚‹ */
             t = fabs(a[ii][k]) * weight[ii];
             if (t > u) {  u = t;  j = i;  }
         }
         ik = ip[j];
         if (j != k) {
-            ip[j] = ip[k];  ip[k] = ik;  /* ¹ÔÈÖ¹æ¤ò¸ò´¹ */
-            det = -det;  /* ¹Ô¤ò¸ò´¹¤¹¤ì¤Ğ¹ÔÎó¼°¤ÎÉä¹æ¤¬ÊÑ¤ï¤ë */
+            ip[j] = ip[k];  ip[k] = ik;  /* è¡Œç•ªå·ã‚’äº¤æ› */
+            det = -det;  /* è¡Œã‚’äº¤æ›ã™ã‚Œã°è¡Œåˆ—å¼ã®ç¬¦å·ãŒå¤‰ã‚ã‚‹ */
         }
-        u = a[ik][k];  det *= u;  /* ÂĞ³ÑÀ®Ê¬ */
-        if (u == 0) goto EXIT;    /* 0 ¤Ê¤é¹ÔÎó¤ÏLUÊ¬²ò¤Ç¤­¤Ê¤¤ */
-        for (i = k + 1; i < n; i++) {  /* Gauss¾ÃµîË¡ */
+        u = a[ik][k];  det *= u;  /* å¯¾è§’æˆåˆ† */
+        if (u == 0) goto EXIT;    /* 0 ãªã‚‰è¡Œåˆ—ã¯LUåˆ†è§£ã§ããªã„ */
+        for (i = k + 1; i < n; i++) {  /* Gaussæ¶ˆå»æ³• */
             ii = ip[i];
             t = (a[ii][k] /= u);
             for (j = k + 1; j < n; j++)
@@ -44,8 +44,8 @@ double lu(int n, matrix a, int *ip)
         }
     }
 EXIT:
-    free_vector(weight);  /* µ­²±ÎÎ°è¤ò²òÊü */
-    return det;           /* Ìá¤êÃÍ¤Ï¹ÔÎó¼° */
+    free_vector(weight);  /* è¨˜æ†¶é ˜åŸŸã‚’è§£æ”¾ */
+    return det;           /* æˆ»ã‚Šå€¤ã¯è¡Œåˆ—å¼ */
 }
 
 void solve(int n, matrix a, vector b, int *ip, vector x)
@@ -53,12 +53,12 @@ void solve(int n, matrix a, vector b, int *ip, vector x)
     int i, j, ii;
     double t;
 
-    for (i = 0; i < n; i++) {       /* Gauss¾ÃµîË¡¤Î»Ä¤ê */
+    for (i = 0; i < n; i++) {       /* Gaussæ¶ˆå»æ³•ã®æ®‹ã‚Š */
         ii = ip[i];  t = b[ii];
         for (j = 0; j < i; j++) t -= a[ii][j] * x[j];
         x[i] = t;
     }
-    for (i = n - 1; i >= 0; i--) {  /* ¸åÂàÂåÆş */
+    for (i = n - 1; i >= 0; i--) {  /* å¾Œé€€ä»£å…¥ */
         t = x[i];  ii = ip[i];
         for (j = i + 1; j < n; j++) t -= a[ii][j] * x[j];
         x[i] = t / a[ii][i];
@@ -67,24 +67,24 @@ void solve(int n, matrix a, vector b, int *ip, vector x)
 
 double gauss(int n, matrix a, vector b, vector x)
 {
-    double det;  /* ¹ÔÎó¼° */
-    int *ip;     /* ¹Ô¸ò´¹¤Î¾ğÊó */
+    double det;  /* è¡Œåˆ—å¼ */
+    int *ip;     /* è¡Œäº¤æ›ã®æƒ…å ± */
 
-    ip = malloc(sizeof(int) * n);         /* µ­²±ÎÎ°è³ÎÊİ */
-    if (ip == NULL) error("µ­²±ÎÎ°èÉÔÂ­");
-    det = lu(n, a, ip);                   /* LUÊ¬²ò */
-    if (det != 0) solve(n, a, b, ip, x);  /* LUÊ¬²ò¤Î·ë²Ì¤ò»È¤Ã¤ÆÏ¢Î©ÊıÄø¼°¤ò²ò¤¯ */
-    free(ip);                             /* µ­²±ÎÎ°è¤Î²òÊü */
-    return det;                           /* Ìá¤êÃÍ¤Ï¹ÔÎó¼° */
+    ip = malloc(sizeof(int) * n);         /* è¨˜æ†¶é ˜åŸŸç¢ºä¿ */
+    if (ip == NULL) error("è¨˜æ†¶é ˜åŸŸä¸è¶³");
+    det = lu(n, a, ip);                   /* LUåˆ†è§£ */
+    if (det != 0) solve(n, a, b, ip, x);  /* LUåˆ†è§£ã®çµæœã‚’ä½¿ã£ã¦é€£ç«‹æ–¹ç¨‹å¼ã‚’è§£ã */
+    free(ip);                             /* è¨˜æ†¶é ˜åŸŸã®è§£æ”¾ */
+    return det;                           /* æˆ»ã‚Šå€¤ã¯è¡Œåˆ—å¼ */
 }
 
-/********** °Ê²¼¤Ï¥Æ¥¹¥ÈÍÑ **********/
+/********** ä»¥ä¸‹ã¯ãƒ†ã‚¹ãƒˆç”¨ **********/
 
 #include <limits.h>
 
-double rnd(void)  /* Íğ¿ô  0 < rnd() < 1 */
+double rnd(void)  /* ä¹±æ•°  0 < rnd() < 1 */
 {
-    static unsigned long seed = 123456789UL;  /* ´ñ¿ô */
+    static unsigned long seed = 123456789UL;  /* å¥‡æ•° */
 
     return (seed *= 69069UL) / (ULONG_MAX + 1.0);
 }
@@ -96,20 +96,20 @@ int main()
     vector b, bsave, x;
     double s, det;
 
-    printf("n = ");  scanf("%d", &n);  /* ¹ÔÎó¤Î¼¡¿ô¤òÆşÎÏ */
+    printf("n = ");  scanf("%d", &n);  /* è¡Œåˆ—ã®æ¬¡æ•°ã‚’å…¥åŠ› */
     a = new_matrix(n, n);  asave = new_matrix(n, n);
     b = new_vector(n);  bsave = new_vector(n);
     x = new_vector(n);
     for (i = 0; i < n; i++)
         for (j = 0; j < n; j++)
             a[i][j] = asave[i][j] = rnd() - rnd();
-    printf("·¸¿ô¹ÔÎó\n");  matprint(a, n, 10, "%7.3f");
+    printf("ä¿‚æ•°è¡Œåˆ—\n");  matprint(a, n, 10, "%7.3f");
     for (i = 0; i < n; i++)
         b[i] = bsave[i] = rnd() - rnd();
-    printf("±¦ÊÕ\n");  vecprint(b, n, 10, "%7.3f");
-    det = gauss(n, a, b, x);  /* GaussË¡¤Ç $Ax=b$ ¤ò²ò¤¯ */
-    printf("¹ÔÎó¼° = %g\n", det);
-    printf("²ò¤È, ²ò¤òÂåÆş¤·¤¿¤È¤­¤ÎÎ¾ÊÕ¤Îº¹\n");
+    printf("å³è¾º\n");  vecprint(b, n, 10, "%7.3f");
+    det = gauss(n, a, b, x);  /* Gaussæ³•ã§ $Ax=b$ ã‚’è§£ã */
+    printf("è¡Œåˆ—å¼ = %g\n", det);
+    printf("è§£ã¨, è§£ã‚’ä»£å…¥ã—ãŸã¨ãã®ä¸¡è¾ºã®å·®\n");
     for (i = 0; i < n; i++) {
         s = bsave[i];
         for (j = 0; j < n; j++) s -= asave[i][j] * x[j];

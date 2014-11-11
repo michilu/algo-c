@@ -1,5 +1,5 @@
 /***********************************************************
-    common.c -- ¶¦ÄÌ¤ÎÍ×ÁÇ
+    common.c -- å…±é€šã®è¦ç´ 
 ***********************************************************/
 #include <stdio.h>
 #include <limits.h>
@@ -9,7 +9,7 @@ void list_common_elements(
 {
     int i, j, k, t;
 
-    a[na] = b[nb] = c[nc] = INT_MAX;  /* ÈÖ¿Í */
+    a[na] = b[nb] = c[nc] = INT_MAX;  /* ç•ªäºº */
     i = j = k = 0;  t = a[0];
     while (t < INT_MAX) {
         while (b[j] < t) j++;

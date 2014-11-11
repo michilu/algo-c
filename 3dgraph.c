@@ -1,13 +1,13 @@
 /***********************************************************
-    3dgraph.c -- 3¼¡¸µ¥°¥é¥Õ
+    3dgraph.c -- 3æ¬¡å…ƒã‚°ãƒ©ãƒ•
 ***********************************************************/
-#include "plotter.c"             /* ¥é¡¼¥¸¥â¥Ç¥ë¤Ç¥³¥ó¥Ñ¥¤¥ë */
+#include "plotter.c"             /* ãƒ©ãƒ¼ã‚¸ãƒ¢ãƒ‡ãƒ«ã§ã‚³ãƒ³ãƒ‘ã‚¤ãƒ« */
 #include <math.h>
 
-const double Xmin = -1, Ymin = -1, Zmin = -1,  /* ºÂÉ¸¤Î²¼¸Â */
-             Xmax =  1, Ymax =  1, Zmax =  1;  /* ºÂÉ¸¤Î¾å¸Â */
+const double Xmin = -1, Ymin = -1, Zmin = -1,  /* åº§æ¨™ã®ä¸‹é™ */
+             Xmax =  1, Ymax =  1, Zmax =  1;  /* åº§æ¨™ã®ä¸Šé™ */
 
-double func(double x, double z)             /* ÉÁ¤¯´Ø¿ô (Îã) */
+double func(double x, double z)             /* æãé–¢æ•° (ä¾‹) */
 {
     double r2;
 
@@ -23,8 +23,8 @@ int main()
 
     gr_on();  gr_window(0, 0, 240, 130, 1, 0);
     for (i = 0; i <= 240; i++) {
-        lowerhorizon[i] =  1e30;  /* Àµ¤ÎÌµ¸ÂÂç */
-        upperhorizon[i] = -1e30;  /* Éé¤ÎÌµ¸ÂÂç */
+        lowerhorizon[i] =  1e30;  /* æ­£ã®ç„¡é™å¤§ */
+        upperhorizon[i] = -1e30;  /* è² ã®ç„¡é™å¤§ */
     }
     for (iz = 0; iz <= 20; iz++) {
         z = Zmin + (Zmax - Zmin) / 20 * iz;

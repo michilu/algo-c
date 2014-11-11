@@ -1,16 +1,16 @@
 /***********************************************************
-    dijkstra.c -- ºÇÃ»Ï©ÌäÂê
-    »ÈÍÑÎã: dijkstra <dijkstra.dat
+    dijkstra.c -- æœ€çŸ­è·¯å•é¡Œ
+    ä½¿ç”¨ä¾‹: dijkstra <dijkstra.dat
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
 
-#define NMAX 100                 /* ÅÀ¤Î¿ô¤Î¾å¸Â */
-int weight[NMAX + 1][NMAX + 1];  /* ÊÕ¤Î½Å¤ß */
-int n;                           /* ÅÀ¤Î¿ô */
+#define NMAX 100                 /* ç‚¹ã®æ•°ã®ä¸Šé™ */
+int weight[NMAX + 1][NMAX + 1];  /* è¾ºã®é‡ã¿ */
+int n;                           /* ç‚¹ã®æ•° */
 
-void readweight(void)            /* ¥Ç¡¼¥¿ÆşÎÏ */
+void readweight(void)            /* ãƒ‡ãƒ¼ã‚¿å…¥åŠ› */
 {
     int i, j, x;
 
@@ -21,19 +21,19 @@ void readweight(void)            /* ¥Ç¡¼¥¿ÆşÎÏ */
         for (j = 1; j <= n; j++) weight[i][j] = INT_MAX;
     while (scanf("%d%d%d%*[^\n]", &i, &j, &x) == 3)
         weight[i][j] = weight[j][i] = x;
-    printf("¥Ç¡¼¥¿ weight(i,j)\n");
+    printf("ãƒ‡ãƒ¼ã‚¿ weight(i,j)\n");
     for (i = 1; i <= n; i++) {
         for (j = 1; j <= n; j++) {
             if (weight[i][j] < INT_MAX)
                 printf("%3d", weight[i][j]);
             else
-                printf(" ¡ç");
+                printf(" âˆ");
         }
         printf("\n");
     }
 }
 
-#define START  1  /* ½ĞÈ¯ÅÀ */
+#define START  1  /* å‡ºç™ºç‚¹ */
 #define FALSE  0
 #define TRUE   1
 
@@ -43,7 +43,7 @@ int main()
     static char visited[NMAX + 1];
     static int distance[NMAX + 1], prev[NMAX + 1];
 
-    readweight();  /* ÅÀ¤Î¿ô{\tt n}, µ÷Î¥{\tt weight[1..n][1..n]}¤òÆÉ¤à */
+    readweight();  /* ç‚¹ã®æ•°{\tt n}, è·é›¢{\tt weight[1..n][1..n]}ã‚’èª­ã‚€ */
     for (i = 1; i <= n; i++) {
         visited[i] = FALSE;  distance[i] = INT_MAX;
     }
@@ -62,7 +62,7 @@ int main()
             }
         }
     } while (min < INT_MAX);
-    printf("ÅÀ  Ä¾Á°¤ÎÅÀ  ºÇÃ»µ÷Î¥\n");
+    printf("ç‚¹  ç›´å‰ã®ç‚¹  æœ€çŸ­è·é›¢\n");
     for (i = 1; i <= n; i++)
         if (i != START && visited[i])
             printf("%2d%10d%10d\n", i, prev[i], distance[i]);

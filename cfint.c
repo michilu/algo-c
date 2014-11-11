@@ -1,10 +1,10 @@
 /***********************************************************
-    cfint.c -- Ï¢Ê¬¿ôÊä´Ö
+    cfint.c -- é€£åˆ†æ•°è£œé–“
 ***********************************************************/
-#define N  5          /* ÅÀ¤Î¿ô */
-double x[N], y[N];    /* N ¸Ä¤ÎÅÀ¤Î x ºÂÉ¸, y ºÂÉ¸ */
+#define N  5          /* ç‚¹ã®æ•° */
+double x[N], y[N];    /* N å€‹ã®ç‚¹ã® x åº§æ¨™, y åº§æ¨™ */
 
-void maketable(void)  /* ·¸¿ô¤òµá¤á y[] ¤Ë¾å½ñ¤­ */
+void maketable(void)  /* ä¿‚æ•°ã‚’æ±‚ã‚ y[] ã«ä¸Šæ›¸ã */
 {
     int i, j;
 
@@ -13,7 +13,7 @@ void maketable(void)  /* ·¸¿ô¤òµá¤á y[] ¤Ë¾å½ñ¤­ */
             y[i] = (x[i] - x[j]) / (y[i] - y[j]);
 }
 
-double interpolate(double t)  /* Êä´Ö */
+double interpolate(double t)  /* è£œé–“ */
 {
     int i;
     double r;
@@ -33,11 +33,11 @@ int main()
     int i;
     double s;
 
-    for (i = 0; i < N; i++) {           /* É½¤òºî¤ë */
+    for (i = 0; i < N; i++) {           /* è¡¨ã‚’ä½œã‚‹ */
         x[i] = 20 * i;  y[i] = tan(x[i] * PI / 180);
     }
     maketable();
-    for (i = 0; i <= 80; i += 2) {      /* Êä´Ö */
+    for (i = 0; i <= 80; i += 2) {      /* è£œé–“ */
         s = interpolate(i);
         printf("%2d  % .14f  % .2e\n",
             i, s, s - tan(i * PI / 180));

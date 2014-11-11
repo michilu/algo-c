@@ -1,5 +1,5 @@
 /***********************************************************
-    gauss3.c -- 3½ÅÂĞ³Ñ¤ÊÏ¢Î©ÊıÄø¼°
+    gauss3.c -- 3é‡å¯¾è§’ãªé€£ç«‹æ–¹ç¨‹å¼
 ***********************************************************/
 #include "matutil.c"
 
@@ -9,17 +9,17 @@ void gauss3(int n, vector diag,
     int i;
     double t;
 
-    for (i = 0; i < n - 1; i++) {  /* ¾ÃµîË¡ */
+    for (i = 0; i < n - 1; i++) {  /* æ¶ˆå»æ³• */
         t = sub[i] / diag[i];
         diag[i + 1] -= t * sup[i];
         b   [i + 1] -= t * b  [i];
     }
-    b[n - 1] /= diag[n - 1];       /* ¸åÂàÂåÆş */
+    b[n - 1] /= diag[n - 1];       /* å¾Œé€€ä»£å…¥ */
     for (i = n - 2; i >= 0; i--)
         b[i] = (b[i] - sup[i] * b[i + 1]) / diag[i];
 }
 
-int main()  /* ¥Æ¥¹¥È */
+int main()  /* ãƒ†ã‚¹ãƒˆ */
 {
     int i, n;
     vector diag, sub, sup, b;
@@ -30,13 +30,13 @@ int main()  /* ¥Æ¥¹¥È */
     sub  = new_vector(n);
     sup  = new_vector(n);
     b    = new_vector(n);
-    /* ÎãÂê.  Àµ²ò¤Ï¤¹¤Ù¤Æ 1 */
+    /* ä¾‹é¡Œ.  æ­£è§£ã¯ã™ã¹ã¦ 1 */
     for (i = 0; i < n; i++) {
         diag[i] = 4;  sub[i] = 1;  sup[i] = 2;  b[i] = 7;
     }
     b[0] = 6;  b[n - 1] = 5;
     gauss3(n, diag, sub, sup, b);
     vecprint(b, n, 8, "%9.6f");
-    printf("Àµ²ò¤Ï¤¹¤Ù¤Æ 1\n");
+    printf("æ­£è§£ã¯ã™ã¹ã¦ 1\n");
     return EXIT_SUCCESS;
 }

@@ -1,5 +1,5 @@
 /***********************************************************
-    eval.c -- ¼°¤ÎÉ¾²Á
+    eval.c -- å¼ã®è©•ä¾¡
 ***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,19 +7,19 @@
 
 int ch;
 
-void error(char *s)  /* ¥¨¥é¡¼½èÍı */
+void error(char *s)  /* ã‚¨ãƒ©ãƒ¼å‡¦ç† */
 {
     printf("%s\n", s);  exit(EXIT_FAILURE);
 }
 
-void readch(void)  /* 1Ê¸»ú¤òÆÉ¤à. ¶õÇò¤ÏÆÉ¤ßÈô¤Ğ¤¹. */
+void readch(void)  /* 1æ–‡å­—ã‚’èª­ã‚€. ç©ºç™½ã¯èª­ã¿é£›ã°ã™. */
 {
     do {
         if ((ch = getchar()) == EOF) return;
     } while (ch == ' ' || ch == '\t');
 }
 
-double number(void)  /* ¿ô */
+double number(void)  /* æ•° */
 {
     double x, a;
     int sign;
@@ -27,7 +27,7 @@ double number(void)  /* ¿ô */
     if (ch == '+' || ch == '-') {
         sign = ch;  readch();
     }
-    if (! isdigit(ch)) error("¿ô¤« '(' ¤¬¤¢¤ê¤Ş¤»¤ó");
+    if (! isdigit(ch)) error("æ•°ã‹ '(' ãŒã‚ã‚Šã¾ã›ã‚“");
     x = ch - '0';
     while (readch(), isdigit(ch))
         x = 10 * x + ch - '0';
@@ -39,19 +39,19 @@ double number(void)  /* ¿ô */
     if (sign == '-') return -x;  else return x;
 }
 
-double expression(void);  /* ¼° */
+double expression(void);  /* å¼ */
 
-double factor(void)  /* °ø»Ò */
+double factor(void)  /* å› å­ */
 {
     double x;
 
     if (ch != '(') return number();
     readch();  x = expression();
-    if (ch != ')') error("')' ¤¬¤¢¤ê¤Ş¤»¤ó");
+    if (ch != ')') error("')' ãŒã‚ã‚Šã¾ã›ã‚“");
     readch();  return x;
 }
 
-double term(void)  /* ¹à */
+double term(void)  /* é … */
 {
     double x, y;
 
@@ -61,13 +61,13 @@ double term(void)  /* ¹à */
             readch();  x *= factor();
         } else if (ch == '/') {
             readch();  y = factor();
-            if (y == 0) error("0 ¤Ç¤Ï³ä¤ì¤Ş¤»¤ó");
+            if (y == 0) error("0 ã§ã¯å‰²ã‚Œã¾ã›ã‚“");
             x /= y;
         } else break;
     return x;
 }
 
-double expression(void)  /* ¼° */
+double expression(void)  /* å¼ */
 {
     double x;
 
@@ -86,7 +86,7 @@ int main()
     double x;
 
     readch();  x = expression();
-    if (ch != '\n') error("Ê¸Ë¡¤Î´Ö°ã¤¤¤¬¤¢¤ê¤Ş¤¹");
+    if (ch != '\n') error("æ–‡æ³•ã®é–“é•ã„ãŒã‚ã‚Šã¾ã™");
     printf("%g\n", x);
     return EXIT_SUCCESS;
 }

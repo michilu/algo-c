@@ -1,5 +1,5 @@
 /***********************************************************
-    icubrt.c -- Î©Êıº¬
+    icubrt.c -- ç«‹æ–¹æ ¹
 ***********************************************************/
 
 unsigned int icubrt(unsigned int x)
@@ -23,7 +23,7 @@ int main()
     unsigned int i;
     unsigned long s;
 
-    printf("À°¿ô¤ÎÎ©Êıº¬¤Î¥Æ¥¹¥ÈÃæ\n");
+    printf("æ•´æ•°ã®ç«‹æ–¹æ ¹ã®ãƒ†ã‚¹ãƒˆä¸­\n");
     i = 0;
     do {
         if ((i & 0x3fff) == 0) printf("i = %u\n", i);
@@ -33,6 +33,6 @@ int main()
             break;
         }
     } while (++i != 0);
-    printf("¥Æ¥¹¥È´°Î»\n");
+    printf("ãƒ†ã‚¹ãƒˆå®Œäº†\n");
     return EXIT_SUCCESS;
 }
